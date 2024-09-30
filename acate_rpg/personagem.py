@@ -1,69 +1,64 @@
 from classePersonagem import ClassePersonagem
+from pocao_hp import PocaoHP
+from pocao_est import PocaoEstamina
 
-
-class Personagem():
-    def __init__(self, nome, cargo, nivel, experiencia, pocao_hp, pocao_est, classe_personagem):
-        self._nome = nome
-        self._cargo = cargo
-        self._nivel = nivel
-        self._experiencia = experiencia
-        self._pocao_hp = pocao_hp
-        self._pocao_est = pocao_est
-        self._classe_personagem = classe_personagem
+class Personagem(ClassePersonagem, PocaoHP, PocaoEstamina):
+    def __init__(self, nome, nivel, experiencia, pocao_hp: PocaoHP, pocao_est: PocaoEstamina, classe_personagem: ClassePersonagem):
+        self.__nome = nome
+        self.__nivel = nivel
+        self.__experiencia = experiencia
+        if isinstance(pocao_hp, PocaoHP):
+            self.__pocao_hp = pocao_hp
+        if isinstance(pocao_est, PocaoEstamina):
+            self.__pocao_est = pocao_est
+        if isinstance(classe_personagem, ClassePersonagem):
+            self.__classe_personagem = classe_personagem
 
 
     @property
     def nome(self):
-        return self._nome
+        return self.__nome
 
     @nome.setter
     def nome(self, nome):
-        self._nome = nome
-
-    @property
-    def cargo(self):
-        return self._cargo
-
-    @cargo.setter
-    def cargo(self, cargo):
-        self._cargo = cargo
+        self.__nome = nome
 
     @property
     def nivel(self):
-        return self._nivel
+        return self.__nivel
 
     @nivel.setter
     def nivel(self, nivel):
-        self._nivel = nivel
+        self.__nivel = nivel
 
     @property
     def experiencia(self):
-        return self._experiencia
+        return self.__experiencia
 
     @experiencia.setter
     def experiencia(self, experiencia):
-        self._experiencia = experiencia
+        self.__experiencia = experiencia
 
     @property
     def pocao_hp(self):
-        return self._pocao_hp
+        return self.__pocao_hp
 
     @pocao_hp.setter
     def pocao_hp(self, pocao_hp):
-        self._pocao_hp = pocao_hp
+        self.__pocao_hp = pocao_hp
 
     @property
     def pocao_est(self):
-        return self._pocao_est
+        return self.__pocao_est
 
     @pocao_est.setter
     def pocao_est(self, pocao_est):
-        self._pocao_est = pocao_est
+        self.__pocao_est = pocao_est
 
     @property
     def classe_personagem(self):
-        return self._classe_personagem
+        return self.__classe_personagem
 
     @classe_personagem.setter
     def classe_personagem(self, classe_personagem):
-        self._classe_personagem = classe_personagem
+        self.__classe_personagem = classe_personagem

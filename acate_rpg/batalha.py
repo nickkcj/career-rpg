@@ -89,7 +89,7 @@ class Batalha(Personagem, Boss):
                 case 'usar item':
                     self.usar_item()
                 case 'usar habilidade':
-                    sefl.usar_habilidade()
+                    self.usar_habilidade()
                 case _:
                     print("Ação inválida. Tente novamente.")
                     self.realizar_turno()
@@ -119,11 +119,11 @@ class Batalha(Personagem, Boss):
             self.finalizar(self.personagem.nome)
 
     def usar_item(self):
-        #tem que ter relação com
+        #tem que ter relação com pocao_hp e pocao_est
         pass
 
     def acao_boss(self):
-        #tem que ser aleatório, num sei como faz sem o famoso rand() e um switch-case
+        #tem que ser aleatório
         pass
 
     def finalizar(self, perdedor):

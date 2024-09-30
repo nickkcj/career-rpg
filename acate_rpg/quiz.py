@@ -7,7 +7,7 @@ class Quiz:
         self._selecionada = None
         self._gabaritou_miga = False
 
-    # Getters e Setters
+
     @property
     def setor(self):
         return self._setor
@@ -57,7 +57,4 @@ class Quiz:
         self._gabaritou_miga = gabaritou_miga
 
     def responder(self, resposta_selecionada):
-        self._selecionada = resposta_selecionada
-        if self._selecionada == self._resposta_correta:
-            self._gabaritou_miga = True
-        return self._gabaritou_miga
+        pass

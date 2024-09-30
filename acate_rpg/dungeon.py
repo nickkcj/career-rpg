@@ -1,4 +1,6 @@
-class Dungeon:
+from setor import Setor
+
+class Dungeon(Setor):
     def __init__(self, nome, nivel_requerido, xp_ganho, dificuldade, conquistada=False):
         self._nome = nome
         self._nivel_requerido = nivel_requerido

@@ -3,7 +3,6 @@ class Setor:
         self._nome = nome
         self._dificuldade = dificuldade
 
-
     @property
     def nome(self):
         return self._nome

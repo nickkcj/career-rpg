@@ -1,33 +1,47 @@
-class Menu:
-    def __init__(self, dungeons_conquistadas, cursos_realizados):
-        self._dungeons_conquistadas = dungeons_conquistadas
-        self._cursos_realizados = cursos_realizados
+from personagem import Personagem
+from dungeon import Dungeon
+from curso import Curso
+
+
+class Menu(Personagem, Dungeon, Curso):
+    def __init__(self, personagem: Personagem, dungeon: Dungeon, curso: Curso):
+        self.__personagem = personagem
+        self.__dungeon = dungeon
+        self.__curso = curso
+
 
     @property
-    def dungeons_conquistadas(self):
-        return self._dungeons_conquistadas
+    def personagem(self):
+        return self.__personagem
 
-    @dungeons_conquistadas.setter
-    def dungeons_conquistadas(self, dungeons_conquistadas):
-        self._dungeons_conquistadas = dungeons_conquistadas
+    @personagem.setter
+    def personagem(self, personagem: Personagem):
+        if isinstance(personagem, Personagem):
+            self.__personagem = personagem
 
     @property
-    def cursos_realizados(self):
-        return self._cursos_realizados
+    def dungeon(self):
+        return self.__dungeon
 
-    @cursos_realizados.setter
-    def cursos_realizados(self, cursos_realizados):
-        self._cursos_realizados = cursos_realizados
+    @dungeon.setter
+    def dungeon(self, dungeon: Dungeon):
+        if isinstance(dungeon, Dungeon):
+            self.__dungeon = dungeon
 
-    def listar_status(self, personagem):
-        return f"{personagem.nome} - Nível: {personagem.nivel} - Experiência: {personagem.experiencia}"
+    @property
+    def curso(self):
+        return self.__curso
+
+    @curso.setter
+    def curso(self, curso: Curso):
+        if isinstance(curso, Curso):
+            self.__curso = curso
+
+    def listar_status(self):
+        pass
 
     def listar_cursos(self):
-        for curso in self._cursos_realizados:
-            status = 'Realizado' if curso.realizado else 'Pendente'
-            print(f"Curso: {curso.nome} - Setor: {curso.setor} - Status: {status}")
+        pass
 
     def listar_dungeons(self):
-        for dungeon in self._dungeons_conquistadas:
-            status = 'Conquistada' if dungeon.conquistada else 'Não conquistada'
-            print(f"Dungeon: {dungeon.nome} - Dificuldade: {dungeon.dificuldade} - Status: {status}")
+        pass

@@ -1,5 +1,7 @@
-class Curso:
-    def __init__(self, nome, nivel_requerido, xp_ganho, setor, dificuldade, realizado=False, acertos=0):
+from quiz import Quiz
+
+class Curso(Quiz):
+    def __init__(self, nome, nivel_requerido, xp_ganho, setor, dificuldade, realizado=False, acertos: Quiz=0):
         self._nome = nome
         self._nivel_requerido = nivel_requerido
         self._xp_ganho = xp_ganho

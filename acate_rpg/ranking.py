@@ -1,22 +1,41 @@
-class Ranking:
-    def __init__(self, tipo):
-        self._tipo = tipo
-        self._personagens = []
+from personagem import Personagem
+
+class Ranking(Personagem):
+    def __init__(self, tipo, id, personagem:Personagem):
+        self.__tipo = tipo
+        self.__id = id
+        self.__personagens = list[personagem] ## sabemos que não é assim!
 
 
     @property
     def tipo(self):
-        return self._tipo
+        return self.__tipo
 
     @tipo.setter
     def tipo(self, tipo):
-        self._tipo = tipo
+        self.__tipo = tipo
+
+    @property
+    def id(self):
+        return self.__id
+
+    @id.setter
+    def id(self, id):
+        self.__id = id
+
+    @property
+    def personagens(self):
+        return self.__personagens
+
+    @personagens.setter
+    def personagens(self, personagens):
+        self.__personagens = personagens
 
     def adicionar_personagem(self, personagem):
-        self._personagens.append(personagem)
+        self.__personagens.append(personagem)
 
     def remover_personagem(self, personagem):
-        self._personagens.remove(personagem)
+        self.__personagens.remove(personagem)
 
     def ranking_nivel(self):
         pass

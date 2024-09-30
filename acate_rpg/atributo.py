@@ -16,4 +16,4 @@ class Atributo:
         if isinstance(novos_atributos, dict):
             self._atributos.update(novos_atributos)
         else:
-            return ValueError("Os atributos devem ser um dicionário")
+            return 'errou'
