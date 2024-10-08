@@ -2,7 +2,7 @@ from classePersonagem import ClassePersonagem
 from pocao_hp import PocaoHP
 from pocao_est import PocaoEstamina
 
-class Personagem(ClassePersonagem, PocaoHP, PocaoEstamina):
+class Personagem():
     def __init__(self, nome, nivel, experiencia, pocao_hp: PocaoHP, pocao_est: PocaoEstamina, classe_personagem: ClassePersonagem):
         self.__nome = nome
         self.__nivel = nivel

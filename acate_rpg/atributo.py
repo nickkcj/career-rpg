@@ -1,6 +1,6 @@
 class Atributo:
     def __init__(self, ataque=0, defesa=0, hp=0, estamina=0):
-        self._atributos = {
+        self.__atributos = {
             'ataque': ataque,
             'defesa': defesa,
             'hp': hp,
@@ -14,6 +14,6 @@ class Atributo:
     @atributos.setter
     def atributos(self, novos_atributos):
         if isinstance(novos_atributos, dict):
-            self._atributos.update(novos_atributos)
+            self.__atributos.update(novos_atributos)
         else:
             return 'errou'

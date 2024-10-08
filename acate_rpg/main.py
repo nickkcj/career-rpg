@@ -1,1 +1,3 @@
-## Sla poh, num enche
+from atributoView import AtributoView
+
+upar_atributo(AtributoView)

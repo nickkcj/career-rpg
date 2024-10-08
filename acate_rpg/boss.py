@@ -1,10 +1,12 @@
+import random
+
 class Boss:
     def __init__(self, nome, dificuldade, nivel_requerido, ataque=0, defesa=0, hp=0, estamina=0, diretor=False):
         super().__init__(ataque, defesa, hp, estamina)
         self.__nome = nome
         self.__dificuldade = dificuldade
         self.__nivel_requerido = nivel_requerido
-        self.__diretor = diretor
+        self.__diretor = False
 
 
     @property
@@ -41,3 +43,28 @@ class Boss:
 
     def mostrar_atributos(self):
         return f"Ataque: {self.atributos['ataque']}, Defesa: {self.atributos['defesa']}, HP: {self.atributos['hp']}, Estamina: {self.atributos['estamina']}"
+    
+    def realizar_acao(self, personagem):
+        acao = random.choice(['atacar', 'defender', 'usar_habilidade'])
+        if acao == 'atacar':
+            self.atacar()
+        elif acao == 'defender':
+            self.defender()
+        elif acao == 'usar_habilidade':
+            self.usar_habilidade()
+
+    def atacar(self, personagem):
+        dano = self.atributos['ataque'] - personagem.classe_personagem.atributos['defesa']
+        dano = max(dano, 1)
+        personagem.classe_personagem.atributos['hp'] -= dano
+        print(f"{self.nome} atacou {personagem.nome} e causou {dano} de dano!")
+
+    def defender(self):
+        #logica para aumentar a defesa em somente um turno
+        print(f"{self.nome} se defendeu, aumentando sua defesa temporariamente.")
+        pass
+
+    def usar_habilidade(self, personagem):
+        #habilidade do boss
+        print(f"{self.nome} usou uma habilidade especial em {personagem.nome}!")
+        pass
