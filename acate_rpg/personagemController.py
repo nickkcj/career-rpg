@@ -1,9 +1,11 @@
 from personagemView import PersonagemView
 from personagem import Personagem
+from bossController import BossController
 
 class PersonagemController():
     def __init__(self):
         self.__personagens = []
+        self.__classe = ''
         self.__personagemView = PersonagemView()
 
 
@@ -11,16 +13,24 @@ class PersonagemController():
         for personagem in self.__personagens:
             if (personagem.nome == nome):
                 return personagem
-            return None
+        return None
 
     def cadastrar_personagem(self):
-        dados_personagem = self.__personagemView.pega_dados_personagem()
+        dados_personagem = None
+        while dados_personagem is None:
+            try:
+                dados_personagem = self.__personagemView.pega_dados_personagem()
+                if not dados_personagem['classe']:
+                    raise ValueError("Classe inválida!")
+            except ValueError as e:
+                self.__personagemView.mostra_mensagem(str(e))
+                dados_personagem = None
         personagem_existente = self.pega_personagem_por_nome(dados_personagem["nome"])
         if personagem_existente is None:
             classe = dados_personagem["classe"]
             personagem = Personagem(dados_personagem["nome"], dados_personagem["nivel"], dados_personagem["experiencia"], None, None, dados_personagem["classe"])
             self.__personagens.append(personagem)
-            self.__personagemView.mostra_mensagem(f"Personagem {dados_personagem['nome']} cadastrado com sucesso!")
+            self.__personagemView.mostra_mensagem(f"Personagem {dados_personagem['nome']} da classe {dados_personagem['classe']} cadastrado com sucesso!")
         else:
             self.__personagemView.mostra_mensagem(f"O personagem {dados_personagem['nome']} já existe!")
 
@@ -34,8 +44,8 @@ class PersonagemController():
         }
         self.__personagemView.mostrar_status(dados_personagem)
 
-    def atacar(self, personagem: Personagem, boss: Boss):
-        dano = self.classePersonagem.atributos['ataque'] - boss.atributos['defesa']
+    def atacar(self, personagem: Personagem, boss: BossController):
+        dano = personagem.classe_personagem.atributos['ataque'] - boss.atributos['defesa']
         dano = max(dano, 1)
         boss.atributos['hp'] -= dano
         self.__personagemView.mostra_mensagem(f"{personagem.nome} atacou {boss.nome} e causou {dano} de dano!")
@@ -57,7 +67,7 @@ class PersonagemController():
         else:
             self.__personagemView.mostra_mensagem(f"{self.nome} não tem Poção de {tipo_item} disponível!")
 
-    def usar_habilidade(self, classe_personagem: Personagem, boss: Boss):
+    def usar_habilidade(self, classe_personagem: Personagem, boss: BossController):
         #colocar a logica em que o jogador escolhe qual habilidade ele quer usar,
         #podendo escolher entre 3 habilidades, que tem efeitos diferentes no inimigo.
         pass

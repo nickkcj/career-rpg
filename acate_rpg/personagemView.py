@@ -13,18 +13,32 @@ class PersonagemView():
         if not isinstance(nome, str):
             raise Exception("Nome inválido")
 
-        print("-------- CLASSES ----------")
-        print("Escolha uma classe:")
-        print("1 - CLT (Bom no early game)")
-        print("2 - Estagiário (Médio no early, bom no late)")
-        print("3 - Trainee (Fraco no early, muito forte no late)")
+        while True:
+            print("-------- CLASSES ----------")
+            print("Escolha uma classe:")
+            print("1 - CLT (Bom no early game)")
+            print("2 - Estagiário (Médio no early, bom no late)")
+            print("3 - Trainee (Fraco no early, muito forte no late)")
 
-        opcao = int(input("Digite o número da classe: "))
-        classe = "CLT" if opcao == 1 else "Estagiário" if opcao == 2 else "Trainee" if opcao == 3 else None
-        if not classe:
-            raise Exception("Classe não encontrada")
+            opcao = int(input("Digite o número da classe: "))
 
-        return {"nome": nome, "classe": classe, "nivel": 1, "experiencia": 0}
+            if opcao == 1:
+                classe = "CLT"
+            elif opcao == 2:
+                classe = "Estagiário"
+            elif opcao == 3:
+                classe = "Trainee"
+            else:
+                print("Classe inválida! Tente novamente.")
+                continue
+
+            break
+
+        return {"nome": nome, 
+                "classe": classe, 
+                "nivel": 1, 
+                "experiencia": 0
+                }
     
     def escolher_item(self):
         print("Escolha o item para usar:")
