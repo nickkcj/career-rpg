@@ -58,3 +58,5 @@ class Quiz:
 
     def responder(self, resposta_selecionada):
         pass
+
+    

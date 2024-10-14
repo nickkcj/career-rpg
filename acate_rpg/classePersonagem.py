@@ -5,6 +5,12 @@ class ClassePersonagem(Atributo):
         super().__init__(ataque, defesa, hp, estamina)
         self.__nome_classe = nome_classe
         self.__evolucao = evolucao
+        self.__atributos = {
+            'ataque': ataque,
+            'defesa': defesa,
+            'hp': hp,
+            'estamina': estamina
+        }
 
 
     @property
@@ -45,3 +51,5 @@ class ClassePersonagem(Atributo):
             self.atributos[atributo] += valor
         else:
             return f"Atributo '{atributo}' não encontrado."
+        
+        

@@ -45,3 +45,5 @@ class Menu(Personagem, Dungeon, Curso):
 
     def listar_dungeons(self):
         pass
+
+    

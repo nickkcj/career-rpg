@@ -69,3 +69,5 @@ class Curso(Quiz):
 
     def realizar_quiz(self, gabarito):
         pass
+
+    

@@ -58,4 +58,4 @@ class Batalha():
     @turno.setter
     def turno(self, turno):
         self.__turno = turno
-        
+

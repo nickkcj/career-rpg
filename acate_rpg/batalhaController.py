@@ -48,3 +48,5 @@ class BatalhaController(Boss, Personagem):
                 self.__view.mostra_resultado("Você venceu!")
             elif resultado == "derrota":
                 self.__view.mostra_resultado("Você foi derrotado!")
+
+                

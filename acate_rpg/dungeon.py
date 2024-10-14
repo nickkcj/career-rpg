@@ -48,3 +48,5 @@ class Dungeon(Setor):
     @conquistada.setter
     def conquistada(self, conquistada):
         self._conquistada = conquistada
+
+        

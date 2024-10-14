@@ -62,3 +62,4 @@ class Personagem():
     @classe_personagem.setter
     def classe_personagem(self, classe_personagem):
         self.__classe_personagem = classe_personagem
+

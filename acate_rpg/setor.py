@@ -6,7 +6,7 @@ class Setor:
     @property
     def nome(self):
         return self._nome
-
+ 
     @nome.setter
     def nome(self, nome):
         self._nome = nome
@@ -18,3 +18,5 @@ class Setor:
     @dificuldade.setter
     def dificuldade(self, dificuldade):
         self._dificuldade = dificuldade
+
+        

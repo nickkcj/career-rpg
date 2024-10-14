@@ -45,3 +45,5 @@ class Ranking(Personagem):
 
     def ranking_cursos(self):
         pass
+
+    

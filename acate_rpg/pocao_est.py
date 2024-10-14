@@ -13,3 +13,5 @@ class PocaoEstamina(Pocao):
     @quant.setter
     def quant(self, quant):
         self._quant = quant
+
+        

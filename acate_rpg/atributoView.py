@@ -17,7 +17,7 @@ class AtributoView():
         print("5 - Voltar")
 
         opcao = int(input("Digite o número: "))
-        return opcao
+         return opcao
     
             
     def incrementar_atributo(opcao):

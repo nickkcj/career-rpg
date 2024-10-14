@@ -13,3 +13,5 @@ class PocaoHP(Pocao):
     @quant.setter
     def quant(self, quant):
         self._quant = quant
+
+        
