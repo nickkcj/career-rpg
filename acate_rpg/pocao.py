@@ -1,23 +1,23 @@
 class Pocao:
     def __init__(self, nome, valor):
-        self._nome = nome
-        self._valor = valor
+        self.__nome = nome
+        self.__valor = valor
 
 
     @property
     def nome(self):
-        return self._nome
+        return self.__nome
 
     @nome.setter
     def nome(self, nome):
-        self._nome = nome
+        self.__nome = nome
 
     @property
     def valor(self):
-        return self._valor
+        return self.__valor
 
     @valor.setter
     def valor(self, valor):
-        self._valor = valor
+        self.__valor = valor
 
         

@@ -5,7 +5,6 @@ from bossController import BossController
 class PersonagemController():
     def __init__(self):
         self.__personagens = []
-        self.__classe = ''
         self.__personagemView = PersonagemView()
 
 
@@ -15,45 +14,46 @@ class PersonagemController():
                 return personagem
         return None
 
-    def cadastrar_personagem(self):
-        dados_personagem = None
-        while dados_personagem is None:
-            try:
-                dados_personagem = self.__personagemView.pega_dados_personagem()
-                if not dados_personagem['classe']:
-                    raise ValueError("Classe inválida!")
-            except ValueError as e:
-                self.__personagemView.mostra_mensagem(str(e))
-                dados_personagem = None
-        personagem_existente = self.pega_personagem_por_nome(dados_personagem["nome"])
-        if personagem_existente is None:
-            classe = dados_personagem["classe"]
-            personagem = Personagem(dados_personagem["nome"], dados_personagem["nivel"], dados_personagem["experiencia"], None, None, dados_personagem["classe"])
-            self.__personagens.append(personagem)
-            self.__personagemView.mostra_mensagem(f"Personagem {dados_personagem['nome']} da classe {dados_personagem['classe']} cadastrado com sucesso!")
-        else:
-            self.__personagemView.mostra_mensagem(f"O personagem {dados_personagem['nome']} já existe!")
+    def cadastrar_personagem(self, nome, nivel=1, experiencia=0, nome_classe=""):
+        personagem = Personagem(
+            nome=nome,
+            nivel=nivel,
+            experiencia=experiencia,
+            nome_classe=nome_classe
+        )
+        self.__personagens.append(personagem)
+        return personagem
 
     def mostrar_status(self, personagem: Personagem):
-        dados_personagem = {
+        status = {
             'nome': personagem.nome,
             'nivel': personagem.nivel,
             'experiencia': personagem.experiencia,
+            'ataque': personagem.classe_personagem.atributos['ataque'],
+            'defesa': personagem.classe_personagem.atributos['defesa'],
             'hp': personagem.classe_personagem.atributos['hp'],
-            'estamina': personagem.classe_personagem.atributos['estamina']
+            'estamina': personagem.classe_personagem.atributos['estamina'],
+            'pontos_disponiveis': personagem.pontos_disponiveis,
+            'pocoes_hp': personagem.pocao_hp.quant,
+            'pocoes_est': personagem.pocao_est.quant
         }
-        self.__personagemView.mostrar_status(dados_personagem)
+        self.__personagemView.mostrar_status(status)
 
-    def atacar(self, personagem: Personagem, boss: BossController):
-        dano = personagem.classe_personagem.atributos['ataque'] - boss.atributos['defesa']
-        dano = max(dano, 1)
-        boss.atributos['hp'] -= dano
-        self.__personagemView.mostra_mensagem(f"{personagem.nome} atacou {boss.nome} e causou {dano} de dano!")
-
-    def defender(self):
-        #colocar a logica que dobraria o atributo 'defender' durante 1 turno
-        pass
-
+    def upar_atributos(self, personagem):
+        if personagem.pontos_disponiveis > 0:
+            atributo_escolhido = self.__personagemView.escolher_atributo()
+            pontos = self.__personagemView.pega_quantidade_pontos()
+            if pontos <= personagem.pontos_disponiveis:
+                if atributo_escolhido in personagem.classe_personagem.atributos:
+                    personagem.classe_personagem.atributos[atributo_escolhido] += pontos
+                    personagem.pontos_disponiveis -= pontos
+                    self.__personagemView.mostra_mensagem(f"Atributo {atributo_escolhido} aumentado em {pontos} pontos!")
+                else:
+                    self.__personagemView.mostra_mensagem("Atributo inválido.")
+            else:
+                self.__personagemView.mostra_mensagem("Pontos insuficientes.")
+        else:
+            self.__personagemView.mostra_mensagem("Você não tem pontos disponíveis para distribuir.")
     def usar_item(self, personagem: Personagem):
         tipo_item = self.__personagemView.escolher_item()
         if tipo_item == 1 and personagem.pocao_hp and personagem.pocao_hp.quant > 0:

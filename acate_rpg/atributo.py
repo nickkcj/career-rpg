@@ -9,12 +9,12 @@ class Atributo:
 
     @property
     def atributos(self):
-        return self._atributos
+        return self.__atributos
 
     @atributos.setter
     def atributos(self, novos_atributos):
         if isinstance(novos_atributos, dict):
             self.__atributos.update(novos_atributos)
         else:
-            return 'errou'
+            raise ValueError("Atributos devem ser passados em um dicionário.")
 

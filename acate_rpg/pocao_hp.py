@@ -3,15 +3,15 @@ from pocao  import Pocao
 class PocaoHP(Pocao):
     def __init__(self, quant):
         super().__init__("Poção de HP", 10)
-        self._quant = quant
+        self.__quant = quant
 
 
     @property
     def quant(self):
-        return self._quant
+        return self.__quant
 
     @quant.setter
     def quant(self, quant):
-        self._quant = quant
+        self.__quant = quant
 
         

@@ -1,44 +1,34 @@
 
 class PersonagemView():
+
     def mostrar_status(self, dados_personagem):
+        print("-------- STATUS ----------")
         print(f"Nome: {dados_personagem['nome']}")
         print(f"Nível: {dados_personagem['nivel']}")
         print(f"Experiência: {dados_personagem['experiencia']}")
+        print(f"Ataque: {dados_personagem['ataque']}")
+        print(f"Defesa: {dados_personagem['defesa']}")
         print(f"HP: {dados_personagem['hp']}")
         print(f"Estamina: {dados_personagem['estamina']}")
+        print(f"Pontos disponíveis para distribuir: {dados_personagem['pontos_disponiveis']}")
+        print(f"Poções de HP: {dados_personagem['pocoes_hp']}")
+        print(f"Poções de Estamina: {dados_personagem['pocoes_est']}")
 
-    def pega_dados_personagem(self):
-        print("----------CADASTRO PERSONAGEM---------")
-        nome = input("Nome: ")
-        if not isinstance(nome, str):
-            raise Exception("Nome inválido")
-
-        while True:
-            print("-------- CLASSES ----------")
-            print("Escolha uma classe:")
-            print("1 - CLT (Bom no early game)")
-            print("2 - Estagiário (Médio no early, bom no late)")
-            print("3 - Trainee (Fraco no early, muito forte no late)")
-
-            opcao = int(input("Digite o número da classe: "))
-
-            if opcao == 1:
-                classe = "CLT"
-            elif opcao == 2:
-                classe = "Estagiário"
-            elif opcao == 3:
-                classe = "Trainee"
-            else:
-                print("Classe inválida! Tente novamente.")
-                continue
-
-            break
-
-        return {"nome": nome, 
-                "classe": classe, 
-                "nivel": 1, 
-                "experiencia": 0
-                }
+    def escolher_atributo(self):
+        print("-------- UPAR ATRIBUTOS ----------")
+        print("Escolha o atributo para aumentar:")
+        print("1 - Ataque")
+        print("2 - Defesa")
+        print("3 - HP")
+        print("4 - Estamina")
+        opcao = int(input("Digite o número do atributo: "))
+        atributos = {1: "ataque", 2: "defesa", 3: "hp", 4: "estamina"}
+        return atributos.get(opcao, None)
+    
+    def pega_quantidade_pontos(self):
+        print("-------- UPAR ATRIBUTOS ----------")
+        pontos = int(input("Quantos pontos deseja aplicar? "))
+        return pontos
     
     def escolher_item(self):
         print("Escolha o item para usar:")
