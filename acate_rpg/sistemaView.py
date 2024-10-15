@@ -1,12 +1,14 @@
-
+import os
 class SistemaView:
     def mostrar_menu(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("--------- MENU ---------")
         print("1 - Cadastrar Personagem")
         print("2 - Selecionar Personagem")
         print("0 - Sair")
 
     def mostrar_personagens(self, personagens):
+        os.system('cls' if os.name == 'nt' else 'clear')
         if not personagens:
             print("##############################")
             print(" Nenhum personagem cadastrado!")
@@ -41,7 +43,7 @@ class SistemaView:
             if opcao == 1:
                 classe = "CLT"
             elif opcao == 2:
-                classe = "Estagiário"
+                classe = "Estagiario"
             elif opcao == 3:
                 classe = "Trainee"
             else:
@@ -61,6 +63,7 @@ class SistemaView:
         print("1 - Mostrar Status")
         print("2 - Aumentar Atributo")
         print("3 - Usar Item")
+        print("4 - Upar Nível")
         print("0 - Voltar ao menu principal")
 
     def mostrar_status(self, status):
@@ -68,5 +71,8 @@ class SistemaView:
         for key, value in status.items():
             print(f"{key.capitalize()}: {value}")
 
-    def mostrar_mensagem(self, mensagem):
-        print(mensagem)
+    def mostrar_mensagem(self, msg):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("****************************************")
+        print(msg)
+        print("****************************************")

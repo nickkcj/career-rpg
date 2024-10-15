@@ -38,14 +38,6 @@ class Personagem():
     @experiencia.setter
     def experiencia(self, experiencia):
         self.__experiencia = experiencia
-
-    @property
-    def pontos_disponiveis(self):
-        return self.__pontos_disponiveis
-
-    @pontos_disponiveis.setter
-    def pontos_disponiveis(self, pontos):
-        self.__pontos_disponiveis = pontos
     
     @property
     def classe_personagem(self):
@@ -71,4 +63,10 @@ class Personagem():
     def pocao_est(self, pocao_est: PocaoEstamina):
         self.__pocao_est = pocao_est
 
+    @property
+    def pontos_disponiveis(self):
+        return self.__pontos_disponiveis
 
+    @pontos_disponiveis.setter
+    def pontos_disponiveis(self, pontos):
+        self.__pontos_disponiveis = pontos
