@@ -1,7 +1,8 @@
-
+import os
 class PersonagemView():
 
     def mostrar_status(self, dados_personagem):
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("-------- STATUS ----------")
         print(f"Nome: {dados_personagem['nome']}")
         print(f"Nível: {dados_personagem['nivel']}")
@@ -15,6 +16,7 @@ class PersonagemView():
         print(f"Poções de Estamina: {dados_personagem['pocoes_est']}")
 
     def escolher_atributo(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("-------- UPAR ATRIBUTOS ----------")
         print("Escolha o atributo para aumentar:")
         print("1 - Ataque")
@@ -31,12 +33,14 @@ class PersonagemView():
         return pontos
     
     def escolher_item(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("Escolha o item para usar:")
         print("1 - Poção de HP")
         print("2 - Poção de Estamina")
         return int(input("Digite o número do item: "))
 
     def escolher_habilidade(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("Escolha a habilidade:")
         print("1 - hab1")
         print("2 - hab2")
@@ -46,6 +50,9 @@ class PersonagemView():
         return int(input("Digite o número da habilidade: "))
 
     def mostra_mensagem(self, msg):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("****************************************")
         print(msg)
+        print("****************************************")
 
         

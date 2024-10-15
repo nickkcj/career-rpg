@@ -1,0 +1,47 @@
+[
+    {
+        "nome": "davi",
+        "nivel": 1,
+        "experiencia": 0,
+        "classe": "Estagiario",
+        "pontos_disponiveis": 0,
+        "pocoes_hp": 0,
+        "pocoes_est": 0,
+        "atributos": {
+            "ataque": 0,
+            "defesa": 10,
+            "hp": 30,
+            "estamina": 15
+        }
+    },
+    {
+        "nome": "nick",
+        "nivel": 1,
+        "experiencia": 0,
+        "classe": "Estagiario",
+        "pontos_disponiveis": 8,
+        "pocoes_hp": 2,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 2,
+            "defesa": 0,
+            "hp": 10,
+            "estamina": 0
+        }
+    },
+    {
+        "nome": "kalel",
+        "nivel": 1,
+        "experiencia": 0,
+        "classe": "Trainee",
+        "pontos_disponiveis": 0,
+        "pocoes_hp": 2,
+        "pocoes_est": 2,
+        "atributos": {
+            "ataque": 10,
+            "defesa": 0,
+            "hp": 10,
+            "estamina": 5
+        }
+    }
+]
