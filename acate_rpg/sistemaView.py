@@ -1,4 +1,5 @@
 import os
+import time
 class SistemaView:
     def mostrar_menu(self):
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -13,6 +14,7 @@ class SistemaView:
             print("##############################")
             print(" Nenhum personagem cadastrado!")
             print("##############################")
+            time.sleep(2)
             return
         print("--------- PERSONAGENS CADASTRADOS ---------")
         print("Selecione um personagem:")
@@ -48,6 +50,7 @@ class SistemaView:
                 classe = "Trainee"
             else:
                 print("Classe inválida! Tente novamente.")
+
                 continue
 
             break

@@ -1,5 +1,6 @@
 from personagemView import PersonagemView
 from personagem import Personagem
+import time
 
 
 class PersonagemController:
@@ -20,6 +21,7 @@ class PersonagemController:
     def cadastrar_personagem(self, nome, nivel=1, experiencia=0, nome_classe=""):
         if self.pega_personagem_por_nome(nome) is not None:
             raise ValueError(f"O personagem {nome} já existe!")
+
 
         personagem = Personagem(
             nome=nome,

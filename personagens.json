@@ -43,5 +43,35 @@
             "hp": 10,
             "estamina": 5
         }
+    },
+    {
+        "nome": "nick 2",
+        "nivel": 1,
+        "experiencia": 0,
+        "classe": "Estagiario",
+        "pontos_disponiveis": 10,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 0,
+            "defesa": 0,
+            "hp": 0,
+            "estamina": 0
+        }
+    },
+    {
+        "nome": "calabreso",
+        "nivel": 1,
+        "experiencia": 0,
+        "classe": "CLT",
+        "pontos_disponiveis": 10,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 0,
+            "defesa": 0,
+            "hp": 0,
+            "estamina": 0
+        }
     }
 ]

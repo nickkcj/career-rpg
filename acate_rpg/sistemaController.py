@@ -1,5 +1,6 @@
 
 import json
+import time
 from sistema import Sistema
 from sistemaView import SistemaView
 from personagemController import PersonagemController
@@ -30,6 +31,7 @@ class SistemaController:
         with open(self.__arquivo_personagens, 'w') as arquivo:
             json.dump(personagens_salvar, arquivo, indent=4)
         self.__sistemaView.mostrar_mensagem("Personagens salvos com sucesso!")
+        time.sleep(2)
 
     def carregar_personagens(self):
         try:
@@ -47,8 +49,10 @@ class SistemaController:
                     personagem.pontos_disponiveis = dados_personagem['pontos_disponiveis']
                     personagem.classe_personagem.atributos.update(dados_personagem['atributos'])
                 self.__sistemaView.mostrar_mensagem(f"{len(personagens_carregados)} personagens carregados com sucesso!")
+                time.sleep(2)
         except FileNotFoundError:
             self.__sistemaView.mostrar_mensagem("Nenhum arquivo de personagens encontrado. Iniciando sistema sem personagens.")
+            time.sleep(2)
 
     def executar(self):
         while True:
@@ -68,6 +72,7 @@ class SistemaController:
                 break
             else:
                 self.__sistemaView.mostrar_mensagem("Opção inválida. Tente novamente.")
+                time.sleep(2)
 
     def cadastrar_personagem(self):
         dados_personagem = None
@@ -102,6 +107,7 @@ class SistemaController:
             return personagem
         else:
             self.__sistemaView.mostrar_mensagem("Escolha inválida.")
+            time.sleep(2)
             return None
 
     def mostrar_status(self, personagem):
@@ -125,3 +131,4 @@ class SistemaController:
                 break
             else:
                 self.__sistemaView.mostrar_mensagem("Opção inválida. Tente novamente.")
+                time.sleep(2)
