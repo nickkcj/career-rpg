@@ -4,15 +4,28 @@ import time
 from sistema import Sistema
 from sistemaView import SistemaView
 from personagemController import PersonagemController
+from cursoController import CursoController
+from quizController import QuizController
 
 
-class SistemaController:
+class SistemaControllerr:
     def __init__(self):
         self.__sistema = Sistema()
         self.__sistemaView = SistemaView()
-        self.__personagemController = PersonagemController()
+        self.__personagemController = PersonagemController(self)
+        self.__cursoController = CursoController(self)
+        self.__quizController = QuizController(self)
         self.__arquivo_personagens = "personagens.json"
         self.carregar_personagens()
+
+
+    @property
+    def cursoController(self):
+        return self.__cursoController
+    
+    @property
+    def quizController(self):
+        return self.__quizController
 
     def salvar_personagens(self):
         personagens_salvar = []

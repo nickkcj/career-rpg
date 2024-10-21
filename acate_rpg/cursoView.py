@@ -19,7 +19,7 @@ class CursoView():
 
     def mostra_cursos(self,cursos):
         print("----LISTA DE CURSOS---- \n")
-        ##Aqui também tem que testar se o curso está na lista
+        print(cursos)
         for curso in cursos:
             print(f"Nome: {curso.nome}, Nível Requerido: {curso.nivel_requerido}, XP Ganhado: {curso.xp_ganho}, "
                   f"Setor: {curso.setor}, Dificuldade: {curso.dificuldade}, Realizado: {curso.realizado} \n")

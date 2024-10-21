@@ -1,9 +1,7 @@
 
 from sistemaController import SistemaController
 
-def main():
-    sistema_controller = SistemaController()
-    sistema_controller.executar()
-    
-if __name__ == "__main__":
-    main()
+sistema_controller = SistemaController()
+
+sistema_controller.cursoController.cadastrar_curso()
+sistema_controller.quizController.realizar_quiz()

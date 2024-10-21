@@ -3,21 +3,23 @@ from cursoView import CursoView
 
 class CursoController():
     def __init__(self):
-        self.__cursos = []
+        self.cursos = []
         self.__cursoView = CursoView()
 
     def cadastrar_curso(self):
         dados_curso = self.__cursoView.pega_dados_curso()
+        print(dados_curso)
         curso = Curso(dados_curso["nome"], dados_curso["nivel_requerido"], dados_curso["xp_ganho"], dados_curso["setor"], dados_curso["dificuldade"], dados_curso["realizado"])
-        self.__cursos.append(curso)
+        self.cursos.append(curso)
+        print(self.cursos)
         self.__cursoView.mostra_mensagem(f"O curso {dados_curso["nome"]} foi cadastrado com sucesso \n")
 
 
     def alterar_curso(self):
-        self.__cursoView.mostra_cursos(self.__cursos)
+        self.__cursoView.mostra_cursos(self.cursos)
         nome = self.__cursoView.seleciona_curso()
         curso = None
-        for c in self.__cursos:
+        for c in self.cursos:
             if c.nome == nome:
                 curso = c
                 break
@@ -42,13 +44,11 @@ class CursoController():
         self.__cursoView.mostra_cursos(self.__cursos)
         nome = self.__cursoView.seleciona_curso()
         curso = None
-        for c in self.__cursos:
+        for c in self.cursos:
             if c.nome == nome:
-                self.__cursos.remove(c)
+                self.cursos.remove(c)
         self.__cursoView.mostra_mensagem(f"O curso {c.nome} foi removido com sucesso \n")
 
 
 
     
-
-
