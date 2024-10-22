@@ -22,5 +22,5 @@ class DungeonController():
 
         self.__dungeons.append(dungeon)
         self.__dungeonView.mostra_mensagem(f"A dungeon {dados_dungeon["nome"]} foi cadastrada com sucesso")
-        time.sleep(1)
+        time.sleep(3)
 
