@@ -1,5 +1,7 @@
 from batalha import Batalha
 from batalhaView import BatalhaView
+from boss import Boss
+from personagem import Personagem
 
 class BatalhaController(Boss, Personagem):
     def __init__(self, batalha: Batalha):

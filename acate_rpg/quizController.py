@@ -745,5 +745,4 @@ class QuizController():
         elif setor == "Vendas":
             pontos = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizvendas)
            
-        if pontos == int(dificuldade):
-            ##Incrementar experiência do personagem
+       
