@@ -1,3 +1,4 @@
+import time
 from dungeonView import DungeonView
 from dungeon import Dungeon
 from setorController import SetorController
@@ -21,4 +22,5 @@ class DungeonController():
 
         self.__dungeons.append(dungeon)
         self.__dungeonView.mostra_mensagem(f"A dungeon {dados_dungeon["nome"]} foi cadastrada com sucesso")
+        time.sleep(1)
 
