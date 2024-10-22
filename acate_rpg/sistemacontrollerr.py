@@ -63,7 +63,7 @@ class SistemaController:
                 self.menu_bosses()
 
             elif opcao == '6':
-                self.batalha_controller.iniciar_batalha()
+                pass
 
             elif opcao == '7':
                 exit()
@@ -130,8 +130,4 @@ class SistemaController:
 
             elif opcao == '2':
                 self.menu_principal()
-
-
-            
-
 

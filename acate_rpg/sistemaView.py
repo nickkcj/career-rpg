@@ -1,9 +1,32 @@
 import os
 import time
 class SistemaView:
-    def mostrar_menu(self):
+    def menu_inicial(self):
+        print("##########################################")
+        print("Bem vindo ao RPG do Mercado de Trabalho!!")
+        print("##########################################")
+        print("")
+        print("Você quer ser um personagem ou uma empresa?")
+        print("1 - Personagem")
+        print("2 - Empresa")
+        print("3 - Nah, sair")
+        print("")
+
+    def menu_principal(self):
+        print("----------MENU PRINCIPAL---------")
+        print("Bem vindo ao RPG do Mercado de Trabalho!!")
+        print("1. Gerenciar Cursos")
+        print("2. Realizar Quiz")
+        print("3. Gerenciar Personagens")
+        print("4. Gerenciar Dungeons")
+        print("5. Gerenciar Bosses")
+        print("6. Batalhar")
+        print("7. Sair")
+        print("")
+
+    def menu_personagem(self):
         os.system('cls' if os.name == 'nt' else 'clear')
-        print("--------- MENU ---------")
+        print("--------- MENU PERSONAGEM ---------")
         print("1 - Cadastrar Personagem")
         print("2 - Selecionar Personagem")
         print("0 - Sair")
@@ -67,7 +90,8 @@ class SistemaView:
         print("2 - Aumentar Atributo")
         print("3 - Usar Item")
         print("4 - Upar Nível")
-        print("0 - Voltar ao menu principal")
+        print("5 - Menu Principal")
+        print("0 - Voltar ao Meu Personagem")
 
     def mostrar_status(self, status):
         print("-------- STATUS ----------")

@@ -1,7 +1,7 @@
 from batalha import Batalha
 from batalhaView import BatalhaView
 
-class BatalhaController(BossController, PersonagemController):
+class BatalhaController():
     def __init__(self, batalha: Batalha):
         self.__batalha = batalha
         self.__tela = BatalhaView()
@@ -17,9 +17,7 @@ class BatalhaController(BossController, PersonagemController):
             personagem.defender()
             self.__tela.mostra_mensagem(f"{personagem.nome} se defendeu!")
         elif acao_personagem == 3:
-            tipo_item = self.__tela.escolher_item()
-            if tipo_item:
-                personagem.usar_item(tipo_item)
+            pass
         elif acao_personagem == 4:
             personagem.usar_habilidade(boss)
             self.__tela.mostra_mensagem(f"{personagem.nome} usou uma habilidade!")
@@ -40,13 +38,13 @@ class BatalhaController(BossController, PersonagemController):
 
     def iniciar_batalha(self):
         while not self.__batalha.finalizada:
-            acao_personagem = self.__view.tela_opcoes()
+            acao_personagem = self.__tela.tela_opcoes()
             self.realizar_turno(acao_personagem)
 
             resultado = self.verificar_vencedor()
             if resultado == "vitória":
-                self.__view.mostra_resultado("Você venceu!")
+                self.__tela.mostra_resultado("Você venceu!")
             elif resultado == "derrota":
-                self.__view.mostra_resultado("Você foi derrotado!")
+                self.__tela.mostra_resultado("Você foi derrotado!")
 
                 

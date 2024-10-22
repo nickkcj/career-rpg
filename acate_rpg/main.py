@@ -1,7 +1,7 @@
-from sistemacontrollerr import SistemaController
+from sistemaController import SistemaControllerr
 
 def main():
-    sistema = SistemaController()
+    sistema = SistemaControllerr()
     while True:
         sistema.iniciar()
 

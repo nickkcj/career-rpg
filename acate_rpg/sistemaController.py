@@ -1,20 +1,31 @@
 
 import json
 import time
+import os
 from sistema import Sistema
 from sistemaView import SistemaView
 from personagemController import PersonagemController
 from cursoController import CursoController
 from quizController import QuizController
+from bossController import BossController
+from dungeonController import DungeonController
+from batalhaController import BatalhaController
+from setorController import SetorController
 
 
 class SistemaControllerr:
     def __init__(self):
         self.__sistema = Sistema()
         self.__sistemaView = SistemaView()
-        self.__personagemController = PersonagemController(self)
-        self.__cursoController = CursoController(self)
-        self.__quizController = QuizController(self)
+        self.__personagemController = PersonagemController()
+        self.__cursoController = CursoController()
+        self.__quizController = QuizController()
+        self.__bossController = BossController()
+        self.__setorController = SetorController()
+        self.__dungeonController = DungeonController()
+        self.__batalhaController = BatalhaController(self)
+        self.__quizController._QuizController__cursoController = self.__cursoController
+        
         self.__arquivo_personagens = "personagens.json"
         self.carregar_personagens()
 
@@ -26,6 +37,25 @@ class SistemaControllerr:
     @property
     def quizController(self):
         return self.__quizController
+    
+    @property
+    def bossController(self):
+        return self.__bossController
+    
+    @property
+    def setorController(self):
+        return self.__setorController
+    
+    @property
+    def dungeonController(self):
+        return self.__dungeonController
+    
+    @property
+    def batalhaController(self):
+        return self.__batalhaController
+    
+    def limpar_terminal(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
 
     def salvar_personagens(self):
         personagens_salvar = []
@@ -67,9 +97,56 @@ class SistemaControllerr:
             self.__sistemaView.mostrar_mensagem("Nenhum arquivo de personagens encontrado. Iniciando sistema sem personagens.")
             time.sleep(2)
 
-    def executar(self):
+    def iniciar(self):
+        self.limpar_terminal()
         while True:
-            self.__sistemaView.mostrar_menu()
+            self.__sistemaView.menu_inicial()
+            opcao = self.__sistemaView.pegar_opcao()
+
+            if opcao == '1':
+                self.menu_personagem()
+
+            elif opcao == '2':
+                self.__dungeonController.cadastrar_dungeon()
+                self.iniciar()
+
+            elif opcao == '3':
+                self.salvar_personagens()
+                self.__sistemaView.mostrar_mensagem("Saindo do sistema...")
+                time.sleep(1)
+                break
+
+    def menu_principal(self):
+        self.limpar_terminal()
+        while True:
+            self.__sistemaView.menu_principal()
+            opcao = self.__sistemaView.pegar_opcao()
+
+            if opcao == '1':
+                self.menu_curso()
+
+            elif opcao == '2':
+                self.quizController.realizar_quiz()
+
+            elif opcao == '3':
+                self.menu_personagem()
+
+            elif opcao == '4':
+                self.menu_dungeons()
+
+            elif opcao == '5':
+                self.menu_bosses()
+
+            elif opcao == '6':
+                pass
+
+            elif opcao == '7':
+                exit()
+
+    def menu_personagem(self):
+        self.limpar_terminal()
+        while True:
+            self.__sistemaView.menu_personagem()
             opcao = self.__sistemaView.pegar_opcao()
 
             if opcao == '1':
@@ -82,10 +159,11 @@ class SistemaControllerr:
             elif opcao == '0':
                 self.salvar_personagens()
                 self.__sistemaView.mostrar_mensagem("Saindo do sistema...")
+                time.sleep(1)
                 break
             else:
                 self.__sistemaView.mostrar_mensagem("Opção inválida. Tente novamente.")
-                time.sleep(2)
+                time.sleep(1)
 
     def cadastrar_personagem(self):
         dados_personagem = None
@@ -130,7 +208,7 @@ class SistemaControllerr:
     def opcoes_personagem(self, personagem):
         while True:
             self.__sistemaView.mostrar_opcoes_personagem()
-            opcao = input("Escolha uma opção: ").strip()
+            opcao = self.__sistemaView.pegar_opcao()
 
             if opcao == '1':
                 self.mostrar_status(personagem)
@@ -140,8 +218,50 @@ class SistemaControllerr:
                 self.__personagemController.usar_item(personagem)
             elif opcao == '4':
                 self.__personagemController.upar_nivel(personagem)
+            elif opcao == '5':
+                self.menu_principal()
             elif opcao == '0':
                 break
             else:
                 self.__sistemaView.mostrar_mensagem("Opção inválida. Tente novamente.")
                 time.sleep(2)
+
+    def menu_curso(self):
+        self.limpar_terminal()
+        while True:
+            opcao = input("\nMenu de Cursos:\n1. Cadastrar Curso\n2. Alterar Curso\n3. Excluir Curso\n4. Voltar\nEscolha uma opção: ")
+
+            if opcao == '1':
+                self.__cursoController.cadastrar_curso()
+            elif opcao == '2':
+                self.__cursoController.alterar_curso()
+            elif opcao == '3':
+                self.__cursoController.excluir_curso()
+            elif opcao == '4':
+                self.menu_principal()
+
+    def menu_bosses(self):
+        self.limpar_terminal()
+        while True:
+            opcao = input("\nMenu de Bosses:\n1. Cadastrar Boss\n2. Voltar\nEscolha uma opção: ")
+
+            if opcao == '1':
+                self.__bossController.cadastrar_boss()
+
+            elif opcao == '2':
+                self.menu_principal()
+
+    def menu_dungeons(self):
+        self.limpar_terminal()
+        while True:
+            opcao = input("\nMenu de Dungeons:\n1. Cadastrar Dungeon\n2. Ver Dungeons\n3. Voltar\nEscolha uma opção: ")
+
+            if opcao == '1':
+                self.__dungeonController.cadastrar_dungeon()
+
+            elif opcao == '2':
+                self.__dungeonController.ver_dungeons()  # Implementar ainda
+
+            elif opcao == '3':
+                self.menu_principal()
+

@@ -9,7 +9,12 @@ class CursoView():
         dificuldade = input("Qual a dificuldade do curso? ")
         print("\n")
         realizado = False
-        return {"nome": nome, "nivel_requerido": nivel_requerido, "xp_ganho": xp_ganho, "setor": setor, "dificuldade": dificuldade, "realizado": realizado}
+        return {"nome": nome, 
+                "nivel_requerido": nivel_requerido, 
+                "xp_ganho": xp_ganho, 
+                "setor": setor, 
+                "dificuldade": dificuldade, 
+                "realizado": realizado}
 
 
 
@@ -19,12 +24,12 @@ class CursoView():
 
     def mostra_cursos(self,cursos):
         print("----LISTA DE CURSOS---- \n")
-        print(cursos)
         for curso in cursos:
             print(f"Nome: {curso.nome}, Nível Requerido: {curso.nivel_requerido}, XP Ganhado: {curso.xp_ganho}, "
                   f"Setor: {curso.setor}, Dificuldade: {curso.dificuldade}, Realizado: {curso.realizado} \n")
 
     def seleciona_curso(self):
-        nome = input("Qual curso você quer selecionar? ")
+        nome = input("Qual o nome do curso que você quer selecionar?: ")
         ##Aqui tem que testar se o curso está na lista, senão raise exception
         return nome
+    
