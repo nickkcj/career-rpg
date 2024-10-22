@@ -725,31 +725,25 @@ class QuizController():
         for curso in self.__cursoController.cursos:
             if curso.nome == nome_curso:
                 setor = curso.setor
+                dificuldade = curso.dificuldade
 
         if setor == "RH":
-            self.__quizView.comeca_quiz(self.__quizrh)
+           pontos = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizrh)
 
 
         elif setor == "Financeiro":
-            self.__quizView.comeca_quiz(self.__quizfin)
+           pontos = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizfin)
 
         elif setor == "Marketing":
-            self.__quizView.comeca_quiz(self.__quizmark)
+           pontos = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizmark)
 
         
         elif setor == "T.I":
-            self.__quizView.comeca_quiz(self.__quizti)
+           pontos = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizti)
 
 
         elif setor == "Vendas":
-             self.__quizView.comeca_quiz(self.__quizvendas)
+            pontos = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizvendas)
            
-
-
-        
-
-
-
-
-
-    
+        if pontos == int(dificuldade):
+            ##Incrementar experiência do personagem
