@@ -1,7 +1,9 @@
+from sistemacontrollerr import SistemaController
 
-from sistemaController import SistemaController
+def main():
+    sistema = SistemaController()
+    while True:
+        sistema.iniciar()
 
-sistema_controller = SistemaController()
-
-sistema_controller.cursoController.cadastrar_curso()
-sistema_controller.quizController.realizar_quiz()
+if __name__ == "__main__":
+    main()
