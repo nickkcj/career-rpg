@@ -1,12 +1,13 @@
 from setor import Setor
 
 class Dungeon(Setor):
-    def __init__(self, nome, nivel_requerido, xp_ganho, dificuldade, conquistada=False):
+    def __init__(self, nome, nivel_requerido, xp_ganho, dificuldade, setores, conquistada=False):
         self._nome = nome
         self._nivel_requerido = nivel_requerido
         self._xp_ganho = xp_ganho
         self._dificuldade = dificuldade
         self._conquistada = conquistada
+        self.setores = setores if setores else []
 
 
     @property
