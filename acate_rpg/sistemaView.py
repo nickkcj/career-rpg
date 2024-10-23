@@ -51,6 +51,7 @@ class SistemaView:
         return input("Escolha uma opção: ").strip()
 
     def pega_dados_personagem(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("----------CADASTRO PERSONAGEM---------")
         nome = input("Nome: ")
         if not isinstance(nome, str):

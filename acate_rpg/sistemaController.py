@@ -114,7 +114,7 @@ class SistemaControllerr:
                 self.salvar_personagens()
                 self.__sistemaView.mostrar_mensagem("Saindo do sistema...")
                 time.sleep(1)
-                break
+                exit()
 
     def menu_principal(self):
         self.limpar_terminal()

@@ -51,6 +51,9 @@ class QuizView():
         if pontos == len(perguntas):
             print("Parabéns, você gabaritou o quiz! \n")
 
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+
         return pontos
 
 

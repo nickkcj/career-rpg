@@ -1,5 +1,8 @@
+import time
+import os
 class CursoView():
     def pega_dados_curso(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("---DADOS DO CURSO---")
         ##Aqui tem que realizar diversos testes pra cada variável.
         nome = input("Digite o nome do curso: ")
@@ -21,14 +24,19 @@ class CursoView():
     def mostra_mensagem(self,mensagem):
         print(mensagem)
 
+    time.sleep(2)
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 
     def mostra_cursos(self,cursos):
+        print("\n")
         print("----LISTA DE CURSOS---- \n")
         for curso in cursos:
             print(f"Nome: {curso.nome}, Nível Requerido: {curso.nivel_requerido}, XP Ganhado: {curso.xp_ganho}, "
                   f"Setor: {curso.setor}, Dificuldade: {curso.dificuldade}, Realizado: {curso.realizado} \n")
 
     def seleciona_curso(self):
+        print("\n")
         nome = input("Qual o nome do curso que você quer selecionar?: ")
         ##Aqui tem que testar se o curso está na lista, senão raise exception
         return nome
