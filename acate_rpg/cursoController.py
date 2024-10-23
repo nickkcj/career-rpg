@@ -39,7 +39,7 @@ class CursoController():
 
 
     def excluir_curso(self):
-        self.__cursoView.mostra_cursos(self.__cursos)
+        self.__cursoView.mostra_cursos(self.cursos)
         nome = self.__cursoView.seleciona_curso()
         curso = None
         for c in self.cursos:

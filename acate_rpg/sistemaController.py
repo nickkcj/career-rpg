@@ -160,7 +160,7 @@ class SistemaControllerr:
                 self.salvar_personagens()
                 self.__sistemaView.mostrar_mensagem("Saindo do sistema...")
                 time.sleep(1)
-                break
+                exit()
             else:
                 self.__sistemaView.mostrar_mensagem("Opção inválida. Tente novamente.")
                 time.sleep(1)
@@ -187,7 +187,7 @@ class SistemaControllerr:
         )
         self.__sistema.adicionar_personagem(personagem)
         self.__sistemaView.mostrar_mensagem(f"Personagem {dados_personagem['nome']} da classe {dados_personagem['classe']} cadastrado com sucesso!")
-
+        time.sleep(2)
     def selecionar_personagem(self):
         personagens = self.__personagemController.personagens
         self.__sistemaView.mostrar_personagens(personagens)

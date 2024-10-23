@@ -1,12 +1,12 @@
 import os
 import random
+import time
 class QuizView():
     
     def mostra_mensagem(self, mensagem):
         print(mensagem)
 
     def limpar_terminal(self):
-        # Limpa o terminal dependendo do sistema operacional
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def comeca_quiz(self, dificuldade, setor, quiz):
@@ -50,6 +50,8 @@ class QuizView():
 
         if pontos == len(perguntas):
             print("Parabéns, você gabaritou o quiz! \n")
+
+        time.sleep(2)
 
         os.system('cls' if os.name == 'nt' else 'clear')
 
