@@ -7,13 +7,14 @@ class SetorController():
 
 
     
-    def adicionar_setor(self):
-        dados_setor = self.__setorView.pega_dados_setor()
+    def adicionar_setor(self, numero):
+        dados_setor = self.__setorView.pega_dados_setor(numero)
         setor = Setor(dados_setor["nome"], dados_setor["dificuldade"])
         return setor
     
 
 
-    def calcular_media_dificuldades(self):
+    def calcular_media_dificuldades(self, setores):
         dificuldade = 0
-        dificuldade += [setor["dificuldade"] for setor in self.setores.values()]
+        dificuldade = sum(int(setor.dificuldade) for setor in setores)
+        return dificuldade/ len(setores)

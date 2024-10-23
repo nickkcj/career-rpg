@@ -12,15 +12,19 @@ class DungeonController():
     def cadastrar_dungeon(self):
         setores = []
         dados_dungeon = self.__dungeonView.pega_dados_dungeon()
-        for _ in range(int(dados_dungeon["n_setores"])):
-            setor = self.__setorController.adicionar_setor()
+        for i in range(int(dados_dungeon["n_setores"])):
+            setor = self.__setorController.adicionar_setor(i+1)
             setores.append(setor)
 
-        dificuldade = self.__setorController.calcular_media_dificuldades
+        dificuldade = round(self.__setorController.calcular_media_dificuldades(setores), 1)
 
         dungeon = Dungeon(dados_dungeon["nome"], dados_dungeon["nivel_requerido"], dados_dungeon["xp_ganho"], dificuldade, setores, dados_dungeon["status"])
 
         self.__dungeons.append(dungeon)
         self.__dungeonView.mostra_mensagem(f"A dungeon {dados_dungeon["nome"]} foi cadastrada com sucesso")
         time.sleep(3)
+
+
+    def mostrar_dungeons(self):
+        self.__dungeonView.listar_dungeons(self.__dungeons)
 

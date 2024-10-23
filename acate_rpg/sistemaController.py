@@ -260,7 +260,7 @@ class SistemaControllerr:
                 self.__dungeonController.cadastrar_dungeon()
 
             elif opcao == '2':
-                self.__dungeonController.ver_dungeons()  # Implementar ainda
+                self.__dungeonController.mostrar_dungeons()  
 
             elif opcao == '3':
                 self.menu_principal()
