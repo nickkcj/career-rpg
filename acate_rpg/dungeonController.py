@@ -10,19 +10,53 @@ class DungeonController():
         self.__setorController = SetorController()
 
     def cadastrar_dungeon(self):
-        setores = []
-        dados_dungeon = self.__dungeonView.pega_dados_dungeon()
-        for i in range(int(dados_dungeon["n_setores"])):
-            setor = self.__setorController.adicionar_setor(i+1)
-            setores.append(setor)
+        while True:
+            try:
+                setores = []
+                dados_dungeon = self.__dungeonView.pega_dados_dungeon()
+                erros = []
 
-        dificuldade = round(self.__setorController.calcular_media_dificuldades(setores), 1)
+                try:
+                    nivel_requerido = int(dados_dungeon["nivel_requerido"])
+                    if not 1 <= nivel_requerido <= 10:
+                        erros.append("O nível requerido deve ser um inteiro entre 1 e 10.")
+                except ValueError:
+                    erros.append("O nível requerido deve ser um número inteiro.")
 
-        dungeon = Dungeon(dados_dungeon["nome"], dados_dungeon["nivel_requerido"], dados_dungeon["xp_ganho"], dificuldade, setores, dados_dungeon["status"])
+                
+                try:
+                    xp_ganho = int(dados_dungeon["xp_ganho"])
+                except ValueError:
+                    erros.append("O XP ganho deve ser um número inteiro.")
 
-        self.__dungeons.append(dungeon)
-        self.__dungeonView.mostra_mensagem(f"A dungeon {dados_dungeon["nome"]} foi cadastrada com sucesso")
-        time.sleep(3)
+                
+                try:
+                    n_setores = int(dados_dungeon["n_setores"])
+                    if not 1 <= n_setores <= 5:
+                        erros.append("O número de setores deve ser entre 1 e 5.")
+                except ValueError:
+                    erros.append("O número de setores deve ser um número inteiro.")
+
+                
+                if erros:
+                    self.__dungeonView.mostra_mensagem("Erros encontrados:\n" + "\n".join(erros))
+                    continue  
+
+                
+                for i in range(n_setores):
+                    setor = self.__setorController.adicionar_setor(i+1)
+                    setores.append(setor)
+
+                dificuldade = round(self.__setorController.calcular_media_dificuldades(setores), 1)
+                dungeon = Dungeon(dados_dungeon["nome"], nivel_requerido, xp_ganho, dificuldade, setores, dados_dungeon["status"])
+                self.__dungeons.append(dungeon)
+
+                self.__dungeonView.mostra_mensagem(f"A dungeon {dados_dungeon['nome']} foi cadastrada com sucesso")
+                time.sleep(3)
+                break  
+            
+            except Exception as e:
+                self.__dungeonView.mostra_mensagem(f"Erro inesperado: {str(e)}")
 
 
     def mostrar_dungeons(self):

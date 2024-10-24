@@ -234,6 +234,8 @@ class SistemaControllerr:
                 self.__cursoController.mostrar_cursos()
             elif opcao == '2':
                 self.__cursoController.cadastrar_curso()
+                time.sleep(2)
+                self.menu_curso()
             elif opcao == '3':
                 self.__cursoController.alterar_curso()
             elif opcao == '4':

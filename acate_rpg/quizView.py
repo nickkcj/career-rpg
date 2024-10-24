@@ -31,22 +31,31 @@ class QuizView():
             
             
             print(f"{(perguntas[i])}. {pergunta}")
-            print()
+            print("\n")
             print(f"a) {a}")
             print(f"b) {b}")
             print(f"c) {c}")
             
             
-            resposta_usuario = input("Digite a sua resposta (a, b ou c): ").lower()
-            
-            
+            while True:
+                try:
+                    resposta_usuario = input("Digite a sua resposta (a, b ou c): ").lower()
+                    if resposta_usuario not in ['a', 'b', 'c']:
+                        print("\n")
+                        raise ValueError("Opção inválida, tente novamente.")  # Levanta exceção se a resposta for inválida
+                    break
+                except ValueError as e:
+                    print(e)
+                    print("\n")
+                
+                
             if resposta_usuario == resposta_correta:
                 print("Resposta correta!\n")
-                print()
+                print("\n")
                 pontos += 1  # Incrementar a pontuação
             else:
                 print(f"Resposta incorreta. A resposta correta era '{resposta_correta}'.\n")
-                print()
+                print("\n")
 
         if pontos == len(perguntas):
             print("Parabéns, você gabaritou o quiz! \n")
