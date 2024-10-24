@@ -11,7 +11,7 @@ class QuizView():
 
     def comeca_quiz(self, dificuldade, setor, quiz):
         self.limpar_terminal()
-        print(f"Bem-vindo ao quiz de {setor}! ##É necessário gabaritar para ganhar experiência## \n Responda as perguntas abaixo:\n")
+        print(f"Bem-vindo ao quiz de {setor}! ##É necessário gabaritar para ganhar experiência## \nResponda as perguntas abaixo:\n")
         
         
         pontos = 0
@@ -50,6 +50,9 @@ class QuizView():
 
         if pontos == len(perguntas):
             print("Parabéns, você gabaritou o quiz! \n")
+
+        else:
+            print("Infelizmente você não foi aprovado no curso :(")
 
         time.sleep(2)
 

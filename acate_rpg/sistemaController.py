@@ -229,15 +229,16 @@ class SistemaControllerr:
     def menu_curso(self):
         self.limpar_terminal()
         while True:
-            opcao = input("\nMenu de Cursos:\n1. Cadastrar Curso\n2. Alterar Curso\n3. Excluir Curso\n4. Voltar\nEscolha uma opção: ")
-
+            opcao = input("\nMenu de Cursos:\n1. Lista de Cursos\n2. Cadastrar Curso\n3. Alterar Curso\n4. Excluir Curso\n5. Voltar\nEscolha uma opção: ")
             if opcao == '1':
-                self.__cursoController.cadastrar_curso()
+                self.__cursoController.mostrar_cursos()
             elif opcao == '2':
-                self.__cursoController.alterar_curso()
+                self.__cursoController.cadastrar_curso()
             elif opcao == '3':
-                self.__cursoController.excluir_curso()
+                self.__cursoController.alterar_curso()
             elif opcao == '4':
+                self.__cursoController.excluir_curso()
+            elif opcao == '5':
                 self.menu_principal()
 
     def menu_bosses(self):

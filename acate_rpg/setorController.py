@@ -33,7 +33,7 @@ class SetorController:
                 setor = Setor(dados_setor["nome"], dados_setor["dificuldade"])
 
             except ValueError as e:
-                
+                print("\n")
                 print("******************************************")
                 print(f"{e}")
                 print("******************************************")

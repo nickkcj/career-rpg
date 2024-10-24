@@ -47,3 +47,9 @@ class CursoController():
                 self.cursos.remove(c)
         self.__cursoView.mostra_mensagem(f"O curso {c.nome} foi removido com sucesso \n")
 
+
+    def mostrar_cursos(self):
+        self.__cursoView.mostra_cursos(self.cursos)
+
+
+

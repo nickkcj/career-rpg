@@ -29,6 +29,7 @@ class CursoView():
 
 
     def mostra_cursos(self,cursos):
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("\n")
         print("----LISTA DE CURSOS---- \n")
         for curso in cursos:
