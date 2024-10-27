@@ -1,14 +1,14 @@
 [
     {
         "nome": "davi",
-        "nivel": 1,
-        "experiencia": 0,
+        "nivel": 13,
+        "experiencia_total": 2000,
         "classe": "Estagiario",
         "pontos_disponiveis": 0,
         "pocoes_hp": 0,
         "pocoes_est": 0,
         "atributos": {
-            "ataque": 0,
+            "ataque": 60,
             "defesa": 10,
             "hp": 30,
             "estamina": 15
@@ -17,7 +17,7 @@
     {
         "nome": "nick",
         "nivel": 1,
-        "experiencia": 0,
+        "experiencia_total": 0,
         "classe": "Estagiario",
         "pontos_disponiveis": 8,
         "pocoes_hp": 2,
@@ -32,7 +32,7 @@
     {
         "nome": "kalel",
         "nivel": 1,
-        "experiencia": 0,
+        "experiencia_total": 0,
         "classe": "Trainee",
         "pontos_disponiveis": 0,
         "pocoes_hp": 2,
@@ -47,7 +47,7 @@
     {
         "nome": "nick 2",
         "nivel": 1,
-        "experiencia": 0,
+        "experiencia_total": 0,
         "classe": "Estagiario",
         "pontos_disponiveis": 10,
         "pocoes_hp": 3,
@@ -62,7 +62,7 @@
     {
         "nome": "calabreso",
         "nivel": 1,
-        "experiencia": 0,
+        "experiencia_total": 0,
         "classe": "CLT",
         "pontos_disponiveis": 10,
         "pocoes_hp": 2,
@@ -71,6 +71,36 @@
             "ataque": 0,
             "defesa": 0,
             "hp": 10,
+            "estamina": 0
+        }
+    },
+    {
+        "nome": "segovinha",
+        "nivel": 1,
+        "experiencia_total": 0,
+        "classe": "CLT",
+        "pontos_disponiveis": 10,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 0,
+            "defesa": 0,
+            "hp": 0,
+            "estamina": 0
+        }
+    },
+    {
+        "nome": "xuxa",
+        "nivel": 10,
+        "experiencia_total": 1500,
+        "classe": "CLT",
+        "pontos_disponiveis": 25,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 0,
+            "defesa": 0,
+            "hp": 30,
             "estamina": 0
         }
     }

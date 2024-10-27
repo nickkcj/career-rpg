@@ -6,12 +6,13 @@ class PersonagemView():
         print("-------- STATUS ----------")
         print(f"Nome: {dados_personagem['nome']}")
         print(f"Nível: {dados_personagem['nivel']}")
-        print(f"Experiência: {dados_personagem['experiencia']}")
+        print(f"Experiência total: {dados_personagem['experiencia_total']}")
+        print(f"Experiência para próximo nível: {dados_personagem['experiencia_para_proximo_nivel']}")
+        print(f"Pontos disponíveis para distribuir: {dados_personagem['pontos_disponiveis']}")
         print(f"Ataque: {dados_personagem['ataque']}")
         print(f"Defesa: {dados_personagem['defesa']}")
         print(f"HP: {dados_personagem['hp']}")
         print(f"Estamina: {dados_personagem['estamina']}")
-        print(f"Pontos disponíveis para distribuir: {dados_personagem['pontos_disponiveis']}")
         print(f"Poções de HP: {dados_personagem['pocoes_hp']}")
         print(f"Poções de Estamina: {dados_personagem['pocoes_est']}")
 
@@ -49,7 +50,7 @@ class PersonagemView():
         # a primeira habilidade, enquanto o estagiario tem a primeira e a segunda, e o CLT tem a primeira, segunda e a terceira.
         return int(input("Digite o número da habilidade: "))
 
-    def mostra_mensagem(self, msg):
+    def mostrar_mensagem(self, msg):
         os.system('cls' if os.name == 'nt' else 'clear')
         print("****************************************")
         print(msg)
