@@ -2,7 +2,7 @@ import time
 from dungeonView import DungeonView
 from dungeon import Dungeon
 from setorController import SetorController
-
+import os
 class DungeonController():
     def __init__(self):
         self.__dungeons = []
@@ -39,7 +39,9 @@ class DungeonController():
 
                 
                 if erros:
-                    self.__dungeonView.mostra_mensagem("Erros encontrados:\n" + "\n".join(erros))
+                    self.__dungeonView.mostra_mensagem("Não foi possível cadastrar a dungeon:\n" + "\n".join(erros))
+                    time.sleep(3)
+                    os.system('cls' if os.name == 'nt' else 'clear')
                     continue  
 
                 
