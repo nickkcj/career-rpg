@@ -3,10 +3,10 @@ from pocao_hp import PocaoHP
 from pocao_est import PocaoEstamina
 
 class Personagem():
-    def __init__(self, nome, nivel, experiencia, nome_classe: str, pocao_hp: PocaoHP=None, pocao_est: PocaoEstamina=None, pontos_disponiveis=10):
+    def __init__(self, nome, nivel, experiencia_total, nome_classe: str, pocao_hp: PocaoHP=None, pocao_est: PocaoEstamina=None, pontos_disponiveis=10):
         self.__nome = nome
         self.__nivel = nivel
-        self.__experiencia = experiencia
+        self.__experiencia_total = experiencia_total
         self.__classe_personagem = ClassePersonagem(nome_classe=nome_classe)
 
         self.__pocao_hp = pocao_hp if pocao_hp else PocaoHP(quant=3)
@@ -32,12 +32,12 @@ class Personagem():
         self.__nivel = nivel
 
     @property
-    def experiencia(self):
-        return self.__experiencia
+    def experiencia_total(self):
+        return self.__experiencia_total
 
-    @experiencia.setter
-    def experiencia(self, experiencia):
-        self.__experiencia = experiencia
+    @experiencia_total.setter
+    def experiencia_total(self, experiencia):
+        self.__experiencia_total = experiencia
     
     @property
     def classe_personagem(self):

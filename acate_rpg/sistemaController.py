@@ -11,6 +11,7 @@ from bossController import BossController
 from dungeonController import DungeonController
 from batalhaController import BatalhaController
 from setorController import SetorController
+from exceptions import CarregamentoDadosException, SalvamentoDadosException, OperacaoNaoPermitidaException, CadastroInvalidoException
 
 
 class SistemaControllerr:
@@ -58,90 +59,140 @@ class SistemaControllerr:
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def salvar_personagens(self):
-        personagens_salvar = []
-        for personagem in self.__personagemController.personagens:
-            personagens_salvar.append({
-                'nome': personagem.nome,
-                'nivel': personagem.nivel,
-                'experiencia': personagem.experiencia,
-                'classe': personagem.classe_personagem.nome_classe,
-                'pontos_disponiveis': personagem.pontos_disponiveis,
-                'pocoes_hp': personagem.pocao_hp.quant,
-                'pocoes_est': personagem.pocao_est.quant,
-                'atributos': personagem.classe_personagem.atributos
-            })
+        try:
+            personagens_salvar = []
+            for personagem in self.__personagemController.personagens:
+                personagens_salvar.append({
+                    'nome': personagem.nome,
+                    'nivel': personagem.nivel,
+                    'experiencia_total': personagem.experiencia_total,
+                    'classe': personagem.classe_personagem.nome_classe,
+                    'pontos_disponiveis': personagem.pontos_disponiveis,
+                    'pocoes_hp': personagem.pocao_hp.quant,
+                    'pocoes_est': personagem.pocao_est.quant,
+                    'atributos': personagem.classe_personagem.atributos
+                })
 
-        with open(self.__arquivo_personagens, 'w') as arquivo:
-            json.dump(personagens_salvar, arquivo, indent=4)
-        self.__sistemaView.mostrar_mensagem("Personagens salvos com sucesso!")
-        time.sleep(2)
+            with open(self.__arquivo_personagens, 'w') as arquivo:
+                json.dump(personagens_salvar, arquivo, indent=4)
+            self.__sistemaView.mostrar_mensagem("Personagens salvos com sucesso!")
+            time.sleep(2)
+        except (OSError, IOError) as e:
+            raise SalvamentoDadosException(arquivo=self.__arquivo_personagens) from e
 
     def carregar_personagens(self):
         try:
             with open(self.__arquivo_personagens, 'r') as arquivo:
                 personagens_carregados = json.load(arquivo)
                 for dados_personagem in personagens_carregados:
+                    experiencia_total = dados_personagem.get('experiencia_total', dados_personagem.get('experiencia', 0))
                     personagem = self.__personagemController.cadastrar_personagem(
                         nome=dados_personagem['nome'],
                         nivel=dados_personagem['nivel'],
-                        experiencia=dados_personagem['experiencia'],
-                        nome_classe=dados_personagem['classe']
+                        experiencia_total=dados_personagem['experiencia_total'],
+                        pontos_disponiveis=dados_personagem['pontos_disponiveis'],
+                        nome_classe=dados_personagem['classe'],
+                        exibir_mensagem=False
                     )
                     personagem.pocao_hp.quant = dados_personagem['pocoes_hp']
                     personagem.pocao_est.quant = dados_personagem['pocoes_est']
-                    personagem.pontos_disponiveis = dados_personagem['pontos_disponiveis']
                     personagem.classe_personagem.atributos.update(dados_personagem['atributos'])
+                    
                 self.__sistemaView.mostrar_mensagem(f"{len(personagens_carregados)} personagens carregados com sucesso!")
                 time.sleep(2)
         except FileNotFoundError:
             self.__sistemaView.mostrar_mensagem("Nenhum arquivo de personagens encontrado. Iniciando sistema sem personagens.")
             time.sleep(2)
 
+    def cadastrar_personagem(self):
+        try:
+            dados_personagem = self.__sistemaView.pega_dados_personagem()
+            if not dados_personagem['classe']:
+                raise CadastroInvalidoException(entidade="Personagem", campo="classe")
+
+            for personagem in self.__sistema.listar_personagens():
+                if personagem.nome == dados_personagem["nome"]:
+                    raise CadastroInvalidoException(entidade="Personagem", campo="nome")
+
+            personagem = self.__personagemController.cadastrar_personagem(
+                nome=dados_personagem["nome"],
+                nivel=dados_personagem["nivel"],
+                experiencia_total=dados_personagem["experiencia_total"],
+                nome_classe=dados_personagem["classe"]
+            )
+            self.__sistema.adicionar_personagem(personagem)
+            self.__sistemaView.mostrar_mensagem(f"Personagem {dados_personagem['nome']} da classe {dados_personagem['classe']} cadastrado com sucesso!")
+        except CadastroInvalidoException as e:
+            self.__sistemaView.mostrar_mensagem(str(e))
+
     def iniciar(self):
         self.limpar_terminal()
         while True:
-            self.__sistemaView.menu_inicial()
-            opcao = self.__sistemaView.pegar_opcao()
+            try:
+                self.__sistemaView.menu_inicial()
+                opcao = self.__sistemaView.pegar_opcao()
 
-            if opcao == '1':
-                self.menu_personagem()
+                if opcao == '1':
+                    self.menu_personagem()
+                elif opcao == '2':
+                    self.__dungeonController.cadastrar_dungeon()
+                elif opcao == '3':
+                    self.salvar_personagens()
+                    self.__sistemaView.mostrar_mensagem("Saindo do sistema...")
+                    time.sleep(1)
+                    exit()
+                else:
+                    self.__sistemaView.mostrar_mensagem("Opção inválida. Tente novamente.")
+                    time.sleep(1)
+            except Exception as e:
+                self.__sistemaView.mostrar_mensagem(f"Erro inesperado: {str(e)}")
+                time.sleep(2)
 
-            elif opcao == '2':
-                self.__dungeonController.cadastrar_dungeon()
-                self.iniciar()
+    def selecionar_personagem(self):
+        try:
+            personagens = self.__personagemController.personagens
+            self.__sistemaView.mostrar_personagens(personagens)
 
-            elif opcao == '3':
-                self.salvar_personagens()
-                self.__sistemaView.mostrar_mensagem("Saindo do sistema...")
-                time.sleep(1)
-                exit()
+            escolha = self.__sistemaView.pegar_personagem_selecionado()
+            if escolha.isdigit() and 1 <= int(escolha) <= len(personagens):
+                personagem = personagens[int(escolha) - 1]
+                return personagem
+            else:
+                raise OperacaoNaoPermitidaException(operacao="Selecionar personagem")
+        except OperacaoNaoPermitidaException as e:
+            self.__sistemaView.mostrar_mensagem(str(e))
+            return None
 
-    def menu_principal(self):
-        self.limpar_terminal()
+    def mostrar_status(self, personagem):
+        try:
+            self.__personagemController.mostrar_status(personagem)
+        except OperacaoNaoPermitidaException as e:
+            self.__sistemaView.mostrar_mensagem(str(e))
+
+    def opcoes_personagem(self, personagem):
         while True:
-            self.__sistemaView.menu_principal()
-            opcao = self.__sistemaView.pegar_opcao()
+            try:
+                self.__sistemaView.mostrar_opcoes_personagem()
+                opcao = self.__sistemaView.pegar_opcao()
 
-            if opcao == '1':
-                self.menu_curso()
-
-            elif opcao == '2':
-                self.quizController.realizar_quiz()
-
-            elif opcao == '3':
-                self.menu_personagem()
-
-            elif opcao == '4':
-                self.menu_dungeons()
-
-            elif opcao == '5':
-                self.menu_bosses()
-
-            elif opcao == '6':
-                pass
-
-            elif opcao == '7':
-                exit()
+                if opcao == '1':
+                    self.mostrar_status(personagem)
+                elif opcao == '2':
+                    self.__personagemController.upar_atributos(personagem)
+                elif opcao == '3':
+                    self.__personagemController.usar_item(personagem)
+                elif opcao == '4':
+                    experiencia_ganha = int(input("Digite a quantidade de experiência a ganhar: "))
+                    self.__personagemController.ganhar_experiencia(personagem, experiencia_ganha)
+                elif opcao == '0':
+                    break
+                else:
+                    raise OperacaoNaoPermitidaException(operacao="Escolha de opção no menu de personagem")
+            except OperacaoNaoPermitidaException as e:
+                self.__sistemaView.mostrar_mensagem(str(e))
+                time.sleep(2)
+            except ValueError:
+                self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
 
     def menu_personagem(self):
         self.limpar_terminal()
@@ -158,73 +209,12 @@ class SistemaControllerr:
                     self.opcoes_personagem(personagem)
             elif opcao == '0':
                 self.salvar_personagens()
-                self.__sistemaView.mostrar_mensagem("Saindo do sistema...")
+                self.__sistemaView.mostrar_mensagem("Voltando ao menu inicial...")
                 time.sleep(1)
-                exit()
-            else:
-                self.__sistemaView.mostrar_mensagem("Opção inválida. Tente novamente.")
-                time.sleep(1)
-
-    def cadastrar_personagem(self):
-        dados_personagem = None
-        while dados_personagem is None:
-            try:
-                dados_personagem = self.__sistemaView.pega_dados_personagem()
-                if not dados_personagem['classe']:
-                    raise ValueError("Classe inválida!")
-                for personagem in self.__sistema.listar_personagens():
-                    if personagem.nome == dados_personagem["nome"]:
-                        raise ValueError(f"O personagem {dados_personagem['nome']} já existe!")
-            except ValueError as e:
-                self.__sistemaView.mostrar_mensagem(str(e))
-                dados_personagem = None
-
-        personagem = self.__personagemController.cadastrar_personagem(
-            nome=dados_personagem["nome"],
-            nivel=dados_personagem["nivel"],
-            experiencia=dados_personagem["experiencia"],
-            nome_classe=dados_personagem["classe"]
-        )
-        self.__sistema.adicionar_personagem(personagem)
-        self.__sistemaView.mostrar_mensagem(f"Personagem {dados_personagem['nome']} da classe {dados_personagem['classe']} cadastrado com sucesso!")
-        time.sleep(2)
-    def selecionar_personagem(self):
-        personagens = self.__personagemController.personagens
-        self.__sistemaView.mostrar_personagens(personagens)
-
-        escolha = self.__sistemaView.pegar_personagem_selecionado()
-        if escolha.isdigit() and 1 <= int(escolha) <= len(personagens):
-            personagem = personagens[int(escolha) - 1]
-            return personagem
-        else:
-            self.__sistemaView.mostrar_mensagem("Escolha inválida.")
-            time.sleep(2)
-            return None
-
-    def mostrar_status(self, personagem):
-        self.__personagemController.mostrar_status(personagem)
-
-
-    def opcoes_personagem(self, personagem):
-        while True:
-            self.__sistemaView.mostrar_opcoes_personagem()
-            opcao = self.__sistemaView.pegar_opcao()
-
-            if opcao == '1':
-                self.mostrar_status(personagem)
-            elif opcao == '2':
-                self.__personagemController.upar_atributos(personagem)
-            elif opcao == '3':
-                self.__personagemController.usar_item(personagem)
-            elif opcao == '4':
-                self.__personagemController.upar_nivel(personagem)
-            elif opcao == '5':
-                self.menu_principal()
-            elif opcao == '0':
                 break
             else:
                 self.__sistemaView.mostrar_mensagem("Opção inválida. Tente novamente.")
-                time.sleep(2)
+                time.sleep(1)
 
     def menu_curso(self):
         self.limpar_terminal()

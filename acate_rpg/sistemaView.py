@@ -82,7 +82,7 @@ class SistemaView:
         return {"nome": nome, 
                 "classe": classe, 
                 "nivel": 1, 
-                "experiencia": 0
+                "experiencia_total": 0
                 }
 
     def mostrar_opcoes_personagem(self):
@@ -90,7 +90,7 @@ class SistemaView:
         print("1 - Mostrar Status")
         print("2 - Aumentar Atributo")
         print("3 - Usar Item")
-        print("4 - Upar Nível")
+        print("4 - Ganhar Experiência (TESTE)")
         print("5 - Menu Principal")
         print("0 - Voltar ao Meu Personagem")
 
