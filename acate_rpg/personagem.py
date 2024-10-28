@@ -8,6 +8,8 @@ class Personagem():
         self.__nivel = nivel
         self.__experiencia_total = experiencia_total
         self.__classe_personagem = ClassePersonagem(nome_classe=nome_classe)
+        self.__classes_historico = [self.classe_personagem]
+        self.__habilidades = []
 
         self.__pocao_hp = pocao_hp if pocao_hp else PocaoHP(quant=3)
         self.__pocao_est = pocao_est if pocao_est else PocaoEstamina(quant=3)
@@ -44,8 +46,18 @@ class Personagem():
         return self.__classe_personagem
 
     @classe_personagem.setter
-    def classe_personagem(self, classe_personagem: ClassePersonagem):
-        self.__classe_personagem = classe_personagem
+    def classe_personagem(self, nova_classe: ClassePersonagem):
+        if nova_classe.nome_classe != self.__classe_personagem.nome_classe:
+            self.__classes_historico.append(self.__classe_personagem)
+        self.__classe_personagem = nova_classe
+
+    @property
+    def classes_historico(self):
+        return self.__classes_historico
+    
+    @property
+    def habilidades(self):
+        return self.__habilidades
 
     @property
     def pocao_hp(self):

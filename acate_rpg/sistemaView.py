@@ -90,14 +90,22 @@ class SistemaView:
         print("1 - Mostrar Status")
         print("2 - Aumentar Atributo")
         print("3 - Usar Item")
-        print("4 - Ganhar Experiência (TESTE)")
-        print("5 - Menu Principal")
+        print("4 - Ver Habilidades")
+        print("5 - Ganhar Experiência (TESTE)")
+        print("6 - Menu Principal")
         print("0 - Voltar ao Meu Personagem")
 
     def mostrar_status(self, status):
         print("-------- STATUS ----------")
         for key, value in status.items():
             print(f"{key.capitalize()}: {value}")
+
+    def mostrar_habilidades(self, habilidades):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("--------- HABILIDADES DO PERSONAGEM ---------")
+        for habilidade in habilidades:
+            print(f"{habilidade['nome']} - {habilidade['efeito']} ({habilidade['tipo']})")
+        input("\nPressione Enter para voltar ao menu.")
 
     def mostrar_mensagem(self, msg):
         os.system('cls' if os.name == 'nt' else 'clear')

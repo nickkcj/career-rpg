@@ -50,6 +50,13 @@ class PersonagemView():
         # a primeira habilidade, enquanto o estagiario tem a primeira e a segunda, e o CLT tem a primeira, segunda e a terceira.
         return int(input("Digite o número da habilidade: "))
 
+    def mostrar_habilidades(self, habilidades):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("--------- HABILIDADES DO PERSONAGEM ---------")
+        for habilidade in habilidades:
+            print(f"{habilidade['nome']} - {habilidade['efeito']} ({habilidade['tipo']})")
+        input("\nPressione Enter para voltar ao menu.")
+
     def mostrar_mensagem(self, msg):
         os.system('cls' if os.name == 'nt' else 'clear')
         print("****************************************")

@@ -1,6 +1,7 @@
 import time
 from personagemView import PersonagemView
 from personagem import Personagem
+from classePersonagem import ClassePersonagem
 from exceptions import CadastroInvalidoException, ItemIndisponivelException, OperacaoNaoPermitidaException
 
 
@@ -8,10 +9,33 @@ class PersonagemController:
     def __init__(self):
         self.__personagens = []
         self.__personagemView = PersonagemView()
+        self.__habilidades_por_classe = {
+            "Trainee": [
+                {"nome": "Hora Extra", "efeito": "Aumenta a Estamina temporariamente", "tipo": "buff"},
+                {"nome": "Desmotivar Inimigo", "efeito": "Reduz o Ataque do boss", "tipo": "debuff"}
+            ],
+            "Estagiario": [
+                {"nome": "Cagada Remunerada", "efeito": "Aumenta o HP do personagem", "tipo": "buff"},
+                {"nome": "Desestabilizar Boss", "efeito": "Reduz a Defesa do boss", "tipo": "debuff"}
+            ],
+            "CLT": [
+                {"nome": "Festa da Firma", "efeito": "Aumenta o Ataque do personagem", "tipo": "buff"},
+                {"nome": "Ataque Corporativo", "efeito": "Dano direto ao HP do boss", "tipo": "dano"}
+            ]
+        }
+
+        self.__niveis_para_evolucao = {
+            "Trainee": 10,
+            "Estagiario": 25
+        }
 
     @property
     def personagens(self):
         return self.__personagens
+    
+    @property
+    def niveis_para_evolucao(self):
+        return self.__niveis_para_evolucao
 
     def pega_personagem_por_nome(self, nome: str):
         for personagem in self.__personagens:
@@ -23,7 +47,7 @@ class PersonagemController:
         try:
             if self.pega_personagem_por_nome(nome) is not None:
                 raise CadastroInvalidoException(entidade="Personagem", campo="nome")
-            
+
             personagem = Personagem(
                 nome=nome,
                 nivel=nivel,
@@ -32,7 +56,9 @@ class PersonagemController:
                 nome_classe=nome_classe
             )
 
+            personagem.habilidades = self.__habilidades_por_classe.get(nome_classe, [])
             self.__personagens.append(personagem)
+
             if exibir_mensagem:
                 self.__personagemView.mostrar_mensagem(
                     f"Personagem {nome} da classe {nome_classe} criado com sucesso! Nível: {nivel}, Experiência: {experiencia_total}"
@@ -41,6 +67,39 @@ class PersonagemController:
             return personagem
         except CadastroInvalidoException as e:
             self.__personagemView.mostrar_mensagem(str(e))
+
+    def evoluir_classe(self, personagem: Personagem):
+        ordem_classes = ["Trainee", "Estagiario", "CLT"]
+        classe_atual = personagem.classe_personagem.nome_classe
+        indice_atual = ordem_classes.index(classe_atual)
+
+        if indice_atual < len(ordem_classes) - 1:
+            nova_classe = ordem_classes[indice_atual + 1]
+            nivel_necessario = self.niveis_para_evolucao.get(classe_atual, None)
+            
+            if personagem.nivel >= nivel_necessario:
+                personagem.classe_personagem.nome_classe=nova_classe
+                personagem.classe_personagem.evolucao += 1
+                personagem.classe_personagem.atributos['ataque'] += 5
+                personagem.classe_personagem.atributos['defesa'] += 5
+                personagem.classe_personagem.atributos['hp'] += 25
+                personagem.classe_personagem.atributos['estamina'] += 15
+                
+                personagem.habilidades.extend(self.__habilidades_por_classe[nova_classe])
+                personagem.classes_historico.append(nova_classe)
+                self.__personagemView.mostrar_mensagem(f"{personagem.nome} evoluiu para {nova_classe}!")
+            else:
+                self.__personagemView.mostrar_mensagem(
+                    f"{personagem.nome} precisa estar no nível {nivel_necessario} para evoluir para {nova_classe}."
+                )
+        else:
+            self.__personagemView.mostrar_mensagem(f"{personagem.nome} já é CLT e não pode evoluir.")
+
+    def mostrar_habilidades(self, personagem: Personagem):
+        habilidades = []
+        for classe in personagem.classes_historico:
+            habilidades += self.__habilidades_por_classe.get(classe, [])
+        self.__personagemView.mostrar_habilidades(habilidades)
 
     def calcular_nivel(self, experiencia_total):
         nivel = 1

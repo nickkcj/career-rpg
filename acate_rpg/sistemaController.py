@@ -58,6 +58,27 @@ class SistemaControllerr:
     def limpar_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
 
+    def cadastrar_personagem(self):
+        try:
+            dados_personagem = self.__sistemaView.pega_dados_personagem()
+            if not dados_personagem['classe']:
+                raise CadastroInvalidoException(entidade="Personagem", campo="classe")
+
+            for personagem in self.__sistema.listar_personagens():
+                if personagem.nome == dados_personagem["nome"]:
+                    raise CadastroInvalidoException(entidade="Personagem", campo="nome")
+
+            personagem = self.__personagemController.cadastrar_personagem(
+                nome=dados_personagem["nome"],
+                nivel=dados_personagem["nivel"],
+                experiencia_total=dados_personagem["experiencia_total"],
+                nome_classe=dados_personagem["classe"]
+            )
+            self.__sistema.adicionar_personagem(personagem)
+            self.__sistemaView.mostrar_mensagem(f"Personagem {dados_personagem['nome']} da classe {dados_personagem['classe']} cadastrado com sucesso!")
+        except CadastroInvalidoException as e:
+            self.__sistemaView.mostrar_mensagem(str(e))
+
     def salvar_personagens(self):
         try:
             personagens_salvar = []
@@ -67,6 +88,8 @@ class SistemaControllerr:
                     'nivel': personagem.nivel,
                     'experiencia_total': personagem.experiencia_total,
                     'classe': personagem.classe_personagem.nome_classe,
+                    'classes_historico': [classe.nome_classe for classe in personagem.classes_historico],
+                    'habilidades': personagem.habilidades,
                     'pontos_disponiveis': personagem.pontos_disponiveis,
                     'pocoes_hp': personagem.pocao_hp.quant,
                     'pocoes_est': personagem.pocao_est.quant,
@@ -90,40 +113,20 @@ class SistemaControllerr:
                         nome=dados_personagem['nome'],
                         nivel=dados_personagem['nivel'],
                         experiencia_total=dados_personagem['experiencia_total'],
-                        pontos_disponiveis=dados_personagem['pontos_disponiveis'],
                         nome_classe=dados_personagem['classe'],
+                        pontos_disponiveis=dados_personagem['pontos_disponiveis'],
                         exibir_mensagem=False
                     )
                     personagem.pocao_hp.quant = dados_personagem['pocoes_hp']
                     personagem.pocao_est.quant = dados_personagem['pocoes_est']
                     personagem.classe_personagem.atributos.update(dados_personagem['atributos'])
+                    personagem.classes_historico = dados_personagem['classes_historico']
                     
                 self.__sistemaView.mostrar_mensagem(f"{len(personagens_carregados)} personagens carregados com sucesso!")
                 time.sleep(2)
         except FileNotFoundError:
             self.__sistemaView.mostrar_mensagem("Nenhum arquivo de personagens encontrado. Iniciando sistema sem personagens.")
             time.sleep(2)
-
-    def cadastrar_personagem(self):
-        try:
-            dados_personagem = self.__sistemaView.pega_dados_personagem()
-            if not dados_personagem['classe']:
-                raise CadastroInvalidoException(entidade="Personagem", campo="classe")
-
-            for personagem in self.__sistema.listar_personagens():
-                if personagem.nome == dados_personagem["nome"]:
-                    raise CadastroInvalidoException(entidade="Personagem", campo="nome")
-
-            personagem = self.__personagemController.cadastrar_personagem(
-                nome=dados_personagem["nome"],
-                nivel=dados_personagem["nivel"],
-                experiencia_total=dados_personagem["experiencia_total"],
-                nome_classe=dados_personagem["classe"]
-            )
-            self.__sistema.adicionar_personagem(personagem)
-            self.__sistemaView.mostrar_mensagem(f"Personagem {dados_personagem['nome']} da classe {dados_personagem['classe']} cadastrado com sucesso!")
-        except CadastroInvalidoException as e:
-            self.__sistemaView.mostrar_mensagem(str(e))
 
     def iniciar(self):
         self.limpar_terminal()
@@ -182,6 +185,8 @@ class SistemaControllerr:
                 elif opcao == '3':
                     self.__personagemController.usar_item(personagem)
                 elif opcao == '4':
+                    self.__personagemController.mostrar_habilidades(personagem)
+                elif opcao == '5':
                     experiencia_ganha = int(input("Digite a quantidade de experiência a ganhar: "))
                     self.__personagemController.ganhar_experiencia(personagem, experiencia_ganha)
                 elif opcao == '0':
