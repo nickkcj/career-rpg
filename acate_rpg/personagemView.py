@@ -1,10 +1,12 @@
 import os
+import time
 class PersonagemView():
 
     def mostrar_status(self, dados_personagem):
         os.system('cls' if os.name == 'nt' else 'clear')
         print("-------- STATUS ----------")
         print(f"Nome: {dados_personagem['nome']}")
+        print(f"Nome: {dados_personagem['classe']}")
         print(f"Nível: {dados_personagem['nivel']}")
         print(f"Experiência total: {dados_personagem['experiencia_total']}")
         print(f"Experiência para próximo nível: {dados_personagem['experiencia_para_proximo_nivel']}")
@@ -62,5 +64,6 @@ class PersonagemView():
         print("****************************************")
         print(msg)
         print("****************************************")
+        time.sleep(1)
 
         

@@ -1,107 +1,145 @@
 [
     {
-        "nome": "davi",
-        "nivel": 13,
-        "experiencia_total": 2000,
-        "classe": "Estagiario",
-        "pontos_disponiveis": 0,
-        "pocoes_hp": 0,
-        "pocoes_est": 0,
+        "nome": "xuxa",
+        "nivel": 100,
+        "experiencia_total": 1500,
+        "classe": "CLT",
+        "classes_historico": [],
+        "habilidades": [
+            {
+                "nome": "Festa da Firma",
+                "efeito": "Aumenta o Ataque do personagem",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Ataque Corporativo",
+                "efeito": "Dano direto ao HP do boss",
+                "tipo": "dano"
+            }
+        ],
+        "pontos_disponiveis": 250,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
         "atributos": {
-            "ataque": 60,
-            "defesa": 10,
+            "ataque": 0,
+            "defesa": 0,
             "hp": 30,
+            "estamina": 0
+        }
+    },
+    {
+        "nome": "kaka",
+        "nivel": 32,
+        "experiencia_total": 8122,
+        "classe": "CLT",
+        "classes_historico": [
+            "Trainee",
+            "Estagiario",
+            "CLT"
+        ],
+        "habilidades": [
+            {
+                "nome": "Festa da Firma",
+                "efeito": "Aumenta o Ataque do personagem",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Ataque Corporativo",
+                "efeito": "Dano direto ao HP do boss",
+                "tipo": "dano"
+            }
+        ],
+        "pontos_disponiveis": 65,
+        "pocoes_hp": 3,
+        "pocoes_est": 2,
+        "atributos": {
+            "ataque": 110,
+            "defesa": 10,
+            "hp": 50,
+            "estamina": 35
+        }
+    },
+    {
+        "nome": "pel\u00e9",
+        "nivel": 14,
+        "experiencia_total": 2200,
+        "classe": "Estagiario",
+        "classes_historico": [
+            "Trainee",
+            "Estagiario"
+        ],
+        "habilidades": [
+            {
+                "nome": "Cagada Remunerada",
+                "efeito": "Aumenta o HP do personagem",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Desestabilizar Boss",
+                "efeito": "Reduz a Defesa do boss",
+                "tipo": "debuff"
+            }
+        ],
+        "pontos_disponiveis": 65,
+        "pocoes_hp": 2,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 15,
+            "defesa": 5,
+            "hp": 35,
             "estamina": 15
         }
     },
     {
-        "nome": "nick",
-        "nivel": 1,
-        "experiencia_total": 0,
-        "classe": "Estagiario",
-        "pontos_disponiveis": 8,
-        "pocoes_hp": 2,
-        "pocoes_est": 3,
-        "atributos": {
-            "ataque": 2,
-            "defesa": 0,
-            "hp": 10,
-            "estamina": 0
-        }
-    },
-    {
-        "nome": "kalel",
-        "nivel": 1,
-        "experiencia_total": 0,
-        "classe": "Trainee",
-        "pontos_disponiveis": 0,
-        "pocoes_hp": 2,
+        "nome": "xamuel",
+        "nivel": 27,
+        "experiencia_total": 6222,
+        "classe": "CLT",
+        "classes_historico": [
+            "Trainee",
+            "Estagiario",
+            "CLT"
+        ],
+        "habilidades": [
+            {
+                "nome": "Hora Extra",
+                "efeito": "Aumenta a Estamina temporariamente",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Desmotivar Inimigo",
+                "efeito": "Reduz o Ataque do boss",
+                "tipo": "debuff"
+            },
+            {
+                "nome": "Cagada Remunerada",
+                "efeito": "Aumenta o HP do personagem",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Desestabilizar Boss",
+                "efeito": "Reduz a Defesa do boss",
+                "tipo": "debuff"
+            },
+            {
+                "nome": "Festa da Firma",
+                "efeito": "Aumenta o Ataque do personagem",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Ataque Corporativo",
+                "efeito": "Dano direto ao HP do boss",
+                "tipo": "dano"
+            }
+        ],
+        "pontos_disponiveis": 130,
+        "pocoes_hp": 3,
         "pocoes_est": 2,
         "atributos": {
             "ataque": 10,
-            "defesa": 0,
-            "hp": 10,
-            "estamina": 5
-        }
-    },
-    {
-        "nome": "nick 2",
-        "nivel": 1,
-        "experiencia_total": 0,
-        "classe": "Estagiario",
-        "pontos_disponiveis": 10,
-        "pocoes_hp": 3,
-        "pocoes_est": 3,
-        "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 0,
-            "estamina": 0
-        }
-    },
-    {
-        "nome": "calabreso",
-        "nivel": 1,
-        "experiencia_total": 0,
-        "classe": "CLT",
-        "pontos_disponiveis": 10,
-        "pocoes_hp": 2,
-        "pocoes_est": 3,
-        "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 10,
-            "estamina": 0
-        }
-    },
-    {
-        "nome": "segovinha",
-        "nivel": 1,
-        "experiencia_total": 0,
-        "classe": "CLT",
-        "pontos_disponiveis": 10,
-        "pocoes_hp": 3,
-        "pocoes_est": 3,
-        "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 0,
-            "estamina": 0
-        }
-    },
-    {
-        "nome": "xuxa",
-        "nivel": 10,
-        "experiencia_total": 1500,
-        "classe": "CLT",
-        "pontos_disponiveis": 25,
-        "pocoes_hp": 3,
-        "pocoes_est": 3,
-        "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 30,
-            "estamina": 0
+            "defesa": 10,
+            "hp": 60,
+            "estamina": 35
         }
     }
 ]

@@ -9,7 +9,7 @@ class SistemaView:
         print("Você quer ser um personagem ou uma empresa?")
         print("1 - Personagem")
         print("2 - Empresa")
-        print("3 - Nah, sair")
+        print("0 - Nah, sair")
         print("")
 
     def menu_principal(self):
@@ -112,3 +112,4 @@ class SistemaView:
         print("****************************************")
         print(msg)
         print("****************************************")
+        time.sleep(2)

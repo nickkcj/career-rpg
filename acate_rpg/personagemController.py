@@ -55,7 +55,6 @@ class PersonagemController:
                 pontos_disponiveis=pontos_disponiveis,
                 nome_classe=nome_classe
             )
-
             personagem.habilidades = self.__habilidades_por_classe.get(nome_classe, [])
             self.__personagens.append(personagem)
 
@@ -63,43 +62,13 @@ class PersonagemController:
                 self.__personagemView.mostrar_mensagem(
                     f"Personagem {nome} da classe {nome_classe} criado com sucesso! Nível: {nivel}, Experiência: {experiencia_total}"
                 )
-            time.sleep(1)
+                time.sleep(2)
             return personagem
         except CadastroInvalidoException as e:
             self.__personagemView.mostrar_mensagem(str(e))
 
-    def evoluir_classe(self, personagem: Personagem):
-        ordem_classes = ["Trainee", "Estagiario", "CLT"]
-        classe_atual = personagem.classe_personagem.nome_classe
-        indice_atual = ordem_classes.index(classe_atual)
-
-        if indice_atual < len(ordem_classes) - 1:
-            nova_classe = ordem_classes[indice_atual + 1]
-            nivel_necessario = self.niveis_para_evolucao.get(classe_atual, None)
-            
-            if personagem.nivel >= nivel_necessario:
-                personagem.classe_personagem.nome_classe=nova_classe
-                personagem.classe_personagem.evolucao += 1
-                personagem.classe_personagem.atributos['ataque'] += 5
-                personagem.classe_personagem.atributos['defesa'] += 5
-                personagem.classe_personagem.atributos['hp'] += 25
-                personagem.classe_personagem.atributos['estamina'] += 15
-                
-                personagem.habilidades.extend(self.__habilidades_por_classe[nova_classe])
-                personagem.classes_historico.append(nova_classe)
-                self.__personagemView.mostrar_mensagem(f"{personagem.nome} evoluiu para {nova_classe}!")
-            else:
-                self.__personagemView.mostrar_mensagem(
-                    f"{personagem.nome} precisa estar no nível {nivel_necessario} para evoluir para {nova_classe}."
-                )
-        else:
-            self.__personagemView.mostrar_mensagem(f"{personagem.nome} já é CLT e não pode evoluir.")
-
     def mostrar_habilidades(self, personagem: Personagem):
-        habilidades = []
-        for classe in personagem.classes_historico:
-            habilidades += self.__habilidades_por_classe.get(classe, [])
-        self.__personagemView.mostrar_habilidades(habilidades)
+        self.__personagemView.mostrar_habilidades(personagem.habilidades)
 
     def calcular_nivel(self, experiencia_total):
         nivel = 1
@@ -129,18 +98,54 @@ class PersonagemController:
             self.__personagemView.mostrar_mensagem(
                 f"{personagem.nome} upou para o nível {novo_nivel}! Pontos disponíveis: {personagem.pontos_disponiveis}"
             )
+            time.sleep(1)
+            self.evoluir_classe(personagem)
 
         self.__personagemView.mostrar_mensagem(
             f"{personagem.nome} ganhou {experiencia_ganha} XP! Experiência total: {personagem.experiencia_total}"
         )
+        time.sleep(1)
+
         self.__personagemView.mostrar_mensagem(
             f"XP para próximo nível: {self.experiencia_para_proximo_nivel(personagem)}"
         )
+        time.sleep(1)
+
+    def evoluir_classe(self, personagem: Personagem):
+        ordem_classes = ["Trainee", "Estagiario", "CLT"]
+        classe_atual = personagem.classe_personagem.nome_classe
+        indice_atual = ordem_classes.index(classe_atual)
+
+        if indice_atual < len(ordem_classes) - 1:
+            nova_classe = ordem_classes[indice_atual + 1]
+            nivel_necessario = self.niveis_para_evolucao.get(classe_atual, None)
+            
+            if personagem.nivel >= nivel_necessario:
+                personagem.classe_personagem.nome_classe=nova_classe
+                personagem.classe_personagem.evolucao += 1
+                personagem.classe_personagem.atributos['ataque'] += 5
+                personagem.classe_personagem.atributos['defesa'] += 5
+                personagem.classe_personagem.atributos['hp'] += 25
+                personagem.classe_personagem.atributos['estamina'] += 15
+                
+                personagem.habilidades.extend(self.__habilidades_por_classe[nova_classe])
+                personagem.classes_historico.append(nova_classe)
+                self.__personagemView.mostrar_mensagem(f"{personagem.nome} evoluiu para {nova_classe}!")
+                time.sleep(1)
+            else:
+                self.__personagemView.mostrar_mensagem(
+                    f"{personagem.nome} precisa estar no nível {nivel_necessario} para evoluir para {nova_classe}."
+                )
+                time.sleep(1)
+        else:
+            self.__personagemView.mostrar_mensagem(f"{personagem.nome} já é CLT e não pode evoluir.")
+            time.sleep(1)
 
     def mostrar_status(self, personagem: Personagem):
         try:
             status = {
                 'nome': personagem.nome,
+                'classe': personagem.classe_personagem.nome_classe,
                 'nivel': personagem.nivel,
                 'experiencia_total': personagem.experiencia_total,
                 'experiencia_para_proximo_nivel': self.experiencia_para_proximo_nivel(personagem),
