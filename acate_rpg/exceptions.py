@@ -38,3 +38,24 @@ class SalvamentoDadosException(BaseSistemaException):
     def __init__(self, arquivo, solucao="Verifique o espaço em disco e as permissões"):
         mensagem = f"Erro ao salvar dados no arquivo '{arquivo}'."
         super().__init__(mensagem, solucao)
+
+
+
+class XpGanhoInvalidoError(CadastroInvalidoException):
+    def __init__(self, solucao="O XP ganho deve ser um número inteiro."):
+        super().__init__("Curso", "xp_ganho", solucao)
+
+
+class NivelRequeridoInvalidoError(CadastroInvalidoException):
+    def __init__(self, solucao="O nível requerido deve ser um número entre 1 e 10."):
+        super().__init__("Curso", "nivel_requerido", solucao)
+
+
+class SetorInvalidoError(CadastroInvalidoException):
+    def __init__(self, solucao="O setor deve ser RH, T.I, Vendas, Marketing ou Financeiro."):
+        super().__init__("Curso", "setor", solucao)
+
+
+class DificuldadeInvalidaError(CadastroInvalidoException):
+    def __init__(self, solucao="A dificuldade deve ser um número inteiro entre 1 e 10."):
+        super().__init__("Curso", "dificuldade", solucao)
