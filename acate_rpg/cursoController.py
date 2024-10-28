@@ -1,6 +1,6 @@
 from curso import Curso
 from cursoView import CursoView
-from excecoes import NivelRequeridoInvalidoError, SetorInvalidoError, DificuldadeInvalidaError, XpGanhoInvalidoError
+from exceptions import NivelRequeridoInvalidoError, SetorInvalidoError, DificuldadeInvalidaError, XpGanhoInvalidoError
 class CursoController():
     def __init__(self):
         self.cursos = []
