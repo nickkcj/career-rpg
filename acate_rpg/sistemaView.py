@@ -9,9 +9,10 @@ class SistemaView:
         print("Bem vindo ao RPG do Mercado de Trabalho!!")
         print("##########################################")
         print("")
-        print("Você quer ser um personagem ou uma empresa?")
+        print("Você quer ser um personagem, uma empresa, ou só quer ver o Ranking?")
         print("1 - Personagem")
         print("2 - Empresa")
+        print("3 - Ranking")
         print("0 - Nah, sair")
         print("")
 
@@ -40,6 +41,14 @@ class SistemaView:
         print("1 - Cadastrar Personagem")
         print("2 - Selecionar Personagem")
         print("0 - Sair")
+
+    def menu_ranking(self):
+        self.limpar_terminal()
+        print("\n------ MENU DE RANKING ------")
+        print("1 - Ranking por Nível")
+        print("2 - Ranking por Dungeons Conquistadas")
+        print("3 - Ranking por Cursos Concluídos")
+        print("0 - Voltar")
 
     def mostrar_personagens(self, personagens):
         self.limpar_terminal()

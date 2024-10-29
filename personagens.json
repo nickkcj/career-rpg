@@ -59,7 +59,7 @@
             "hp": 60,
             "estamina": 30
         },
-        "cursos_conquistados": 0
+        "cursos_conquistados": 3
     },
     {
         "nome": "xamuel",
@@ -163,7 +163,7 @@
             "hp": 0,
             "estamina": 0
         },
-        "cursos_conquistados": 0
+        "cursos_conquistados": 1
     },
     {
         "nome": "maradona",
@@ -187,14 +187,14 @@
     },
     {
         "nome": "segovinha",
-        "nivel": 1,
-        "experiencia_total": 0,
+        "nivel": 17,
+        "experiencia_total": 3000,
         "classe": "Estagiario",
         "classes_historico": [
             "Estagiario"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 10,
+        "pontos_disponiveis": 90,
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
@@ -203,7 +203,7 @@
             "hp": 0,
             "estamina": 0
         },
-        "cursos_conquistados": 0
+        "cursos_conquistados": 1
     },
     {
         "nome": "1",

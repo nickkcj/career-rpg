@@ -11,6 +11,7 @@ from bossController import BossController
 from dungeonController import DungeonController
 from batalhaController import BatalhaController
 from setorController import SetorController
+from rankingController import RankingController
 from exceptions import CarregamentoDadosException, SalvamentoDadosException, OperacaoNaoPermitidaException, CadastroInvalidoException
 
 
@@ -25,6 +26,7 @@ class SistemaControllerr:
         self.__setorController = SetorController()
         self.__dungeonController = DungeonController()
         self.__batalhaController = BatalhaController(self)
+        self.__rankingController = RankingController(self.__personagemController)
         self.__quizController._QuizController__cursoController = self.__cursoController
         self.__arquivo_personagens = "personagens.json"
         self.carregar_personagens()
@@ -204,6 +206,8 @@ class SistemaControllerr:
                     self.menu_jogador()
                 elif opcao == '2':
                     self.__dungeonController.cadastrar_dungeon()
+                elif opcao == '3':
+                    self.menu_ranking()
                 elif opcao == '0':
                     self.salvar_personagens()
                     self.__sistemaView.mostrar_mensagem("Saindo do sistema...")
@@ -354,4 +358,24 @@ class SistemaControllerr:
             elif opcao == '2':
                 self.menu_principal()
 
+    def menu_ranking(self):
+        while True:
+            try:
+                self.__sistemaView.menu_ranking()
+                opcao = self.__sistemaView.pegar_opcao()
 
+                if opcao == '1':
+                    self.__rankingController.exibir_ranking_nivel()
+                elif opcao == '2':
+                    self.__rankingController.exibir_ranking_dungeons()
+                elif opcao == '3':
+                    self.__rankingController.exibir_ranking_cursos()
+                elif opcao == '0':
+                    self.menu_usuario()
+                else:
+                    raise OperacaoNaoPermitidaException(operacao="Escolha de opção no menu de ranking")
+            except OperacaoNaoPermitidaException as e:
+                self.__sistemaView.mostrar_mensagem(str(e))
+                time.sleep(2)
+            except ValueError:
+                self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
