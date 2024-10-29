@@ -1,6 +1,9 @@
 import os
 import time
 class SistemaView:
+    def limpar_terminal(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
+
     def menu_inicial(self):
         print("##########################################")
         print("Bem vindo ao RPG do Mercado de Trabalho!!")
@@ -22,7 +25,7 @@ class SistemaView:
         print("")
 
     def menu_principal_personagem(self, nome_personagem):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        self.limpar_terminal()
         print("--------- MENU PRINCIPAL ---------")
         print(f"Olá {nome_personagem}, Bem vindo(a) ao RPG do Mercado de Trabalho!!")
         print("1 - Meu Personagem")
@@ -31,7 +34,7 @@ class SistemaView:
         print("0 - Voltar ao Menu Personagem")
 
     def menu_jogador(self):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        self.limpar_terminal()
         print("--------- MENU JOGADOR ---------")
         print("Olá Jogador, o que você quer fazer?")
         print("1 - Cadastrar Personagem")
@@ -39,7 +42,7 @@ class SistemaView:
         print("0 - Sair")
 
     def mostrar_personagens(self, personagens):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        self.limpar_terminal()
         if not personagens:
             print("##############################")
             print(" Nenhum personagem cadastrado!")
@@ -58,39 +61,43 @@ class SistemaView:
         return input("Escolha uma opção: ").strip()
 
     def pega_dados_personagem(self):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        self.limpar_terminal()
         print("----------CADASTRO PERSONAGEM---------")
-        nome = input("Nome: ")
-        if not isinstance(nome, str):
-            raise Exception("Nome inválido")
+        
+        while True:
+            nome = input("Nome: ").strip()
+            if nome:
+                break
+            print("Nome inválido! Por favor, insira um nome válido.")
 
         while True:
-            print("-------- CLASSES ----------")
-            print("Escolha uma classe:")
-            print("1 - CLT (Bom no early game)")
-            print("2 - Estagiário (Médio no early, bom no late)")
-            print("3 - Trainee (Fraco no early, muito forte no late)")
+            try:
+                print("-------- CLASSES ----------")
+                print("Escolha uma classe:")
+                print("1 - CLT (Bom no early game)")
+                print("2 - Estagiário (Médio no early, bom no late)")
+                print("3 - Trainee (Fraco no early, muito forte no late)")
 
-            opcao = int(input("Digite o número da classe: "))
+                opcao = int(input("Digite o número da classe: "))
+                if opcao == 1:
+                    classe = "CLT"
+                elif opcao == 2:
+                    classe = "Estagiario"
+                elif opcao == 3:
+                    classe = "Trainee"
+                else:
+                    print("Opção inválida! Escolha entre 1, 2, ou 3.")
+                    continue
+                break
+            except ValueError:
+                print("Entrada inválida! Digite um número para selecionar a classe.")
 
-            if opcao == 1:
-                classe = "CLT"
-            elif opcao == 2:
-                classe = "Estagiario"
-            elif opcao == 3:
-                classe = "Trainee"
-            else:
-                print("Classe inválida! Tente novamente.")
-
-                continue
-
-            break
-
-        return {"nome": nome, 
-                "classe": classe, 
-                "nivel": 1, 
-                "experiencia_total": 0
-                }
+        return {
+            "nome": nome,
+            "classe": classe,
+            "nivel": 1,
+            "experiencia_total": 0
+        }
 
     def mostrar_opcoes_personagem(self):
         print("\n--------- MEU PERSONAGEM ---------")
@@ -108,14 +115,14 @@ class SistemaView:
             print(f"{key.capitalize()}: {value}")
 
     def mostrar_habilidades(self, habilidades):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        self.limpar_terminal()
         print("--------- HABILIDADES DO PERSONAGEM ---------")
         for habilidade in habilidades:
             print(f"{habilidade['nome']} - {habilidade['efeito']} ({habilidade['tipo']})")
         input("\nPressione Enter para voltar ao menu.")
 
     def mostrar_mensagem(self, msg):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        self.limpar_terminal()
         print("****************************************")
         print(msg)
         print("****************************************")

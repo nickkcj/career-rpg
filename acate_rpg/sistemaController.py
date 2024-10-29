@@ -71,23 +71,41 @@ class SistemaControllerr:
     def cadastrar_personagem(self):
         try:
             dados_personagem = self.__sistemaView.pega_dados_personagem()
+            
             if not dados_personagem['classe']:
                 raise CadastroInvalidoException(entidade="Personagem", campo="classe")
 
-            for personagem in self.__sistema.listar_personagens():
-                if personagem.nome == dados_personagem["nome"]:
+            for personagem_existente in self.__personagemController.personagens:
+                if personagem_existente.nome == dados_personagem["nome"]:
                     raise CadastroInvalidoException(entidade="Personagem", campo="nome")
 
-            personagem = self.__personagemController.cadastrar_personagem(
+            personagem = self.__personagemController.criar_personagem(
                 nome=dados_personagem["nome"],
-                nivel=dados_personagem["nivel"],
-                experiencia_total=dados_personagem["experiencia_total"],
+                nivel=dados_personagem.get("nivel", 1),
+                experiencia_total=dados_personagem.get("experiencia_total", 0),
+                pontos_disponiveis=dados_personagem.get("pontos_disponiveis", 10),
                 nome_classe=dados_personagem["classe"]
             )
+
+            personagem.habilidades = self.__personagemController.habilidades_por_classe.get(dados_personagem["classe"], [])
+            personagem.classes_historico = [dados_personagem["classe"]]
+
+            self.__personagemController.personagens.append(personagem)
             self.__sistema.adicionar_personagem(personagem)
-            time.sleep(1)
+            
+            self.__sistemaView.mostrar_mensagem(
+                f"Personagem {personagem.nome} da classe {personagem.classe_personagem.nome_classe} criado com sucesso! "
+                f"Nível: {personagem.nivel}, Experiência: {personagem.experiencia_total}"
+            )
+            time.sleep(2)
+
+            self.menu_principal_personagem(personagem)
+        
         except CadastroInvalidoException as e:
             self.__sistemaView.mostrar_mensagem(str(e))
+        except Exception as e:
+            self.__sistemaView.mostrar_mensagem(f"Erro inesperado: {str(e)}")
+
 
     def salvar_personagens(self):
         try:
@@ -117,18 +135,21 @@ class SistemaControllerr:
             with open(self.__arquivo_personagens, 'r') as arquivo:
                 personagens_carregados = json.load(arquivo)
                 for dados_personagem in personagens_carregados:
-                    personagem = self.__personagemController.cadastrar_personagem(
+                    personagem = self.__personagemController.criar_personagem(
                         nome=dados_personagem['nome'],
                         nivel=dados_personagem.get('nivel', 1),
                         experiencia_total=dados_personagem.get('experiencia_total', 0),
-                        nome_classe=dados_personagem['classe'],
                         pontos_disponiveis=dados_personagem.get('pontos_disponiveis', 0),
-                        exibir_mensagem=False
+                        nome_classe=dados_personagem['classe']
                     )
+                    
                     personagem.pocao_hp.quant = dados_personagem.get('pocoes_hp', 0)
                     personagem.pocao_est.quant = dados_personagem.get('pocoes_est', 0)
                     personagem.classe_personagem.atributos.update(dados_personagem.get('atributos', {}))
                     personagem.classes_historico = dados_personagem.get('classes_historico', [])
+
+                    self.__personagemController.personagens.append(personagem)
+
                 self.__sistemaView.mostrar_mensagem(f"{len(personagens_carregados)} personagens carregados com sucesso!")
                 time.sleep(2)
         except (FileNotFoundError, json.JSONDecodeError) as e:
@@ -202,7 +223,6 @@ class SistemaControllerr:
 
                 if opcao == '1':
                     self.cadastrar_personagem()
-                    self.menu_principal_personagem()
                 elif opcao == '2':
                     personagem = self.selecionar_personagem()
                     if personagem:
