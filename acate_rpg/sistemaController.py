@@ -121,7 +121,8 @@ class SistemaControllerr:
                     'pontos_disponiveis': personagem.pontos_disponiveis,
                     'pocoes_hp': personagem.pocao_hp.quant,
                     'pocoes_est': personagem.pocao_est.quant,
-                    'atributos': personagem.classe_personagem.atributos
+                    'atributos': personagem.classe_personagem.atributos,
+                    'cursos_conquistados': personagem.cursos_conquistados
                 })
             with open(self.__arquivo_personagens, 'w') as arquivo:
                 json.dump(personagens_salvar, arquivo, indent=4)
@@ -140,7 +141,9 @@ class SistemaControllerr:
                         nivel=dados_personagem.get('nivel', 1),
                         experiencia_total=dados_personagem.get('experiencia_total', 0),
                         pontos_disponiveis=dados_personagem.get('pontos_disponiveis', 0),
-                        nome_classe=dados_personagem['classe']
+                        nome_classe=dados_personagem['classe'],
+                        dungeons_conquistadas=dados_personagem.get('dungeons_conquistadas', 0),
+                        cursos_conquistados=dados_personagem.get('cursos_conquistados', 0)
                     )
                     
                     personagem.pocao_hp.quant = dados_personagem.get('pocoes_hp', 0)
@@ -256,7 +259,9 @@ class SistemaControllerr:
                     if dungeon_selecionada:
                         self.__batalhaController.iniciar_batalha(personagem, dungeon_selecionada)
                 elif opcao == '3':
-                    self.__quizController.realizar_quiz()
+                    resultado = self.__quizController.realizar_quiz()
+                    if resultado == True:
+                        self.__personagemController.incrementar_curso(personagem)
                 elif opcao == '0':
                     self.menu_jogador()
                 else:

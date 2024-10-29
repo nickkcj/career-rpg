@@ -14,7 +14,8 @@
             "defesa": 0,
             "hp": 30,
             "estamina": 0
-        }
+        },
+        "cursos_conquistados": 0
     },
     {
         "nome": "kaka",
@@ -35,10 +36,11 @@
             "defesa": 10,
             "hp": 50,
             "estamina": 35
-        }
+        },
+        "cursos_conquistados": 0
     },
     {
-        "nome": "pel\u00e9",
+        "nome": "pel\u00c3\u00a9",
         "nivel": 32,
         "experiencia_total": 8200,
         "classe": "CLT",
@@ -56,7 +58,8 @@
             "defesa": 10,
             "hp": 60,
             "estamina": 30
-        }
+        },
+        "cursos_conquistados": 0
     },
     {
         "nome": "xamuel",
@@ -77,7 +80,8 @@
             "defesa": 10,
             "hp": 60,
             "estamina": 35
-        }
+        },
+        "cursos_conquistados": 2
     },
     {
         "nome": "romario",
@@ -96,7 +100,8 @@
             "defesa": 0,
             "hp": 0,
             "estamina": 0
-        }
+        },
+        "cursos_conquistados": 0
     },
     {
         "nome": "xamazin timaseta",
@@ -117,7 +122,8 @@
             "defesa": 10,
             "hp": 50,
             "estamina": 35
-        }
+        },
+        "cursos_conquistados": 0
     },
     {
         "nome": "puterrier",
@@ -136,7 +142,8 @@
             "defesa": 0,
             "hp": 0,
             "estamina": 0
-        }
+        },
+        "cursos_conquistados": 0
     },
     {
         "nome": "dunha",
@@ -155,7 +162,8 @@
             "defesa": 0,
             "hp": 0,
             "estamina": 0
-        }
+        },
+        "cursos_conquistados": 0
     },
     {
         "nome": "maradona",
@@ -174,7 +182,8 @@
             "defesa": 0,
             "hp": 0,
             "estamina": 0
-        }
+        },
+        "cursos_conquistados": 0
     },
     {
         "nome": "segovinha",
@@ -184,18 +193,7 @@
         "classes_historico": [
             "Estagiario"
         ],
-        "habilidades": [
-            {
-                "nome": "Cagada Remunerada",
-                "efeito": "Aumenta o HP do personagem",
-                "tipo": "buff"
-            },
-            {
-                "nome": "Desestabilizar Boss",
-                "efeito": "Reduz a Defesa do boss",
-                "tipo": "debuff"
-            }
-        ],
+        "habilidades": [],
         "pontos_disponiveis": 10,
         "pocoes_hp": 3,
         "pocoes_est": 3,
@@ -204,7 +202,8 @@
             "defesa": 0,
             "hp": 0,
             "estamina": 0
-        }
+        },
+        "cursos_conquistados": 0
     },
     {
         "nome": "1",
@@ -214,18 +213,7 @@
         "classes_historico": [
             "CLT"
         ],
-        "habilidades": [
-            {
-                "nome": "Festa da Firma",
-                "efeito": "Aumenta o Ataque do personagem",
-                "tipo": "buff"
-            },
-            {
-                "nome": "Ataque Corporativo",
-                "efeito": "Dano direto ao HP do boss",
-                "tipo": "dano"
-            }
-        ],
+        "habilidades": [],
         "pontos_disponiveis": 10,
         "pocoes_hp": 3,
         "pocoes_est": 3,
@@ -234,6 +222,7 @@
             "defesa": 0,
             "hp": 0,
             "estamina": 0
-        }
+        },
+        "cursos_conquistados": 0
     }
 ]

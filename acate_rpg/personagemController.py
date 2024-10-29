@@ -47,13 +47,15 @@ class PersonagemController:
                 return personagem
         return None
 
-    def criar_personagem(self, nome, nivel, experiencia_total, pontos_disponiveis, nome_classe):
+    def criar_personagem(self, nome, nivel, experiencia_total, pontos_disponiveis, nome_classe, dungeons_conquistadas, cursos_conquistados):
         return Personagem(
             nome=nome,
             nivel=nivel,
             experiencia_total=experiencia_total,
             pontos_disponiveis=pontos_disponiveis,
-            nome_classe=nome_classe
+            nome_classe=nome_classe,
+            dungeons_conquistadas=dungeons_conquistadas,
+            cursos_conquistados=cursos_conquistados
         )
 
     def mostrar_habilidades(self, personagem: Personagem):
@@ -75,6 +77,9 @@ class PersonagemController:
             experiencia_para_proximo = 100 + (nivel * 10)
 
         return nivel
+    
+    def incrementar_curso(self, personagem: Personagem):
+        personagem.cursos_conquistados += 1
 
     def experiencia_para_proximo_nivel(self, personagem: Personagem):
         nivel_atual = self.calcular_nivel(personagem.experiencia_total)
@@ -157,7 +162,8 @@ class PersonagemController:
                 'hp': personagem.classe_personagem.atributos['hp'],
                 'estamina': personagem.classe_personagem.atributos['estamina'],
                 'pocoes_hp': personagem.pocao_hp.quant,
-                'pocoes_est': personagem.pocao_est.quant
+                'pocoes_est': personagem.pocao_est.quant,
+                'cursos_conquistados': personagem.cursos_conquistados
             }
             self.__personagemView.mostrar_status(status)
         except KeyError as e:

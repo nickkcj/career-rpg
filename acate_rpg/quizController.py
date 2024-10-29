@@ -1,9 +1,12 @@
 from quiz import Quiz
 from quizView import QuizView
 from cursoView import CursoView
+from personagemController import PersonagemController
+
 
 class QuizController():
     def __init__(self):
+
         self.__quizrh = {
     "1": {
         "a": "Aumentar o número de funcionários",
@@ -715,7 +718,7 @@ class QuizController():
         "resposta": "b"
     }
 }
-
+        self.__personagemController = PersonagemController()
         self.__quizView = QuizView()
         self.__cursoView = CursoView()
         
@@ -728,21 +731,28 @@ class QuizController():
                 dificuldade = curso.dificuldade
 
         if setor == "RH":
-           pontos = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizrh)
+           resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizrh)
 
 
         elif setor == "Financeiro":
-           pontos = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizfin)
+           resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizfin)
 
         elif setor == "Marketing":
-           pontos = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizmark)
+           resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizmark)
 
         
         elif setor == "T.I":
-           pontos = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizti)
+           resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizti)
 
 
         elif setor == "Vendas":
-            pontos = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizvendas)
+           resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizvendas)
+
+        return resultado
+
+        
+
+            
+
            
        
