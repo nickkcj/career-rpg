@@ -11,9 +11,9 @@ class DungeonView():
     
 
     def mostra_mensagem(self,mensagem):
-        print("\n")
+        print("****************************************")
         print(mensagem) 
-
+        print("****************************************")
 
     def listar_dungeons(self, dungeons):
         print("\n")
@@ -26,7 +26,7 @@ class DungeonView():
 
            print("Setores:")
            for setor in dungeon.setores:
-                print(f"  - Nome: {setor.nome}, Dificuldade: {setor.dificuldade}")
+                print(f"  - Nome: {setor['nome']}, Dificuldade: {setor['dificuldade']}")
 
            print("\n")
 

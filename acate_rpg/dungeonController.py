@@ -1,13 +1,37 @@
 import time
+import json
 from dungeonView import DungeonView
 from dungeon import Dungeon
 from setorController import SetorController
 import os
 class DungeonController():
     def __init__(self):
-        self.__dungeons = []
+        self.dungeons = []
         self.__dungeonView = DungeonView()
         self.__setorController = SetorController()
+
+    def carregar_dungeons(self, caminho_arquivo="dungeons.json"):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        try:
+            with open(caminho_arquivo, "r") as arquivo:
+                dados_dungeon = json.load(arquivo)
+
+                for dados in dados_dungeon:
+                    dungeon = Dungeon(
+                        nome=dados["nome"],
+                        nivel_requerido=dados["nivel_requerido"],
+                        xp_ganho=dados["xp_ganho"],
+                        dificuldade=dados["dificuldade"],
+                        conquistada=dados["conquistada"],
+                        setores=dados["setores"]
+                    )
+                    self.dungeons.append(dungeon)
+
+                self.__dungeonView.mostra_mensagem("Dungeons carregadas com sucesso.")
+                time.sleep(2)
+        
+        except Exception as e:
+            self.__dungeonView.mostra_mensagem(f"Erro ao carregar dungeons: {e}")
 
     def cadastrar_dungeon(self):
         while True:
@@ -51,7 +75,7 @@ class DungeonController():
 
                 dificuldade = round(self.__setorController.calcular_media_dificuldades(setores), 1)
                 dungeon = Dungeon(dados_dungeon["nome"], nivel_requerido, xp_ganho, dificuldade, setores, dados_dungeon["status"])
-                self.__dungeons.append(dungeon)
+                self.dungeons.append(dungeon)
 
                 self.__dungeonView.mostra_mensagem(f"A dungeon {dados_dungeon['nome']} foi cadastrada com sucesso")
                 time.sleep(3)
@@ -62,5 +86,5 @@ class DungeonController():
 
 
     def mostrar_dungeons(self):
-        self.__dungeonView.listar_dungeons(self.__dungeons)
+        self.__dungeonView.listar_dungeons(self.dungeons)
 

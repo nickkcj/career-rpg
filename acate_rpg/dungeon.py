@@ -7,7 +7,7 @@ class Dungeon(Setor):
         self._xp_ganho = xp_ganho
         self._dificuldade = dificuldade
         self._conquistada = conquistada
-        self.setores = setores if setores else []
+        self.setores = setores
 
 
     @property

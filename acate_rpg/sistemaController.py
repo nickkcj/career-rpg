@@ -26,9 +26,10 @@ class SistemaControllerr:
         self.__dungeonController = DungeonController()
         self.__batalhaController = BatalhaController(self)
         self.__quizController._QuizController__cursoController = self.__cursoController
-        
         self.__arquivo_personagens = "personagens.json"
         self.carregar_personagens()
+        self.carregar_cursos()
+        self.carregar_dungeons()
 
 
     @property
@@ -57,6 +58,15 @@ class SistemaControllerr:
     
     def limpar_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
+
+    def carregar_cursos(self):
+        self.__cursoController.carregar_cursos()
+
+
+    def carregar_dungeons(self):
+        self.__dungeonController.carregar_dungeons()
+        
+
 
     def cadastrar_personagem(self):
         try:

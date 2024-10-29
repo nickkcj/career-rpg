@@ -1,14 +1,14 @@
 from quiz import Quiz
 
 class Curso(Quiz):
-    def __init__(self, nome, nivel_requerido, xp_ganho, setor, dificuldade, realizado=False, acertos: Quiz=0):
+    def __init__(self, nome, nivel_requerido, xp_ganho, setor, dificuldade, realizado=False):
         self._nome = nome
         self._nivel_requerido = nivel_requerido
         self._xp_ganho = xp_ganho
         self._setor = setor
         self._dificuldade = dificuldade
         self._realizado = realizado
-        self._acertos = acertos
+ 
 
 
     @property
@@ -58,16 +58,5 @@ class Curso(Quiz):
     @realizado.setter
     def realizado(self, realizado):
         self._realizado = realizado
-
-    @property
-    def acertos(self):
-        return self._acertos
-
-    @acertos.setter
-    def acertos(self, acertos):
-        self._acertos = acertos
-
-    def realizar_quiz(self, gabarito):
-        pass
 
     

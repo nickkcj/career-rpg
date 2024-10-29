@@ -1,0 +1,137 @@
+[
+    {
+        "nome": "AUTOJUN",
+        "nivel_requerido": 1,
+        "xp_ganho": 300,
+        "setores": [
+            {
+                "nome": "RH",
+                "dificuldade": 1
+            },
+            {
+                "nome": "Financeiro",
+                "dificuldade": 1
+            }
+        ],
+        "dificuldade": 1,
+        "conquistada": false
+    },
+    {
+        "nome": "Labirinto Corporativo",
+        "nivel_requerido": 5,
+        "xp_ganho": 500,
+        "setores": [
+            {
+                "nome": "RH",
+                "dificuldade": 2
+            },
+            {
+                "nome": "Financeiro",
+                "dificuldade": 4
+            }
+        ],
+        "dificuldade": 3,
+        "conquistada": false
+    },
+    {
+        "nome": "Desafios da TI",
+        "nivel_requerido": 8,
+        "xp_ganho": 800,
+        "setores": [
+            {
+                "nome": "T.I",
+                "dificuldade": 5
+            },
+            {
+                "nome": "Vendas",
+                "dificuldade": 3
+            }
+        ],
+        "dificuldade": 4,
+        "conquistada": false
+    },
+    {
+        "nome": "Castelo do Marketing",
+        "nivel_requerido": 12,
+        "xp_ganho": 1000,
+        "setores": [
+            {
+                "nome": "Marketing",
+                "dificuldade": 7
+            },
+            {
+                "nome": "Financeiro",
+                "dificuldade": 5
+            },
+            {
+                "nome": "RH",
+                "dificuldade": 6
+            }
+        ],
+        "dificuldade": 6,
+        "conquistada": true
+    },
+    {
+        "nome": "Covil da Auditoria",
+        "nivel_requerido": 10,
+        "xp_ganho": 750,
+        "setores": [
+            {
+                "nome": "Financeiro",
+                "dificuldade": 6
+            },
+            {
+                "nome": "T.I",
+                "dificuldade": 4
+            }
+        ],
+        "dificuldade": 5,
+        "conquistada": false
+    },
+    {
+        "nome": "ACATE",
+        "nivel_requerido": 15,
+        "xp_ganho": 1200,
+        "setores": [
+            {
+                "nome": "RH",
+                "dificuldade": 6
+            },
+            {
+                "nome": "Vendas",
+                "dificuldade": 7
+            },
+            {
+                "nome": "Marketing",
+                "dificuldade": 5
+            }
+        ],
+        "dificuldade": 6,
+        "conquistada": false
+    },
+    {
+        "nome": "Tech Solutions",
+        "nivel_requerido": 20,
+        "xp_ganho": 1500,
+        "setores": [
+            {
+                "nome": "RH",
+                "dificuldade": 8
+            },
+            {
+                "nome": "T.I",
+                "dificuldade": 7
+            },
+            {
+                "nome": "Financeiro",
+                "dificuldade": 7
+            },
+            {
+                "nome": "Marketing",
+                "dificuldade": 6
+            }
+        ],
+        "dificuldade": 7,
+        "conquistada": false
+    }
+]

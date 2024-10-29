@@ -1,0 +1,58 @@
+[
+    {
+        "nome": "Introducao ao RH",
+        "nivel_requerido": 1,
+        "xp_ganho": 100,
+        "setor": "RH",
+        "dificuldade": 2,
+        "realizado": false
+    },
+    {
+        "nome": "Fundamentos de T.I",
+        "nivel_requerido": 3,
+        "xp_ganho": 200,
+        "setor": "T.I",
+        "dificuldade": 4,
+        "realizado": false
+    },
+    {
+        "nome": "Tecnicas Avancadas de Marketing",
+        "nivel_requerido": 5,
+        "xp_ganho": 300,
+        "setor": "Marketing",
+        "dificuldade": 5,
+        "realizado": false
+    },
+    {
+        "nome": "Gestao Financeira Corporativa",
+        "nivel_requerido": 7,
+        "xp_ganho": 400,
+        "setor": "Financeiro",
+        "dificuldade": 6,
+        "realizado": false
+    },
+    {
+        "nome": "Estrategias em Vendas",
+        "nivel_requerido": 10,
+        "xp_ganho": 500,
+        "setor": "Vendas",
+        "dificuldade": 7,
+        "realizado": false
+    },
+    {
+        "nome": "Compliance e Regulamentacao",
+        "nivel_requerido": 12,
+        "xp_ganho": 600,
+        "setor": "RH",
+        "dificuldade": 8,
+        "realizado": false
+    },
+    {
+        "nome": "Inovacao e Transformacao Digital",
+        "nivel_requerido": 15,
+        "xp_ganho": 750,
+        "setor": "T.I",
+        "dificuldade": 9,
+        "realizado": false
+    }
+]

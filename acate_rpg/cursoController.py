@@ -1,3 +1,5 @@
+import json
+import os
 from curso import Curso
 from cursoView import CursoView
 from exceptions import NivelRequeridoInvalidoError, SetorInvalidoError, DificuldadeInvalidaError, XpGanhoInvalidoError
@@ -5,6 +7,30 @@ class CursoController():
     def __init__(self):
         self.cursos = []
         self.__cursoView = CursoView()
+
+    def carregar_cursos(self, caminho_arquivo = "cursos.json"):
+            os.system('cls' if os.name == 'nt' else 'clear')
+            try:
+                with open(caminho_arquivo, "r") as arquivo:
+                    dados_curso = json.load(arquivo)
+
+                    for dados in dados_curso:
+                        curso = Curso(
+                            nome=dados["nome"],
+                            nivel_requerido=dados["nivel_requerido"],
+                            xp_ganho=dados["xp_ganho"],
+                            setor=dados["setor"],
+                            dificuldade=dados["dificuldade"],
+                            realizado=dados["realizado"]
+                        )
+                        self.cursos.append(curso)
+
+                self.__cursoView.mostra_mensagem("Cursos carregados com sucesso.")
+
+            except Exception as e:
+                print(e)
+
+            
 
     def cadastrar_curso(self):
         while True:  
@@ -16,8 +42,6 @@ class CursoController():
                 dados_curso["xp_ganho"] = int(dados_curso["xp_ganho"])
             except XpGanhoInvalidoError as e:
                 erros.append(str(e))
-
-            
             try:
                 if not dados_curso["nivel_requerido"].isdigit():  
                     raise NivelRequeridoInvalidoError("O nível requerido deve ser um número inteiro entre 1 e 10.")
@@ -27,7 +51,7 @@ class CursoController():
             except NivelRequeridoInvalidoError as e:
                 erros.append(str(e))
 
-            
+                
             setores_validos = ["RH", "T.I", "Vendas", "Marketing", "Financeiro"]
             try:
                 if dados_curso.get("setor") not in setores_validos:
@@ -35,7 +59,7 @@ class CursoController():
             except SetorInvalidoError as e:
                 erros.append(str(e))
 
-            
+                
             try:
                 if not dados_curso["dificuldade"].isdigit():  
                     raise DificuldadeInvalidaError("A dificuldade deve ser um número inteiro entre 1 e 10.")
@@ -45,12 +69,12 @@ class CursoController():
             except DificuldadeInvalidaError as e:
                 erros.append(str(e))
 
-            
+                
             if erros:
                 mensagem_erro = "Erros ao cadastrar curso:\n" + "\n".join(erros)
                 self.__cursoView.mostra_mensagem(mensagem_erro)
             else:
-                
+                    
                 curso = Curso(
                     dados_curso["nome"], 
                     dados_curso["nivel_requerido"], 

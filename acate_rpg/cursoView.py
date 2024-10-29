@@ -22,8 +22,9 @@ class CursoView():
 
 
     def mostra_mensagem(self,mensagem):
+        print("****************************************")
         print(mensagem)
-
+        print("****************************************")
         time.sleep(2)
         os.system('cls' if os.name == 'nt' else 'clear')
 
