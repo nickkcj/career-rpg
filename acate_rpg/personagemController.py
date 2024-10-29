@@ -25,14 +25,18 @@ class PersonagemController:
         }
 
         self.__niveis_para_evolucao = {
-            "Trainee": 10,
-            "Estagiario": 25
+            "Trainee": 20,
+            "Estagiario": 50
         }
 
     @property
     def personagens(self):
         return self.__personagens
-    
+
+    @property
+    def habilidades_por_classe(self):
+        return self.__habilidades_por_classe
+
     @property
     def niveis_para_evolucao(self):
         return self.__niveis_para_evolucao
@@ -43,29 +47,14 @@ class PersonagemController:
                 return personagem
         return None
 
-    def cadastrar_personagem(self, nome, nivel=1, experiencia_total=0, pontos_disponiveis=10, nome_classe="", exibir_mensagem=True):
-        try:
-            if self.pega_personagem_por_nome(nome) is not None:
-                raise CadastroInvalidoException(entidade="Personagem", campo="nome")
-
-            personagem = Personagem(
-                nome=nome,
-                nivel=nivel,
-                experiencia_total=experiencia_total,
-                pontos_disponiveis=pontos_disponiveis,
-                nome_classe=nome_classe
-            )
-            personagem.habilidades = self.__habilidades_por_classe.get(nome_classe, [])
-            self.__personagens.append(personagem)
-
-            if exibir_mensagem:
-                self.__personagemView.mostrar_mensagem(
-                    f"Personagem {nome} da classe {nome_classe} criado com sucesso! Nível: {nivel}, Experiência: {experiencia_total}"
-                )
-                time.sleep(2)
-            return personagem
-        except CadastroInvalidoException as e:
-            self.__personagemView.mostrar_mensagem(str(e))
+    def criar_personagem(self, nome, nivel, experiencia_total, pontos_disponiveis, nome_classe):
+        return Personagem(
+            nome=nome,
+            nivel=nivel,
+            experiencia_total=experiencia_total,
+            pontos_disponiveis=pontos_disponiveis,
+            nome_classe=nome_classe
+        )
 
     def mostrar_habilidades(self, personagem: Personagem):
         habilidades_por_classe = {}
