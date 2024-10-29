@@ -61,33 +61,34 @@
     },
     {
         "nome": "pel\u00e9",
-        "nivel": 14,
-        "experiencia_total": 2200,
-        "classe": "Estagiario",
+        "nivel": 32,
+        "experiencia_total": 8200,
+        "classe": "CLT",
         "classes_historico": [
             "Trainee",
-            "Estagiario"
+            "Estagiario",
+            "CLT"
         ],
         "habilidades": [
             {
-                "nome": "Cagada Remunerada",
-                "efeito": "Aumenta o HP do personagem",
+                "nome": "Festa da Firma",
+                "efeito": "Aumenta o Ataque do personagem",
                 "tipo": "buff"
             },
             {
-                "nome": "Desestabilizar Boss",
-                "efeito": "Reduz a Defesa do boss",
-                "tipo": "debuff"
+                "nome": "Ataque Corporativo",
+                "efeito": "Dano direto ao HP do boss",
+                "tipo": "dano"
             }
         ],
-        "pontos_disponiveis": 65,
+        "pontos_disponiveis": 155,
         "pocoes_hp": 2,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 15,
-            "defesa": 5,
-            "hp": 35,
-            "estamina": 15
+            "ataque": 20,
+            "defesa": 10,
+            "hp": 60,
+            "estamina": 30
         }
     },
     {
@@ -101,26 +102,6 @@
             "CLT"
         ],
         "habilidades": [
-            {
-                "nome": "Hora Extra",
-                "efeito": "Aumenta a Estamina temporariamente",
-                "tipo": "buff"
-            },
-            {
-                "nome": "Desmotivar Inimigo",
-                "efeito": "Reduz o Ataque do boss",
-                "tipo": "debuff"
-            },
-            {
-                "nome": "Cagada Remunerada",
-                "efeito": "Aumenta o HP do personagem",
-                "tipo": "buff"
-            },
-            {
-                "nome": "Desestabilizar Boss",
-                "efeito": "Reduz a Defesa do boss",
-                "tipo": "debuff"
-            },
             {
                 "nome": "Festa da Firma",
                 "efeito": "Aumenta o Ataque do personagem",
@@ -140,6 +121,128 @@
             "defesa": 10,
             "hp": 60,
             "estamina": 35
+        }
+    },
+    {
+        "nome": "romario",
+        "nivel": 13,
+        "experiencia_total": 2000,
+        "classe": "CLT",
+        "classes_historico": [
+            "CLT"
+        ],
+        "habilidades": [
+            {
+                "nome": "Festa da Firma",
+                "efeito": "Aumenta o Ataque do personagem",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Ataque Corporativo",
+                "efeito": "Dano direto ao HP do boss",
+                "tipo": "dano"
+            }
+        ],
+        "pontos_disponiveis": 70,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 0,
+            "defesa": 0,
+            "hp": 0,
+            "estamina": 0
+        }
+    },
+    {
+        "nome": "xamazin timaseta",
+        "nivel": 29,
+        "experiencia_total": 7000,
+        "classe": "CLT",
+        "classes_historico": [
+            "Trainee",
+            "Estagiario",
+            "CLT"
+        ],
+        "habilidades": [
+            {
+                "nome": "Festa da Firma",
+                "efeito": "Aumenta o Ataque do personagem",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Ataque Corporativo",
+                "efeito": "Dano direto ao HP do boss",
+                "tipo": "dano"
+            }
+        ],
+        "pontos_disponiveis": 140,
+        "pocoes_hp": 3,
+        "pocoes_est": 2,
+        "atributos": {
+            "ataque": 20,
+            "defesa": 10,
+            "hp": 50,
+            "estamina": 35
+        }
+    },
+    {
+        "nome": "puterrier",
+        "nivel": 1,
+        "experiencia_total": 0,
+        "classe": "Trainee",
+        "classes_historico": [
+            "Trainee"
+        ],
+        "habilidades": [
+            {
+                "nome": "Hora Extra",
+                "efeito": "Aumenta a Estamina temporariamente",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Desmotivar Inimigo",
+                "efeito": "Reduz o Ataque do boss",
+                "tipo": "debuff"
+            }
+        ],
+        "pontos_disponiveis": 10,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 0,
+            "defesa": 0,
+            "hp": 0,
+            "estamina": 0
+        }
+    },
+    {
+        "nome": "dunha",
+        "nivel": 1,
+        "experiencia_total": 0,
+        "classe": "Trainee",
+        "classes_historico": [
+            "Trainee"
+        ],
+        "habilidades": [
+            {
+                "nome": "Hora Extra",
+                "efeito": "Aumenta a Estamina temporariamente",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Desmotivar Inimigo",
+                "efeito": "Reduz o Ataque do boss",
+                "tipo": "debuff"
+            }
+        ],
+        "pontos_disponiveis": 10,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 0,
+            "defesa": 0,
+            "hp": 0,
+            "estamina": 0
         }
     }
 ]

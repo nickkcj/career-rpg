@@ -167,7 +167,7 @@ class SistemaControllerr:
                 opcao = self.__sistemaView.pegar_opcao()
 
                 if opcao == '1':
-                    self.menu_personagem()
+                    self.menu_jogador()
                 elif opcao == '2':
                     self.__dungeonController.cadastrar_dungeon()
                 elif opcao == '0':
@@ -183,21 +183,21 @@ class SistemaControllerr:
             except ValueError:
                 self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
 
-    def menu_personagem(self):
+    def menu_jogador(self):
         self.limpar_terminal()
         while True:
             try:
-                self.__sistemaView.menu_personagem()
+                self.__sistemaView.menu_jogador()
                 opcao = self.__sistemaView.pegar_opcao()
 
                 if opcao == '1':
                     self.cadastrar_personagem()
-                    self.opcoes_personagem
+                    self.menu_principal_personagem()
                 elif opcao == '2':
                     personagem = self.selecionar_personagem()
                     if personagem:
                         self.mostrar_status(personagem)
-                        self.opcoes_personagem(personagem)
+                        self.menu_principal_personagem(personagem)
                 elif opcao == '0':
                     self.salvar_personagens()
                     self.__sistemaView.mostrar_mensagem("Voltando ao menu inicial...")
@@ -205,6 +205,32 @@ class SistemaControllerr:
                     self.menu_usuario()
                 else:
                     raise OperacaoNaoPermitidaException(operacao="Escolha de opção no menu de usuario")
+            except OperacaoNaoPermitidaException as e:
+                self.__sistemaView.mostrar_mensagem(str(e))
+                time.sleep(2)
+            except ValueError:
+                self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
+
+    def menu_principal_personagem(self, personagem):
+        while True:
+            try:
+                self.limpar_terminal()
+                self.__sistemaView.menu_principal_personagem(personagem.nome)
+                opcao = self.__sistemaView.pegar_opcao()
+
+                if opcao == '1':
+                    self.opcoes_personagem(personagem)
+                elif opcao == '2':
+                    self.__dungeonController.mostrar_dungeons()
+                    dungeon_selecionada = self.selecionar_dungeon()
+                    if dungeon_selecionada:
+                        self.__batalhaController.iniciar_batalha(personagem, dungeon_selecionada)
+                elif opcao == '3':
+                    self.__quizController.realizar_quiz()
+                elif opcao == '0':
+                    self.menu_jogador()
+                else:
+                    raise OperacaoNaoPermitidaException(operacao="Escolha de opção no menu principal")
             except OperacaoNaoPermitidaException as e:
                 self.__sistemaView.mostrar_mensagem(str(e))
                 time.sleep(2)
@@ -229,9 +255,9 @@ class SistemaControllerr:
                     experiencia_ganha = int(input("Digite a quantidade de experiência a ganhar: "))
                     self.__personagemController.ganhar_experiencia(personagem, experiencia_ganha)
                 elif opcao == '6':
-                    self.menu_personagem()
+                    self.menu_principal_personagem(personagem)
                 elif opcao == '0':
-                    self.menu_personagem()
+                    self.menu_jogador()
                 else:
                     raise OperacaoNaoPermitidaException(operacao="Escolha de opção no menu de personagem")
             except OperacaoNaoPermitidaException as e:
@@ -240,7 +266,18 @@ class SistemaControllerr:
             except ValueError:
                 self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
 
-    def menu_dungeons(self):
+    def selecionar_dungeon(self):
+        try:
+            nome_dungeon = self.__sistemaView.pegar_opcao()
+            for dungeon in self.__dungeonController.dungeons:
+                if dungeon.nome == nome_dungeon and not dungeon.conquistada:
+                    return dungeon
+            raise OperacaoNaoPermitidaException(operacao="Selecionar Dungeon")
+        except OperacaoNaoPermitidaException as e:
+            self.__sistemaView.mostrar_mensagem(str(e))
+            return None
+
+    def menu_dungeons_empresa(self):
         self.limpar_terminal()
         while True:
             opcao = input("\nMenu de Dungeons:\n1. Cadastrar Dungeon\n2. Ver Dungeons\n3. Voltar\nEscolha uma opção: ")
@@ -254,7 +291,7 @@ class SistemaControllerr:
             elif opcao == '3':
                 self.menu_principal()
 
-    def menu_curso(self):
+    def menu_curso_empresa(self):
         self.limpar_terminal()
         while True:
             opcao = input("\nMenu de Cursos:\n1. Lista de Cursos\n2. Cadastrar Curso\n3. Alterar Curso\n4. Excluir Curso\n5. Voltar\nEscolha uma opção: ")
@@ -271,7 +308,7 @@ class SistemaControllerr:
             elif opcao == '5':
                 self.menu_principal()
 
-    def menu_bosses(self):
+    def menu_bosses_empresa(self):
         self.limpar_terminal()
         while True:
             opcao = input("\nMenu de Bosses:\n1. Cadastrar Boss\n2. Voltar\nEscolha uma opção: ")

@@ -30,5 +30,9 @@ class DungeonView():
 
            print("\n")
 
+    def seleciona_dungeon(self):
+        print("Digite o nome da Dungeon que deseja selecionar:")
+        return input("Nome da Dungeon: ").strip()
+
 
         

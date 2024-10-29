@@ -68,7 +68,13 @@ class PersonagemController:
             self.__personagemView.mostrar_mensagem(str(e))
 
     def mostrar_habilidades(self, personagem: Personagem):
-        self.__personagemView.mostrar_habilidades(personagem.habilidades)
+        habilidades_por_classe = {}
+
+        for classe in personagem.classes_historico:
+            habilidades_classe = [habilidade for habilidade in self.__habilidades_por_classe.get(classe, [])]
+            habilidades_por_classe[classe] = habilidades_classe
+
+        self.__personagemView.mostrar_habilidades(habilidades_por_classe)
 
     def calcular_nivel(self, experiencia_total):
         nivel = 1
@@ -128,10 +134,17 @@ class PersonagemController:
                 personagem.classe_personagem.atributos['hp'] += 25
                 personagem.classe_personagem.atributos['estamina'] += 15
                 
-                personagem.habilidades.extend(self.__habilidades_por_classe[nova_classe])
+                novas_habilidades = self.__habilidades_por_classe[nova_classe]
+                personagem.habilidades.extend(novas_habilidades)
                 personagem.classes_historico.append(nova_classe)
+
                 self.__personagemView.mostrar_mensagem(f"{personagem.nome} evoluiu para {nova_classe}!")
                 time.sleep(1)
+                self.__personagemView.mostrar_mensagem(f"Novas habilidades adquiridas por {nova_classe}:")
+
+                for habilidade in novas_habilidades:
+                    self.__personagemView.mostrar_mensagem(f" - {habilidade['nome']}: {habilidade['efeito']}")
+                    time.sleep(1)
             else:
                 self.__personagemView.mostrar_mensagem(
                     f"{personagem.nome} precisa estar no nível {nivel_necessario} para evoluir para {nova_classe}."

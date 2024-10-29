@@ -2,8 +2,11 @@ import os
 import time
 class PersonagemView():
 
-    def mostrar_status(self, dados_personagem):
+    def limpar_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
+
+    def mostrar_status(self, dados_personagem):
+        self.limpar_terminal()
         print("-------- STATUS ----------")
         print(f"Nome: {dados_personagem['nome']}")
         print(f"Nome: {dados_personagem['classe']}")
@@ -19,7 +22,7 @@ class PersonagemView():
         print(f"Poções de Estamina: {dados_personagem['pocoes_est']}")
 
     def escolher_atributo(self):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        self.limpar_terminal()
         print("-------- UPAR ATRIBUTOS ----------")
         print("Escolha o atributo para aumentar:")
         print("1 - Ataque")
@@ -36,14 +39,14 @@ class PersonagemView():
         return pontos
     
     def escolher_item(self):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        self.limpar_terminal()
         print("Escolha o item para usar:")
         print("1 - Poção de HP")
         print("2 - Poção de Estamina")
         return int(input("Digite o número do item: "))
 
     def escolher_habilidade(self):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        self.limpar_terminal()
         print("Escolha a habilidade:")
         print("1 - hab1")
         print("2 - hab2")
@@ -52,15 +55,19 @@ class PersonagemView():
         # a primeira habilidade, enquanto o estagiario tem a primeira e a segunda, e o CLT tem a primeira, segunda e a terceira.
         return int(input("Digite o número da habilidade: "))
 
-    def mostrar_habilidades(self, habilidades):
-        os.system('cls' if os.name == 'nt' else 'clear')
+    def mostrar_habilidades(self, habilidades_por_classe):
+        self.limpar_terminal()
         print("--------- HABILIDADES DO PERSONAGEM ---------")
-        for habilidade in habilidades:
-            print(f"{habilidade['nome']} - {habilidade['efeito']} ({habilidade['tipo']})")
+
+        for classe, habilidades in habilidades_por_classe.items():
+            print(f"\n{classe}:")
+            for habilidade in habilidades:
+                print(f" - {habilidade['nome']} - {habilidade['efeito']} ({habilidade['tipo']})")
+        
         input("\nPressione Enter para voltar ao menu.")
 
     def mostrar_mensagem(self, msg):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        self.limpar_terminal()
         print("****************************************")
         print(msg)
         print("****************************************")

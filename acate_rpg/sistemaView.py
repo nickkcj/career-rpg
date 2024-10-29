@@ -12,21 +12,28 @@ class SistemaView:
         print("0 - Nah, sair")
         print("")
 
-    def menu_principal(self):
+    def menu_principal_empresa(self):
         print("----------MENU PRINCIPAL---------")
         print("Bem vindo ao RPG do Mercado de Trabalho!!")
         print("1. Gerenciar Cursos")
-        print("2. Realizar Quiz")
-        print("3. Gerenciar Personagens")
-        print("4. Gerenciar Dungeons")
-        print("5. Gerenciar Bosses")
-        print("6. Batalhar")
-        print("7. Sair")
+        print("2. Gerenciar Dungeons")
+        print("3. Gerenciar Bosses")
+        print("0. Sair")
         print("")
 
-    def menu_personagem(self):
+    def menu_principal_personagem(self, nome_personagem):
         os.system('cls' if os.name == 'nt' else 'clear')
-        print("--------- MENU PERSONAGEM ---------")
+        print("--------- MENU PRINCIPAL ---------")
+        print(f"Olá {nome_personagem}, Bem vindo(a) ao RPG do Mercado de Trabalho!!")
+        print("1 - Meu Personagem")
+        print("2 - Batalha")
+        print("3 - Cursos")
+        print("0 - Voltar ao Menu Personagem")
+
+    def menu_jogador(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("--------- MENU JOGADOR ---------")
+        print("Olá Jogador, o que você quer fazer?")
         print("1 - Cadastrar Personagem")
         print("2 - Selecionar Personagem")
         print("0 - Sair")
@@ -86,14 +93,14 @@ class SistemaView:
                 }
 
     def mostrar_opcoes_personagem(self):
-        print("\n--------- OPÇÕES DO PERSONAGEM ---------")
+        print("\n--------- MEU PERSONAGEM ---------")
         print("1 - Mostrar Status")
         print("2 - Aumentar Atributo")
         print("3 - Usar Item")
         print("4 - Ver Habilidades")
         print("5 - Ganhar Experiência (TESTE)")
-        print("6 - Menu Principal")
-        print("0 - Voltar ao Meu Personagem")
+        print("6 - Voltar ao Menu Principal")
+        print("0 - Voltar ao Menu Jogador")
 
     def mostrar_status(self, status):
         print("-------- STATUS ----------")
