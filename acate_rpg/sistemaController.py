@@ -86,7 +86,9 @@ class SistemaControllerr:
                 nivel=dados_personagem.get("nivel", 1),
                 experiencia_total=dados_personagem.get("experiencia_total", 0),
                 pontos_disponiveis=dados_personagem.get("pontos_disponiveis", 10),
-                nome_classe=dados_personagem["classe"]
+                nome_classe=dados_personagem["classe"],
+                dungeons_conquistadas=dados_personagem.get("dungeons_conquistadas", 0),
+                cursos_conquistados=dados_personagem.get("cursos_conquistados", 0)
             )
 
             personagem.habilidades = self.__personagemController.habilidades_por_classe.get(dados_personagem["classe"], [])
@@ -158,7 +160,7 @@ class SistemaControllerr:
                 self.__sistemaView.mostrar_mensagem(f"{len(personagens_carregados)} personagens carregados com sucesso!")
                 time.sleep(2)
         except (FileNotFoundError, json.JSONDecodeError) as e:
-            self.__sistemaView.mostrar_mensagem("Erro ao carregar personagens. Arquivo pode estar corrompido ou ausente.")
+            raise CarregamentoDadosException(arquivo=self.__arquivo_personagens) from e
 
     def iniciar(self):
         self.limpar_terminal()

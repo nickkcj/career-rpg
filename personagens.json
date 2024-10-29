@@ -224,5 +224,58 @@
             "estamina": 0
         },
         "cursos_conquistados": 0
+    },
+    {
+        "nome": "arnaldo",
+        "nivel": 52,
+        "experiencia_total": 18500,
+        "classe": "CLT",
+        "classes_historico": [
+            "Trainee",
+            "Estagiario",
+            "CLT"
+        ],
+        "habilidades": [
+            {
+                "nome": "Hora Extra",
+                "efeito": "Aumenta a Estamina temporariamente",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Desmotivar Inimigo",
+                "efeito": "Reduz o Ataque do boss",
+                "tipo": "debuff"
+            },
+            {
+                "nome": "Cagada Remunerada",
+                "efeito": "Aumenta o HP do personagem",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Desestabilizar Boss",
+                "efeito": "Reduz a Defesa do boss",
+                "tipo": "debuff"
+            },
+            {
+                "nome": "Festa da Firma",
+                "efeito": "Aumenta o Ataque do personagem",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Ataque Corporativo",
+                "efeito": "Dano direto ao HP do boss",
+                "tipo": "dano"
+            }
+        ],
+        "pontos_disponiveis": 265,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 10,
+            "defesa": 10,
+            "hp": 50,
+            "estamina": 30
+        },
+        "cursos_conquistados": 1
     }
 ]
