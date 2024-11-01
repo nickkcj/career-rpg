@@ -40,7 +40,6 @@ class SalvamentoDadosException(BaseSistemaException):
         super().__init__(mensagem, solucao)
 
 
-
 class XpGanhoInvalidoError(CadastroInvalidoException):
     def __init__(self, solucao="O XP ganho deve ser um número inteiro."):
         super().__init__("Curso", "xp_ganho", solucao)
@@ -59,3 +58,13 @@ class SetorInvalidoError(CadastroInvalidoException):
 class DificuldadeInvalidaError(CadastroInvalidoException):
     def __init__(self, solucao="A dificuldade deve ser um número inteiro entre 1 e 10."):
         super().__init__("Curso", "dificuldade", solucao)
+
+
+class CriacaoBossException(BaseSistemaException):
+    def __init__(self, mensagem="Erro ao criar o boss"):
+        super().__init__(mensagem, "Verifique as configurações e tente novamente")
+
+
+class CriacaoSetorException(BaseSistemaException):
+    def __init__(self, mensagem="Erro ao criar o setor"):
+        super().__init__(mensagem, "Verifique as configurações do setor e tente novamente")

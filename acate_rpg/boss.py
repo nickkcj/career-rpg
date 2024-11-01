@@ -1,13 +1,12 @@
 from atributo import Atributo
 
-class Boss:
-    def __init__(self, nome, dificuldade, nivel_requerido, ataque, defesa, hp, estamina, diretor=False):
+class Boss(Atributo):
+    def __init__(self, nome, dificuldade, nivel_requerido, ataque=0, defesa=0, hp=0, estamina=0):
         super().__init__(ataque, defesa, hp, estamina)
         self.__nome = nome
         self.__dificuldade = dificuldade
         self.__nivel_requerido = nivel_requerido
-        self.__diretor = diretor
-        self.atributos = {
+        self.__atributos = {
             'ataque': ataque,
             'defesa': defesa,
             'hp': hp,
@@ -38,14 +37,6 @@ class Boss:
     @nivel_requerido.setter
     def nivel_requerido(self, nivel_requerido):
         self.__nivel_requerido = nivel_requerido
-
-    @property
-    def diretor(self):
-        return self.__diretor
-
-    @diretor.setter
-    def diretor(self, diretor):
-        self.__diretor = diretor
 
     @property
     def atributos(self):

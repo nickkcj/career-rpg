@@ -163,7 +163,6 @@ class SistemaControllerr:
             raise CarregamentoDadosException(arquivo=self.__arquivo_personagens) from e
 
     def iniciar(self):
-        self.limpar_terminal()
         while True:
             try:
                 self.menu_usuario()
@@ -207,11 +206,12 @@ class SistemaControllerr:
                 if opcao == '1':
                     self.menu_jogador()
                 elif opcao == '2':
-                    self.__dungeonController.cadastrar_dungeon()
+                    self.menu_dungeons_empresa()
                 elif opcao == '3':
                     self.menu_ranking()
                 elif opcao == '0':
                     self.salvar_personagens()
+                    self.dungeonController.salvar_dungeons()
                     self.__sistemaView.mostrar_mensagem("Saindo do sistema...")
                     time.sleep(2)
                     exit()
@@ -239,6 +239,7 @@ class SistemaControllerr:
                         self.menu_principal_personagem(personagem)
                 elif opcao == '0':
                     self.salvar_personagens()
+                    self.__dungeonController.salvar_dungeons()
                     self.__sistemaView.mostrar_mensagem("Voltando ao menu inicial...")
                     time.sleep(2)
                     self.menu_usuario()
@@ -321,16 +322,27 @@ class SistemaControllerr:
     def menu_dungeons_empresa(self):
         self.limpar_terminal()
         while True:
-            opcao = input("\nMenu de Dungeons:\n1. Cadastrar Dungeon\n2. Ver Dungeons\n3. Voltar\nEscolha uma opção: ")
-
-            if opcao == '1':
-                self.__dungeonController.cadastrar_dungeon()
-
-            elif opcao == '2':
-                self.__dungeonController.mostrar_dungeons()  
-
-            elif opcao == '3':
-                self.menu_principal()
+            try:
+                self.__sistemaView.menu_empresa()
+                opcao = self.__sistemaView.pegar_opcao()
+                
+                if opcao == "1":
+                    self.dungeonController.cadastrar_dungeon()
+                elif opcao == "2":
+                    self.dungeonController.listar_dungeons()
+                elif opcao == "3":
+                    self.dungeonController.alterar_dungeon()
+                elif opcao == "4":
+                    self.dungeonController.excluir_dungeon()
+                elif opcao == "5":
+                    self.menu_usuario()
+                else:
+                    raise OperacaoNaoPermitidaException(operacao="Escolha de opção no menu de empresa")
+            except OperacaoNaoPermitidaException as e:
+                self.__sistemaView.mostrar_mensagem(str(e))
+                time.sleep(2)
+            except ValueError:
+                self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
 
     def menu_curso_empresa(self):
         self.limpar_terminal()

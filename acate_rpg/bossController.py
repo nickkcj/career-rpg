@@ -1,30 +1,38 @@
 from boss import Boss
-from bossView import BossView
+import time
+
 
 class BossController:
-    def __init__(self):
-        self.__bosses = []
-        self.__bossView = BossView()
+    def criar_boss(self, nome, dificuldade, nivel_requerido, ataque, defesa, hp, estamina):
+        ataque = dificuldade * 2
+        defesa = dificuldade * 1.5
+        hp = dificuldade * 10
+        estamina = dificuldade * 5
+        #print(f"Criando boss: {nome}, Dificuldade: {dificuldade}, Nível Requerido: {nivel_requerido}")
+        #time.sleep(1)
+        return Boss(nome=nome, dificuldade=dificuldade, nivel_requerido=nivel_requerido, ataque=ataque, defesa=defesa, hp=hp, estamina=estamina)
 
-    def cadastrar_boss(self):
-        dados_boss = self.__bossView.pega_dados_boss()
-        boss = Boss(dados_boss)
-        self.__bossView.mostra_mensagem(f"Boss {self.__boss.nome} cadastrado com sucesso!")
-
-        dados_personagem = self.__personagemView.pega_dados_personagem()
-        personagem_existente = self.pega_personagem_por_nome(dados_personagem["nome"])
-        if personagem_existente is None:
-            classe = dados_personagem["classe"]
-            personagem = Personagem(dados_personagem["nome"], dados_personagem["nivel"], dados_personagem["experiencia"], None, None, dados_personagem["classe"])
-            self.__personagens.append(personagem)
-            self.__personagemView.mostra_mensagem(f"Personagem {dados_personagem['nome']} cadastrado com sucesso!")
-        else:
-            self.__personagemView.mostra_mensagem(f"O personagem {dados_personagem['nome']} já existe!")
-
-    def mostrar_atributos(self):
-        if self.__boss:
-            atributos = self.__boss.mostrar_atributos()
-            self.__bossView.mostra_atributos(atributos)
-        else:
-            self.__bossView.mostra_mensagem("Nenhum boss cadastrado.")
-
+    def criar_boss_final(self, nome, dificuldade, nivel_requerido):
+        ataque = dificuldade * 4
+        defesa = dificuldade * 3
+        hp = dificuldade * 20 
+        estamina = dificuldade * 10
+        #print(f"Criando boss final: {nome}, Dificuldade: {dificuldade}, Nível Requerido: {nivel_requerido}")
+        #time.sleep(1)
+        return Boss(nome=nome, dificuldade=dificuldade, nivel_requerido=nivel_requerido, ataque=ataque, defesa=defesa, hp=hp, estamina=estamina)
+    
+    def to_dict(self, boss):
+        return {
+            "nome": boss.nome,
+            "dificuldade": boss.dificuldade,
+            "nivel_requerido": boss.nivel_requerido,
+            "atributos": {
+                "ataque": boss.atributos['ataque'],
+                "defesa": boss.atributos['defesa'],
+                "hp": boss.atributos['hp'],
+                "estamina": boss.atributos['estamina'],
+            }
+        }
+    
+    def criar_boss_de_dicionario(self, boss_data):
+        return Boss(nome=boss_data["nome"], dificuldade=boss_data["dificuldade"], nivel_requerido=boss_data["nivel_requerido"], atributos=boss_data["atributos"])

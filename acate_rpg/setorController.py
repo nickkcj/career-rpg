@@ -1,49 +1,38 @@
-from setorView import SetorView
 from setor import Setor
-
-class SetorController():
-    def __init__(self):
-        self.__setorView = SetorView()
-
-
-    
-    from setorView import SetorView
-from setor import Setor
+from bossController import BossController
+from exceptions import CriacaoSetorException
 
 class SetorController:
     def __init__(self):
-        self.__setorView = SetorView()
+        self.__bossController = BossController()
 
-    def adicionar_setor(self, numero):
-        setores_validos = ["RH", "T.I", "Vendas", "Financeiro", "Marketing"]
-        setor = None
+    def criar_setor_com_boss(self, nome_setor, dificuldade_setor, nivel_requerido):
+        try:
+            boss = self.__bossController.criar_boss(nome=f"Boss de {nome_setor}", dificuldade=dificuldade_setor, nivel_requerido=nivel_requerido, ataque=0, defesa=0, hp=0, estamina=0)
+            return Setor(nome=nome_setor, dificuldade=dificuldade_setor, boss=boss)
+        except Exception as e:
+            raise CriacaoSetorException(f"Erro ao criar setor: {str(e)}")
+        
+    def criar_setor_de_dicionario(self, setor_data):
+        try:
+            boss = self.__bossController.criar_boss(
+                nome=setor_data["boss"]["nome"],
+                dificuldade=setor_data["boss"]["dificuldade"],
+                nivel_requerido=setor_data["boss"]["nivel_requerido"],
+                ataque=0,
+                defesa=0,
+                hp=0,
+                estamina=0
+            )
+            return Setor(nome=setor_data["nome"], dificuldade=setor_data["dificuldade"], boss=boss)
+        except KeyError as e:
+            raise Exception(f"Erro ao acessar dados do setor: chave ausente {str(e)}")
+        except Exception as e:
+            raise Exception(f"Erro ao criar setor: {str(e)}")
 
-        while not setor:
-            try:
-                
-                dados_setor = self.__setorView.pega_dados_setor(numero)
-                
-                
-                if dados_setor["nome"] not in setores_validos:
-                    
-                    mensagem = f"Setor inválido: {dados_setor['nome']}. Escolha entre {', '.join(setores_validos)}."
-                    raise ValueError(mensagem)
-                
-                
-                setor = Setor(dados_setor["nome"], dados_setor["dificuldade"])
-
-            except ValueError as e:
-                print("\n")
-                print("******************************************")
-                print(f"{e}")
-                print("******************************************")
-
-        return setor
-
-    
-
-
-    def calcular_media_dificuldades(self, setores):
-        dificuldade = 0
-        dificuldade = sum(int(setor.dificuldade) for setor in setores)
-        return dificuldade/ len(setores)
+    def to_dict(self, setor):
+        return {
+            "nome": setor.nome,
+            "dificuldade": setor.dificuldade,
+            "boss": self.__bossController.to_dict(setor.boss)
+        }

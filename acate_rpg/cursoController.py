@@ -9,7 +9,6 @@ class CursoController():
         self.__cursoView = CursoView()
 
     def carregar_cursos(self, caminho_arquivo = "cursos.json"):
-            os.system('cls' if os.name == 'nt' else 'clear')
             try:
                 with open(caminho_arquivo, "r") as arquivo:
                     dados_curso = json.load(arquivo)
@@ -25,7 +24,7 @@ class CursoController():
                         )
                         self.cursos.append(curso)
 
-                self.__cursoView.mostra_mensagem("Cursos carregados com sucesso.")
+                self.__cursoView.mostra_mensagem(f"{len(dados_curso)} cursos carregados com sucesso!")
 
             except Exception as e:
                 print(e)

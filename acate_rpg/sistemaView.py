@@ -5,6 +5,7 @@ class SistemaView:
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def menu_inicial(self):
+        self.limpar_terminal()
         print("##########################################")
         print("Bem vindo ao RPG do Mercado de Trabalho!!")
         print("##########################################")
@@ -17,13 +18,32 @@ class SistemaView:
         print("")
 
     def menu_principal_empresa(self):
+        self.limpar_terminal()
         print("----------MENU PRINCIPAL---------")
         print("Bem vindo ao RPG do Mercado de Trabalho!!")
         print("1. Gerenciar Cursos")
-        print("2. Gerenciar Dungeons")
+        print("2. Gerenciar Empresas")
         print("3. Gerenciar Bosses")
         print("0. Sair")
         print("")
+
+    def menu_empresa(self):
+        self.limpar_terminal()
+        print("--------- MENU EMPRESA ---------")
+        print("Olá Empresa, o que você quer fazer?")
+        print("1. Cadastrar Empresa")
+        print("2. Ver Empresas")
+        print("3. Alterar Empresa")
+        print("4. Excluir Empresa")
+        print("5. Voltar")
+
+    def menu_jogador(self):
+        self.limpar_terminal()
+        print("--------- MENU JOGADOR ---------")
+        print("Olá Jogador, o que você quer fazer?")
+        print("1 - Cadastrar Personagem")
+        print("2 - Selecionar Personagem")
+        print("0 - Sair")
 
     def menu_principal_personagem(self, nome_personagem):
         self.limpar_terminal()
@@ -33,14 +53,6 @@ class SistemaView:
         print("2 - Batalha")
         print("3 - Cursos")
         print("0 - Voltar ao Menu Personagem")
-
-    def menu_jogador(self):
-        self.limpar_terminal()
-        print("--------- MENU JOGADOR ---------")
-        print("Olá Jogador, o que você quer fazer?")
-        print("1 - Cadastrar Personagem")
-        print("2 - Selecionar Personagem")
-        print("0 - Sair")
 
     def menu_ranking(self):
         self.limpar_terminal()
@@ -132,7 +144,8 @@ class SistemaView:
 
     def mostrar_mensagem(self, msg):
         self.limpar_terminal()
+        print("\n")
         print("****************************************")
         print(msg)
         print("****************************************")
-        time.sleep(2)
+        time.sleep(1)
