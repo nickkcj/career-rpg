@@ -35,7 +35,7 @@ class SistemaView:
         print("2. Ver Empresas")
         print("3. Alterar Empresa")
         print("4. Excluir Empresa")
-        print("5. Voltar")
+        print("0. Voltar")
 
     def menu_jogador(self):
         self.limpar_terminal()

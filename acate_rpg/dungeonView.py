@@ -25,10 +25,6 @@ class DungeonView:
 
     def pega_opcao_setor(self):
         return input("Selecione o número do setor: ")
-    
-    def mostra_dungeons_enum(self, dungeons):
-        for idx, dungeon in enumerate(dungeons):
-            print(f"{idx + 1}. Nome: {dungeon.nome}, Nível Requerido: {dungeon.nivel_requerido}")
 
     def pega_atributo_alteracao(self):
         return input("Digite o nome do atributo a ser alterado ou 'todos' para alterar tudo: ")
@@ -41,7 +37,11 @@ class DungeonView:
         print("****************************************")
         print(msg)
         print("****************************************")
-        time.sleep(2)
+        time.sleep(1)
+
+    def mostra_dungeons_enum(self, dungeons):
+        for idx, dungeon in enumerate(dungeons):
+            print(f"{idx + 1}. Nome: {dungeon.nome}, Nível Requerido: {dungeon.nivel_requerido}")
 
     def mostra_dungeon(self, dungeon):
         print(f"\n--- DUNGEON: {dungeon.nome} ---")

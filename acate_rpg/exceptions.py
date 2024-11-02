@@ -68,3 +68,13 @@ class CriacaoBossException(BaseSistemaException):
 class CriacaoSetorException(BaseSistemaException):
     def __init__(self, mensagem="Erro ao criar o setor"):
         super().__init__(mensagem, "Verifique as configurações do setor e tente novamente")
+
+class ValorInvalidoBossException(BaseSistemaException):
+    def __init__(self, atributo, solucao="O valor fornecido deve ser um número inteiro válido."):
+        mensagem = f"Valor inválido para o atributo '{atributo}' do boss."
+        super().__init__(mensagem, solucao)
+
+class AtributoInexistenteBossException(BaseSistemaException):
+    def __init__(self, atributo, solucao="Verifique o atributo e tente novamente."):
+        mensagem = f"Atributo '{atributo}' não existe no boss."
+        super().__init__(mensagem, solucao)

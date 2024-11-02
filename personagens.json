@@ -266,5 +266,45 @@
             "estamina": 15
         },
         "cursos_conquistados": 0
+    },
+    {
+        "nome": "mangual",
+        "nivel": 1,
+        "experiencia_total": 0,
+        "classe": "CLT",
+        "classes_historico": [
+            "CLT"
+        ],
+        "habilidades": [],
+        "pontos_disponiveis": 10,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 0,
+            "defesa": 0,
+            "hp": 0,
+            "estamina": 0
+        },
+        "cursos_conquistados": 0
+    },
+    {
+        "nome": "eneas",
+        "nivel": 17,
+        "experiencia_total": 3000,
+        "classe": "Trainee",
+        "classes_historico": [
+            "Trainee"
+        ],
+        "habilidades": [],
+        "pontos_disponiveis": 90,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 0,
+            "defesa": 0,
+            "hp": 0,
+            "estamina": 0
+        },
+        "cursos_conquistados": 0
     }
 ]
