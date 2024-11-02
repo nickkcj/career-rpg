@@ -4,7 +4,7 @@ from dungeonView import DungeonView
 from dungeon import Dungeon
 from setorController import SetorController
 from bossController import BossController
-from exceptions import CriacaoSetorException, CriacaoBossException
+from exceptions import CriacaoSetorException, CriacaoBossException, CadastroInvalidoException, CriacaoBossException, OperacaoNaoPermitidaException
 
 class DungeonController:
     def __init__(self):
@@ -31,7 +31,7 @@ class DungeonController:
                 nome_setor = self.__dungeonView.pega_nome_setor(i + 1)
                 dificuldade_setor = self.__dungeonView.pega_dificuldade_setor()
                 
-                setor = self.__setorController.criar_setor_com_boss(nome_setor, dificuldade_setor, dados_dungeon["nivel_requerido"])
+                setor = self.__setorController.criar_setor_com_boss(nome_setor, dificuldade_setor, dados_dungeon["nivel_requerido"], dados_dungeon["nome"])
                 if setor:
                     setores.append(setor)
                 else:
@@ -46,11 +46,11 @@ class DungeonController:
             dungeon = Dungeon(dados_dungeon["nome"], dados_dungeon["nivel_requerido"], dados_dungeon["xp_ganho"], dificuldade, setores, boss_final)
             self.__dungeons.append(dungeon)
             print(f"Dungeon: {dungeon.nome}")
-            print(f"Boss: {self.__bossController.to_dict(boss_final)}")
+            print(f"Boss final: {self.__bossController.to_dict(boss_final)}")
             self.salvar_dungeons()
             self.__dungeonView.mostra_dungeon(dungeon)
+            time.sleep(2)
             input("\nPressione Enter para voltar ao menu.")
-            time.sleep(3)
         except Exception as e:
             self.__dungeonView.mostra_mensagem(f"Erro inesperado no cadastro: {str(e)}")
             input("\nPressione Enter para voltar ao menu.")
@@ -191,8 +191,9 @@ class DungeonController:
         dungeon_num = int(input("Escolha o número da dungeon que deseja alterar: ")) - 1
         try:
             dungeon = self.dungeons[dungeon_num]
+            self.__dungeonView.mostra_dungeon(dungeon)
 
-            atributo = input("Digite o nome do atributo a ser alterado ou 'todos' para alterar tudo: ").lower()
+            atributo = input("\nDigite o nome do atributo a ser alterado ou 'todos' para alterar tudo: ").lower()
             if atributo == "todos":
                 novo_nome = input("Digite o novo nome da dungeon: ")
                 dungeon.nome = novo_nome
@@ -205,12 +206,14 @@ class DungeonController:
                 self.__dungeonView.mostra_mensagem("Todos os atributos foram alterados com sucesso.")
             elif atributo == "setores":
                 self.alterar_setor(dungeon)
+            elif atributo == "boss final":
+                self.alterar_boss(dungeon.boss_final)
             elif hasattr(dungeon, atributo):
                 novo_valor = input(f"Digite o novo valor para {atributo}: ")
                 setattr(dungeon, atributo, novo_valor)
                 self.__dungeonView.mostra_mensagem(f"Atributo {atributo} alterado com sucesso.")
             else:
-                print("Atributo inválido.")
+                self.__dungeonView.mostra_mensagem("Atributo inválido.")
         except ValueError as ve:
             self.__dungeonView.mostra_mensagem(f"Erro ao alterar dungeon: {str(ve)}")
             input("\nPressione Enter para Voltar")
@@ -248,15 +251,18 @@ class DungeonController:
                 setor.dificuldade = novo_dificuldade
                 self.__dungeonView.mostra_mensagem("Todos os atributos do setor foram alterados com sucesso.")
             elif hasattr(setor, atributo):
-                if atributo == "nome":
-                    novo_valor = input("Digite o novo valor: ")
-                    setor.nome = novo_valor
-                elif atributo == "dificuldade":
-                    novo_valor = float(input("Digite o novo valor: "))
-                    setor.dificuldade = novo_valor
+                novo_valor = input(f"Digite o novo valor para {atributo}: ")
+                setattr(dungeon, atributo, novo_valor)
                 self.__dungeonView.mostra_mensagem(f"Atributo {atributo} alterado com sucesso.")
             else:
                 self.__dungeonView.mostra_mensagem("Atributo inválido.")
+
+        elif acao == "boss":
+            if setor.boss:
+                self.alterar_boss(setor.boss)
+            else:
+                self.__dungeonView.mostra_mensagem("Este setor não possui um boss para alterar.")
+                #impossivel, mas vamos deixar pra ver se não dá erro
 
         elif acao == "excluir":
             if len(setores) == 1:
@@ -274,6 +280,58 @@ class DungeonController:
                 else:
                     self.__dungeonView.mostra_mensagem("Exclusão cancelada.")
 
+    def alterar_boss(self, boss):
+        try:
+            print("Alterar atributos do Boss:")
+            self.__bossController.to_dict(boss)
+            opcao = input("Digite o nome do atributo a ser alterado ou 'todos' para alterar tudo: ").lower()
+            
+            if opcao == 'todos':
+                novo_nome = input("Digite o novo nome do boss: ")
+                boss.nome = novo_nome
+
+                nova_dificuldade = int(input("Digite a nova dificuldade: "))
+                boss.dificuldade = nova_dificuldade
+                atributos_recalculados = self.__bossController.criar_boss(
+                    boss.nome, boss.dificuldade, boss.nivel_requerido, 0, 0, 0, 0).atributos
+                boss.atributos.update(atributos_recalculados)
+
+                novo_nivel_requerido = int(input("Digite o novo nível requerido: "))
+                boss.nivel_requerido = novo_nivel_requerido
+
+                self.__dungeonView.mostra_mensagem("Todos os atributos do boss foram alterados com sucesso.")
+
+            elif opcao == "dificuldade":
+                nova_dificuldade = int(input("Digite a nova dificuldade: "))
+                boss.dificuldade = nova_dificuldade
+                atributos_recalculados = self.__bossController.criar_boss(
+                    boss.nome, boss.dificuldade, boss.nivel_requerido, 0, 0, 0, 0).atributos
+                boss.atributos.update(atributos_recalculados)
+                self.__dungeonView.mostra_mensagem("Dificuldade e atributos recalculados com sucesso.")
+
+            elif opcao == "nivel_requerido":
+                novo_nivel_requerido = int(input("Digite o novo nível requerido: "))
+                boss.nivel_requerido = novo_nivel_requerido
+                self.__dungeonView.mostra_mensagem("Nível requerido alterado com sucesso.")
+
+            elif hasattr(boss, opcao):
+                novo_valor = input(f"Digite o novo valor para {opcao}: ")
+                setattr(boss, opcao, int(novo_valor) if opcao in ['ataque', 'defesa', 'hp', 'estamina'] else novo_valor)
+                self.__dungeonView.mostra_mensagem(f"Atributo {opcao} alterado com sucesso.")
+            else:
+                raise CadastroInvalidoException("Boss", opcao, "Verifique o nome do atributo e tente novamente.")
+
+        except ValueError:
+            self.__dungeonView.mostra_mensagem("Erro: o valor digitado é inválido. Insira um número para atributos numéricos.")
+        except CadastroInvalidoException as e:
+            self.__dungeonView.mostra_mensagem(str(e))
+        except CriacaoBossException as e:
+            self.__dungeonView.mostra_mensagem(f"Erro ao criar ou alterar boss: {str(e)}")
+        except OperacaoNaoPermitidaException as e:
+            self.__dungeonView.mostra_mensagem(f"Operação não permitida: {str(e)}")
+        except Exception as e:
+            self.__dungeonView.mostra_mensagem(f"Erro inesperado ao alterar boss: {str(e)}")
+
     def excluir_dungeon_sem_setores(self, dungeon):
         confirmacao = input(f"Tem certeza que deseja excluir a dungeon '{dungeon.nome}'? (s/n): ")
         if confirmacao.lower() == 's':
@@ -288,22 +346,18 @@ class DungeonController:
             return
 
         self.__dungeonView.mostra_dungeons_enum(self.__dungeons)
+        dungeon_opcao = int(input("Escolha o número da dungeon que deseja excluir: ")) - 1
         try:
-            dungeon_opcao = int(input("Escolha o número da dungeon que deseja excluir: ")) - 1
-            if 0 <= dungeon_opcao < len(self.__dungeons):
-                dungeon = self.__dungeons[dungeon_opcao]
-                if self.__dungeonView.confirma_exclusao(dungeon.nome):
-                    del self.__dungeons[dungeon_opcao]
-                    self.__dungeonView.mostra_mensagem("Dungeon excluída com sucesso.")
-                else:
-                    self.__dungeonView.mostra_mensagem("Exclusão cancelada.")
+            dungeon = self.__dungeons[dungeon_opcao]
+            if self.__dungeonView.confirma_exclusao(dungeon.nome):
+                del self.__dungeons[dungeon_opcao]
+                self.__dungeonView.mostra_mensagem("Dungeon excluída com sucesso.")
             else:
-                print("Dungeon inválida.")
+                self.__dungeonView.mostra_mensagem("Exclusão cancelada.")
+        except IndexError:
+            self.__dungeonView.mostra_mensagem("Número de dungeon inválido.")
         except Exception as e:
-            self.__dungeonView.mostra_mensagem(f"Erro ao excluir dungeon: {str(e)}")
-            input("\nPressione Enter para Voltar")
+            self.__dungeonView.mostra_mensagem(f"Erro inesperado ao excluir dungeon: {str(e)}")
 
     def calcular_dificuldade(self, dungeon):
-        if not dungeon.setores:
-            return 0
         return sum(setor.dificuldade for setor in dungeon.setores) / len(dungeon.setores)

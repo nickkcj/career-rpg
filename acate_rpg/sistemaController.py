@@ -261,8 +261,7 @@ class SistemaControllerr:
                 if opcao == '1':
                     self.opcoes_personagem(personagem)
                 elif opcao == '2':
-                    self.__dungeonController.mostrar_dungeons()
-                    dungeon_selecionada = self.selecionar_dungeon()
+                    dungeon_selecionada = self.__dungeonController.selecionar_dungeon_e_setor()
                     if dungeon_selecionada:
                         self.__batalhaController.iniciar_batalha(personagem, dungeon_selecionada)
                 elif opcao == '3':
@@ -334,7 +333,7 @@ class SistemaControllerr:
                     self.dungeonController.alterar_dungeon()
                 elif opcao == "4":
                     self.dungeonController.excluir_dungeon()
-                elif opcao == "5":
+                elif opcao == "0":
                     self.menu_usuario()
                 else:
                     raise OperacaoNaoPermitidaException(operacao="Escolha de opção no menu de empresa")
@@ -353,7 +352,6 @@ class SistemaControllerr:
             elif opcao == '2':
                 self.__cursoController.cadastrar_curso()
                 time.sleep(2)
-                self.menu_curso()
             elif opcao == '3':
                 self.__cursoController.alterar_curso()
             elif opcao == '4':

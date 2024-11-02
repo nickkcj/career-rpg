@@ -33,6 +33,6 @@ class BossController:
                 "estamina": boss.atributos['estamina'],
             }
         }
-    
+
     def criar_boss_de_dicionario(self, boss_data):
         return Boss(nome=boss_data["nome"], dificuldade=boss_data["dificuldade"], nivel_requerido=boss_data["nivel_requerido"], atributos=boss_data["atributos"])
