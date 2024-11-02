@@ -1,10 +1,12 @@
 from setor import Setor
 from bossController import BossController
 from exceptions import CriacaoSetorException
+from setorView import SetorView
 
 class SetorController:
     def __init__(self):
         self.__bossController = BossController()
+        self.__setorView = SetorView()
 
     def criar_setor_com_boss(self, nome_setor, dificuldade_setor, nivel_requerido):
         try:
@@ -36,3 +38,11 @@ class SetorController:
             "dificuldade": setor.dificuldade,
             "boss": self.__bossController.to_dict(setor.boss)
         }
+    
+    def escolher_setor(self, dungeon):
+        escolha = self.__setorView.selecionar_setor(dungeon)
+        for setor in dungeon.setores:
+            if setor.nome == escolha:
+                boss = setor.boss
+
+        return boss

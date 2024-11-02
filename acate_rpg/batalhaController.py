@@ -6,7 +6,7 @@ class BatalhaController():
         self.__batalha = batalha
         self.__tela = BatalhaView()
 
-    def realizar_turno(self, acao_personagem):
+    def realizar_turno(self, acao_personagem, personagem, boss):
         personagem = self.__batalha.personagem
         boss = self.__batalha.boss
 
@@ -36,15 +36,26 @@ class BatalhaController():
             return "derrota"
         return
 
-    def iniciar_batalha(self):
+    def iniciar_batalha(self, personagem, boss):
+        self.__batalha.personagem = personagem
+        self.__batalha.boss = boss
+        self.__batalha.finalizada = False
         while not self.__batalha.finalizada:
+            self.__tela.exibir_tela_batalha(personagem, boss)
             acao_personagem = self.__tela.tela_opcoes()
-            self.realizar_turno(acao_personagem)
+            self.realizar_turno(acao_personagem, personagem, boss)
 
             resultado = self.verificar_vencedor()
             if resultado == "vitória":
                 self.__tela.mostra_resultado("Você venceu!")
+                break
             elif resultado == "derrota":
                 self.__tela.mostra_resultado("Você foi derrotado!")
+
+
+    def atacar(self, personagem, boss):
+        self.__batalha.personagem = personagem
+        self.__batalha.boss = boss
+        
 
                 

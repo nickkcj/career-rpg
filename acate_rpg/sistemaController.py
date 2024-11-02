@@ -261,10 +261,10 @@ class SistemaControllerr:
                 if opcao == '1':
                     self.opcoes_personagem(personagem)
                 elif opcao == '2':
-                    self.__dungeonController.mostrar_dungeons()
-                    dungeon_selecionada = self.selecionar_dungeon()
+                    dungeon_selecionada = self.__dungeonController.selecionar_dungeon_e_setor()
                     if dungeon_selecionada:
-                        self.__batalhaController.iniciar_batalha(personagem, dungeon_selecionada)
+                        boss = self.__setorController.escolher_setor(dungeon_selecionada)
+                        self.__batalhaController.iniciar_batalha(personagem, boss)
                 elif opcao == '3':
                     resultado = self.__quizController.realizar_quiz()
                     if resultado == True:
