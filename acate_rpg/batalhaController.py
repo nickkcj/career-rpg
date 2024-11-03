@@ -21,13 +21,15 @@ class BatalhaController():
             time.sleep(3)
             
         elif acao_personagem == 2:
-            personagem.defender()
-            self.__tela.mostra_mensagem(f"{personagem.nome} se defendeu!")
+            self.defender(personagem)
+            self.__tela.mostra_mensagem(f"{personagem.nome} aumentou a defesa em {personagem.classe_personagem.atributos['defesa']}!")
+            time.sleep(3)
+            self.turno_boss(personagem, boss)
+            time.sleep(3)
         elif acao_personagem == 3:
-            pass
+            self.usar_item(personagem)
         elif acao_personagem == 4:
-            personagem.usar_habilidade(boss)
-            self.__tela.mostra_mensagem(f"{personagem.nome} usou uma habilidade!")
+            pass
 
         else:
             pass
@@ -36,6 +38,25 @@ class BatalhaController():
     def atacar(self, personagem, boss):
         dano = max(personagem.classe_personagem.atributos['ataque'] - boss.atributos['defesa'], 1)
         return dano
+    
+    def defender(self, personagem):
+        personagem.classe_personagem.atributos['defesa'] += 5
+
+    def usar_habilidade(self, personagem):
+        pass
+
+    def usar_item(self, personagem):
+        opcao = self.__personagemController.usar_itens(personagem)
+        if opcao == '1':
+            personagem.classe_personagem.atributos['hp'] += 10
+            self.__tela.mostra_mensagem(f"O personagem {personagem.nome} se curou em 10 de vida")
+            time.sleep(2)
+
+        else:
+            personagem.classe_personagem.atributos['estamina'] += 10
+            self.__tela.mostra_mensagem(f"O personagem {personagem.nome} restaurou 10 de estamina")
+            time.sleep(2)
+
 
 
     def turno_boss(self, personagem, boss):

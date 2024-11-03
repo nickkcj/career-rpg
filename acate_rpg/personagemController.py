@@ -46,7 +46,15 @@ class PersonagemController:
             if personagem.nome == nome:
                 return personagem
         return None
+    
 
+    def usar_itens(self, personagem):
+        self.__personagemView.mostrar_mensagem(f"---Inventário---: Poção HP (quantidade: {personagem.pocao_hp.quant}), Poção Estamina (quantidade: {personagem.pocao_est.quant}")
+        print("1 - Usar poção HP")
+        print("2 - Usar poção Estamina")
+        opcao = input("Digite o item que você quer usar: ")
+        return opcao
+    
     def criar_personagem(self, nome, nivel, experiencia_total, pontos_disponiveis, nome_classe, dungeons_conquistadas, cursos_conquistados):
         return Personagem(
             nome=nome,
