@@ -194,7 +194,8 @@ class DungeonController:
             self.__dungeonView.mostra_dungeon(dungeon)
             print("\n")
 
-    def selecionar_dungeon_e_setor(self):
+
+    def selecionar_dungeon_e_setor(self, personagem):
         if not self.__dungeons:
             self.__dungeonView.mostra_mensagem("Nenhuma dungeon cadastrada.")
             return None, None
@@ -205,6 +206,11 @@ class DungeonController:
         dungeon_selecionada = next((dungeon for dungeon in self.__dungeons if dungeon.nome == dungeon_nome), None)
         if not dungeon_selecionada:
             self.__dungeonView.mostra_mensagem("Dungeon não encontrada.")
+            return None, None
+        
+        if dungeon_selecionada.nivel_requerido > personagem.nivel:
+            self.__dungeonView.mostra_mensagem("Infelizmente esperamos candidatos com mais experiência, boa sorte!")
+            time.sleep(2)
             return None, None
 
         self.__dungeonView.mostra_mensagem(f"Setores da dungeon {dungeon_nome}:")

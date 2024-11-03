@@ -1,7 +1,7 @@
-from quiz import Quiz
 from quizView import QuizView
 from cursoView import CursoView
 from personagemController import PersonagemController
+import time
 
 
 class QuizController():
@@ -722,38 +722,60 @@ class QuizController():
         self.__quizView = QuizView()
         self.__cursoView = CursoView()
         
-    def realizar_quiz(self):
+    def realizar_quiz(self, personagem):
         self.__cursoView.mostra_cursos(self.__cursoController.cursos)
         nome_curso = self.__cursoView.seleciona_curso()
+        curso_encontrado = False  # Flag para verificar se o curso foi encontrado
+
         for curso in self.__cursoController.cursos:
             if curso.nome == nome_curso:
+                curso_encontrado = True
                 setor = curso.setor
                 dificuldade = curso.dificuldade
-                experiencia = curso.experiencia
+                experiencia = curso.xp_ganho
+                nivel_requerido = curso.nivel_requerido
 
-        if setor == "RH":
-           resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizrh)
+                if curso.realizado:
+                    self.__cursoView.mostra_mensagem("Você já tem o certificado desse curso, esqueceu?")
+                    time.sleep(2)
+                    return
 
+                if nivel_requerido > personagem.nivel:
+                    self.__cursoView.mostra_mensagem("Você não tem nível suficiente para fazer esse curso, volte mais tarde!")
+                    time.sleep(2)
+                    return
 
-        elif setor == "Financeiro":
-           resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizfin)
+                # Iniciar o quiz com base no setor
+                if setor == "RH":
+                    resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizrh)
+                elif setor == "Financeiro":
+                    resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizfin)
+                elif setor == "Marketing":
+                    resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizmark)
+                elif setor == "T.I":
+                    resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizti)
+                elif setor == "Vendas":
+                    resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizvendas)
+                else:
+                    resultado = False  # Caso o setor não corresponda a nenhum caso previsto
 
-        elif setor == "Marketing":
-           resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizmark)
+                # Atualizar a experiência e status do curso se o quiz for concluído com sucesso
+                if resultado:
+                    self.__personagemController.ganhar_experiencia(personagem, experiencia)
+                    curso.realizado = True
+                else:
+                    curso.realizado = False
+
+                return resultado  # Retorna o resultado e sai da função após encontrar o curso
+
+        # Caso o curso não tenha sido encontrado
+        if not curso_encontrado:
+            self.__cursoView.mostra_mensagem("O curso selecionado não existe, tente novamente!")
+            time.sleep(2)
+            return
+
 
         
-        elif setor == "T.I":
-           resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizti)
-
-
-        elif setor == "Vendas":
-           resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizvendas)
-
-        if resultado == True:
-            self.__personagemController.ganhar_experiencia(experiencia)
-            curso.realizado = True
-
-        return resultado
 
 
         

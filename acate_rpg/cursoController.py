@@ -1,4 +1,5 @@
 import json
+import time
 import os
 from curso import Curso
 from cursoView import CursoView
@@ -72,6 +73,9 @@ class CursoController():
             if erros:
                 mensagem_erro = "Erros ao cadastrar curso:\n" + "\n".join(erros)
                 self.__cursoView.mostra_mensagem(mensagem_erro)
+                time.sleep(3)
+                os.system('cls' if os.name == 'nt' else 'clear')
+
             else:
                     
                 curso = Curso(
@@ -84,6 +88,7 @@ class CursoController():
                 )
                 self.cursos.append(curso)
                 self.__cursoView.mostra_mensagem(f"O curso {dados_curso['nome']} foi cadastrado com sucesso \n")
+                os.system('cls' if os.name == 'nt' else 'clear')
                 break  
 
   
@@ -99,18 +104,25 @@ class CursoController():
 
         if curso is None:
             self.__cursoView.mostra_mensagem(f"Curso com o nome {nome} não foi encontrado \n")
+            time.sleep(2)
+            os.system('cls' if os.name == 'nt' else 'clear')
 
+            
 
-        novos_dados = self.__cursoView.pega_dados_curso()
+        elif curso is not None:
+            novos_dados = self.__cursoView.pega_dados_curso()
 
-        curso.nome = novos_dados["nome"]
-        curso.nivel_requerido = novos_dados["nivel_requerido"]
-        curso.xp_ganho = novos_dados["xp_ganho"]
-        curso.setor = novos_dados["setor"]
-        curso.dificuldade = novos_dados["dificuldade"]
-        curso.realizado = novos_dados["realizado"]
+            curso.nome = novos_dados["nome"]
+            curso.nivel_requerido = novos_dados["nivel_requerido"]
+            curso.xp_ganho = novos_dados["xp_ganho"]
+            curso.setor = novos_dados["setor"]
+            curso.dificuldade = novos_dados["dificuldade"]
+            curso.realizado = novos_dados["realizado"]
 
-        self.__cursoView.mostra_mensagem(f"O curso foi alterado com sucesso \n")
+            self.__cursoView.mostra_mensagem(f"O curso foi alterado com sucesso \n")
+            time.sleep(2)
+            os.system('cls' if os.name == 'nt' else 'clear')
+
 
 
     def excluir_curso(self):
@@ -121,6 +133,9 @@ class CursoController():
             if c.nome == nome:
                 self.cursos.remove(c)
         self.__cursoView.mostra_mensagem(f"O curso {c.nome} foi removido com sucesso \n")
+        time.sleep(2)
+        os.system('cls' if os.name == 'nt' else 'clear')
+
 
 
     def mostrar_cursos(self):

@@ -15,7 +15,7 @@ class BatalhaController():
         if acao_personagem == 1: 
             dano = self.atacar(personagem, boss)
             boss.atributos['hp'] -= dano
-            self.__tela.mostra_mensagem(f"{personagem.nome} atacou {boss.nome} e causou {dano}!")
+            self.__tela.mostra_mensagem(f"{personagem.nome} atacou {boss.nome} e causou {dano} de dano!")
             time.sleep(3)
             self.turno_boss(personagem, boss)
             time.sleep(3)
@@ -72,7 +72,7 @@ class BatalhaController():
 
             elif classe == 'Estagiario' and opcao == '2':
                 personagem.classe_personagem.atributos['estamina'] -= 2
-                boss.atributos['defesa'] -= 7.5
+                boss.atributos['defesa'] = max(boss.atributos['defesa'] - 5, 1)
                 self.__tela.mostra_mensagem(f"O personagem {personagem.nome} usou a habilidade *Desestabilizar Boss* e diminuiu a defesa do boss em 7.5 pontos!")
                 time.sleep(2)
 
@@ -109,15 +109,12 @@ class BatalhaController():
 
 
     def turno_boss(self, personagem, boss):
-        self.boss_defesa_original = boss.atributos['defesa']
         acao_boss = random.randint(1, 2)  
         if acao_boss == 1:
-            self.boss_defesa_original = None
-            dano = max(boss.atributos['ataque'] - personagem.classe_personagem.atributos['defesa'], 1)
+            dano = max(boss.atributos['ataque'] * 2 - personagem.classe_personagem.atributos['defesa'], 1)
             personagem.classe_personagem.atributos['hp'] -= dano
             self.__tela.mostra_mensagem(f"{boss.nome} atacou {personagem.nome} e causou {dano} de dano!")
             
-            boss.atributos['defesa'] = self.boss_defesa_original if self.boss_defesa_original else boss.atributos['defesa']
         else:      
             boss.atributos['defesa'] += 5
             
@@ -150,6 +147,7 @@ class BatalhaController():
             resultado = self.verificar_vencedor()
             if resultado == "vitória":
                 self.__tela.mostra_resultado("Você venceu!")
+                time.sleep(2)
                 self.__personagemController.ganhar_experiencia(personagem, boss.dificuldade * 100)
                 dungeon.conquistada = True
                 personagem.dungeons_conquistadas.append(dungeon)

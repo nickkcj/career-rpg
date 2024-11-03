@@ -1,101 +1,22 @@
 [
     {
-        "nome": "Intel",
-        "nivel_requerido": 10,
-        "xp_ganho": 11111111,
-        "dificuldade": 7.25,
-        "setores": [
-            {
-                "nome": "RH",
-                "dificuldade": 10,
-                "boss": {
-                    "nome": "Boss de RH",
-                    "dificuldade": 10,
-                    "nivel_requerido": 10,
-                    "atributos": {
-                        "ataque": 20,
-                        "defesa": 15.0,
-                        "hp": 100,
-                        "estamina": 50
-                    }
-                }
-            },
-            {
-                "nome": "T.I",
-                "dificuldade": 8,
-                "boss": {
-                    "nome": "Boss de T.I",
-                    "dificuldade": 8,
-                    "nivel_requerido": 10,
-                    "atributos": {
-                        "ataque": 16,
-                        "defesa": 12.0,
-                        "hp": 80,
-                        "estamina": 40
-                    }
-                }
-            },
-            {
-                "nome": "Financeiro",
-                "dificuldade": 3.0,
-                "boss": {
-                    "nome": "Boss de Financeiro",
-                    "dificuldade": 9,
-                    "nivel_requerido": 10,
-                    "atributos": {
-                        "ataque": 18,
-                        "defesa": 13.5,
-                        "hp": 90,
-                        "estamina": 45
-                    }
-                }
-            },
-            {
-                "nome": "Vendas",
-                "dificuldade": 8,
-                "boss": {
-                    "nome": "Boss de Vendas",
-                    "dificuldade": 8,
-                    "nivel_requerido": 10,
-                    "atributos": {
-                        "ataque": 16,
-                        "defesa": 12.0,
-                        "hp": 80,
-                        "estamina": 40
-                    }
-                }
-            }
-        ],
-        "boss_final": {
-            "nome": "warden",
-            "dificuldade": 7.8,
-            "nivel_requerido": 10,
-            "atributos": {
-                "ataque": 31.2,
-                "defesa": 23.4,
-                "hp": 156.0,
-                "estamina": 78.0
-            }
-        }
-    },
-    {
         "nome": "mattel",
         "nivel_requerido": 1,
-        "xp_ganho": 2,
+        "xp_ganho": 300,
         "dificuldade": 7.0,
         "setores": [
             {
                 "nome": "Vendas",
-                "dificuldade": 4,
+                "dificuldade": 1,
                 "boss": {
                     "nome": "Boss de Vendas",
-                    "dificuldade": 4,
+                    "dificuldade": 1,
                     "nivel_requerido": 1,
                     "atributos": {
-                        "ataque": 8,
-                        "defesa": 6.0,
-                        "hp": 40,
-                        "estamina": 20
+                        "ataque": 2,
+                        "defesa": 1.5,
+                        "hp": 10,
+                        "estamina": 5
                     }
                 }
             },
@@ -320,6 +241,40 @@
                 "defesa": 18.0,
                 "hp": 120.0,
                 "estamina": 60.0
+            }
+        }
+    },
+    {
+        "nome": "nickzin2",
+        "nivel_requerido": 1,
+        "xp_ganho": 500,
+        "dificuldade": 1.0,
+        "setores": [
+            {
+                "nome": "RH",
+                "dificuldade": 2,
+                "boss": {
+                    "nome": "Boss de RH da nickzin",
+                    "dificuldade": 2,
+                    "nivel_requerido": 2,
+                    "atributos": {
+                        "ataque": 4,
+                        "defesa": 3.0,
+                        "hp": 16.0,
+                        "estamina": 10
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "Boss do RH ",
+            "dificuldade": 2.0,
+            "nivel_requerido": 2,
+            "atributos": {
+                "ataque": 8.0,
+                "defesa": 6.0,
+                "hp": 40.0,
+                "estamina": 20.0
             }
         }
     }

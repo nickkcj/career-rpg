@@ -123,7 +123,9 @@ class SistemaControllerr:
             self.menu_principal_personagem(personagem)
         
         except CadastroInvalidoException as e:
+            os.system('cls' if os.name == 'nt' else 'clear')
             self.__sistemaView.mostrar_mensagem(str(e))
+            time.sleep(2)
         except Exception as e:
             self.__sistemaView.mostrar_mensagem(f"Erro inesperado: {str(e)}")
 
@@ -278,12 +280,18 @@ class SistemaControllerr:
                 if opcao == '1':
                     self.opcoes_personagem(personagem)
                 elif opcao == '2':
-                    dungeon_selecionada, setor = self.__dungeonController.selecionar_dungeon_e_setor()
+                    dungeon_selecionada, setor = self.__dungeonController.selecionar_dungeon_e_setor(personagem)
                     if dungeon_selecionada:
-                        boss = setor.boss
-                        self.__batalhaController.iniciar_batalha(personagem, boss, dungeon_selecionada)
+                        if dungeon_selecionada.conquistada == False:
+                            boss = setor.boss
+                            self.__batalhaController.iniciar_batalha(personagem, boss, dungeon_selecionada)
+
+                        else:
+                            self.__sistemaView.mostrar_mensagem("Você já passou no processo seletivo desse setor, tente outra empresa!")
+                            time.sleep(2)
+
                 elif opcao == '3':
-                    resultado = self.__quizController.realizar_quiz()
+                    resultado = self.__quizController.realizar_quiz(personagem)
                     if resultado == True:
                         self.__personagemController.incrementar_curso(personagem)
                         
@@ -359,6 +367,7 @@ class SistemaControllerr:
                        
                 elif opcao == "2":
                     self.dungeonController.listar_dungeons()
+                    input("Pressione Enter para voltar: ")
                 elif opcao == "3":
                     while True:
 
@@ -374,6 +383,9 @@ class SistemaControllerr:
                             self.__sistemaView.mostrar_mensagem(str(e))
                 elif opcao == "4":
                     self.dungeonController.excluir_dungeon()
+
+                elif opcao == "5":
+                    self.menu_curso_empresa()
                 elif opcao == "0":
                     self.menu_usuario()
                 else:
@@ -400,18 +412,7 @@ class SistemaControllerr:
             elif opcao == '4':
                 self.__cursoController.excluir_curso()
             elif opcao == '5':
-                self.menu_principal()
-
-    def menu_bosses_empresa(self):
-        self.limpar_terminal()
-        while True:
-            opcao = input("\nMenu de Bosses:\n1. Cadastrar Boss\n2. Voltar\nEscolha uma opção: ")
-
-            if opcao == '1':
-                self.__bossController.cadastrar_boss()
-
-            elif opcao == '2':
-                self.menu_principal()
+                self.menu_dungeons_empresa()
 
     def menu_ranking(self):
         while True:

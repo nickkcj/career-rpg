@@ -16,7 +16,7 @@ class RankingView:
         self.limpar_tela()
         print("-------- RANKING POR DUNGEONS CONQUISTADAS --------")
         for i, personagem in enumerate(personagens_ordenados, start=1):
-            print(f"{i}. {personagem.nome} - Dungeons Conquistadas: {personagem.dungeons_conquistadas}")
+            print(f"{i}. {personagem.nome} - Dungeons Conquistadas: {len(personagem.dungeons_conquistadas)}")
         input("\nPressione Enter para voltar ao menu.")
 
     def exibir_ranking_cursos(self, personagens_ordenados):
@@ -25,3 +25,19 @@ class RankingView:
         for i, personagem in enumerate(personagens_ordenados, start=1):
             print(f"{i}. {personagem.nome} - Cursos Conquistados: {personagem.cursos_conquistados}")
         input("\nPressione Enter para voltar ao menu.")
+
+
+    def exibir_dungeons_personagem(self, personagem):
+        if not personagem.dungeons_conquistadas:
+            print(f"{personagem.nome} não conquistou nenhuma dungeon.")
+        else:
+            print(f"Dungeons conquistadas por {personagem.nome}:")
+            for dungeon in personagem.dungeons_conquistadas:
+                print(f"- {dungeon.nome}")
+
+
+    def mostrar_mensagem(self, mensagem):
+        print("***************************")
+        print(mensagem)
+        print("***************************")
+       
