@@ -1,7 +1,7 @@
 from atributo import Atributo
 
 class ClassePersonagem(Atributo):
-    def __init__(self, nome_classe, evolucao=0, ataque=0, defesa=0, hp=0, estamina=0):
+    def __init__(self, nome_classe, evolucao=0, ataque=1, defesa=1, hp=1, estamina=0):
         super().__init__(ataque, defesa, hp, estamina)
         self.__nome_classe = nome_classe
         self.__evolucao = evolucao

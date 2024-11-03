@@ -729,6 +729,7 @@ class QuizController():
             if curso.nome == nome_curso:
                 setor = curso.setor
                 dificuldade = curso.dificuldade
+                experiencia = curso.experiencia
 
         if setor == "RH":
            resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizrh)
@@ -748,7 +749,12 @@ class QuizController():
         elif setor == "Vendas":
            resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizvendas)
 
+        if resultado == True:
+            self.__personagemController.ganhar_experiencia(experiencia)
+            curso.realizado = True
+
         return resultado
+
 
         
 

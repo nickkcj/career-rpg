@@ -1,3 +1,4 @@
+import os
 class BatalhaView:
     def tela_opcoes(self):
         print("-------- BATALHA ----------")
@@ -18,20 +19,38 @@ class BatalhaView:
         print(mensagem)
 
     def mostra_mensagem(self, msg):
+        print("\n")
         print(msg)
+        print("\n")
 
 
-    def exibir_tela_batalha(personagem, boss):
-        print("=" * 40)
+    def exibir_tela_batalha(self, personagem, boss):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        largura_total = 60  
+        margem_personagem = 7  
+        margem_boss = 10  
+        ajuste_direita = 5  
+
         
-        print(f"{personagem.nome:<15} VS {boss.nome:<15}")
-        print("-" * 40)
+        espacos_entre_nomes = largura_total - margem_personagem - margem_boss - len(personagem.nome) - len(boss.nome) - len(" VS ")
+
+        print("=" * largura_total)
+        print(f"{' ' * margem_personagem}{personagem.nome}{' ' * (espacos_entre_nomes // 2)}VS{' ' * (espacos_entre_nomes // 2)}{boss.nome}")
+        print("-" * largura_total)
+
         
-        print(f"{'HP:':<10} {personagem.atributos['hp']:<10} {'HP:':<10} {boss.atributos['hp']}")
-        print(f"{'Ataque:':<10} {personagem.atributos['ataque']:<10} {'Ataque:':<10} {boss.atributos['ataque']}")
-        print(f"{'Defesa:':<10} {personagem.atributos['defesa']:<10} {'Defesa:':<10} {boss.atributos['defesa']}")
-        print(f"{'Estamina:':<10} {personagem.atributos['estamina']:<10} {'Estamina:':<10} {boss.atributos['estamina']}")
-        print("=" * 40)
+        espacos_boss = margem_personagem + len(personagem.nome) + (espacos_entre_nomes // 2) + len(" VS ") + ajuste_direita
+
+        
+        print(f"{' ' * margem_personagem}{'HP:':<10}{personagem.classe_personagem.atributos['hp']:<10}{' ' * (espacos_boss - margem_personagem - 20)}{'HP:':<10}{boss.atributos['hp']}")
+        print(f"{' ' * margem_personagem}{'Ataque:':<10}{personagem.classe_personagem.atributos['ataque']:<10}{' ' * (espacos_boss - margem_personagem - 20)}{'Ataque:':<10}{boss.atributos['ataque']}")
+        print(f"{' ' * margem_personagem}{'Defesa:':<10}{personagem.classe_personagem.atributos['defesa']:<10}{' ' * (espacos_boss - margem_personagem - 20)}{'Defesa:':<10}{boss.atributos['defesa']}")
+        print(f"{' ' * margem_personagem}{'Estamina:':<10}{personagem.classe_personagem.atributos['estamina']:<10}{' ' * (espacos_boss - margem_personagem - 20)}{'Estamina:':<10}{boss.atributos['estamina']}")
+        print("=" * largura_total)
+
+
+
+
 
 
 
