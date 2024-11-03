@@ -12,7 +12,24 @@ from dungeonController import DungeonController
 from batalhaController import BatalhaController
 from setorController import SetorController
 from rankingController import RankingController
-from exceptions import CarregamentoDadosException, SalvamentoDadosException, OperacaoNaoPermitidaException, CadastroInvalidoException
+from exceptions import (
+    BaseSistemaException,
+    CadastroInvalidoException,
+    ItemIndisponivelException,
+    OperacaoNaoPermitidaException,
+    CarregamentoDadosException,
+    SalvamentoDadosException,
+    XpGanhoInvalidoError,
+    NivelRequeridoInvalidoError,
+    SetorInvalidoError,
+    DificuldadeInvalidaError,
+    CriacaoBossException,
+    CriacaoSetorException,
+    ValorInvalidoBossException,
+    AtributoInexistenteBossException,
+    NumeroSetoresInvalidoError
+)
+
 
 
 class SistemaControllerr:
@@ -326,24 +343,48 @@ class SistemaControllerr:
             try:
                 self.__sistemaView.menu_empresa()
                 opcao = self.__sistemaView.pegar_opcao()
-                
+
                 if opcao == "1":
-                    self.dungeonController.cadastrar_dungeon()
+                    while True:  
+                        try:
+                            self.dungeonController.cadastrar_dungeon()
+                            break  
+                        except (NivelRequeridoInvalidoError, 
+                                XpGanhoInvalidoError, 
+                                NumeroSetoresInvalidoError, 
+                                DificuldadeInvalidaError, 
+                                CriacaoSetorException, 
+                                CriacaoBossException, ValueError) as e:
+                            self.__sistemaView.mostrar_mensagem(str(e))
+                       
                 elif opcao == "2":
                     self.dungeonController.listar_dungeons()
                 elif opcao == "3":
-                    self.dungeonController.alterar_dungeon()
+                    while True:
+
+                        try:
+                            self.dungeonController.alterar_dungeon()
+                            break
+                        except (NivelRequeridoInvalidoError, 
+                                XpGanhoInvalidoError, 
+                                NumeroSetoresInvalidoError, 
+                                DificuldadeInvalidaError, 
+                                CriacaoSetorException, 
+                                CriacaoBossException, ValueError) as e:
+                            self.__sistemaView.mostrar_mensagem(str(e))
                 elif opcao == "4":
                     self.dungeonController.excluir_dungeon()
                 elif opcao == "0":
                     self.menu_usuario()
                 else:
                     raise OperacaoNaoPermitidaException(operacao="Escolha de opção no menu de empresa")
+
             except OperacaoNaoPermitidaException as e:
                 self.__sistemaView.mostrar_mensagem(str(e))
-                time.sleep(2)
-            except ValueError:
-                self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
+            
+            time.sleep(2)
+
+
 
     def menu_curso_empresa(self):
         self.limpar_terminal()

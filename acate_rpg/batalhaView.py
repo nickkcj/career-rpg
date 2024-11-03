@@ -11,9 +11,39 @@ class BatalhaView:
         opcao = int(input("Escolha a ação: "))
         return opcao
 
-    def escolher_habilidade(self):
-        #colocar a logica do personagem escolher a habilidade
-        pass
+    def escolher_habilidade(self, classe):
+        if classe == 'CLT':
+            print("\n")
+            print("------Escolha sua habilidade!------")
+            print("\n")
+            print("1 - Festa da Firma, efeito: Aumenta o Ataque do personagem, tipo: buff")
+            print("\n")
+            print("2 - Ataque Corporativo, efeito: Dano direto ao HP do boss, tipo: dano")
+            print("\n")
+            opcao = input("Digite o número da habilidade: ")
+
+        elif classe == 'Estagiario':
+            print("\n")
+            print("------Escolha sua habilidade!------")
+            print("\n")
+            print("1 - Cagada Remunerada, efeito: Aumenta o HP do personagem, tipo: buff")
+            print("\n")
+            print("2 - Desestabilizar Boss, efeito: Reduz a defesa do boss, tipo: debuff")
+            print("\n")
+            opcao = input("Digite o número da habilidade: ")
+
+        elif classe == 'Trainee':
+            print("\n")
+            print("------Escolha sua habilidade!------")
+            print("\n")
+            print("1 - Hora Extra, efeito: Aumenta a estamina, tipo: buff")
+            print("\n")
+            print("2 - Desmotivar Boss, efeito: Reduz o ataque do boss, tipo: debuff")
+            print("\n")
+            opcao = input("Digite o número da habilidade: ")
+
+        return opcao
+        
 
     def mostra_resultado(self, mensagem):
         print(mensagem)

@@ -3,7 +3,7 @@ from batalhaView import BatalhaView
 from personagemController import PersonagemController
 import time
 import random
-
+from exceptions import OperacaoNaoPermitidaException
 class BatalhaController():
     def __init__(self, batalha: Batalha):
         self.__batalha = batalha
@@ -28,11 +28,16 @@ class BatalhaController():
             time.sleep(3)
         elif acao_personagem == 3:
             self.usar_item(personagem)
+            self.turno_boss(personagem, boss)
+            time.sleep(3)
+
         elif acao_personagem == 4:
-            pass
+            self.usar_habilidade(personagem, boss)
+            self.turno_boss(personagem, boss)
+            time.sleep(3)
 
         else:
-            pass
+            raise OperacaoNaoPermitidaException("Opção inválida, tente novamente.")
 
     
     def atacar(self, personagem, boss):
@@ -42,8 +47,52 @@ class BatalhaController():
     def defender(self, personagem):
         personagem.classe_personagem.atributos['defesa'] += 5
 
-    def usar_habilidade(self, personagem):
-        pass
+    def usar_habilidade(self, personagem, boss):
+        classe = personagem.classe_personagem.nome_classe
+        opcao = self.__tela.escolher_habilidade(classe)
+        if personagem.classe_personagem.atributos['estamina'] >= 2:
+
+            if classe == 'CLT' and opcao == '1':
+                personagem.classe_personagem.atributos['estamina'] -= 2
+                personagem.classe_personagem.atributos['ataque'] += 5
+                self.__tela.mostra_mensagem(f"O personagem {personagem.nome} usou a habilidade *Festa da Firma* e aumentou seu ataque em 5 pontos!")
+                time.sleep(2)
+
+            elif classe == 'CLT' and opcao == '2':
+                personagem.classe_personagem.atributos['estamina'] -= 2
+                boss.atributos['hp'] -= 10
+                self.__tela.mostra_mensagem(f"O personagem {personagem.nome} usou a habilidade *Ataque Corporativo* e diminuiu o HP do boss em 10 pontos!")
+                time.sleep(2)
+
+            elif classe == 'Estagiario' and opcao == '1':
+                personagem.classe_personagem.atributos['estamina'] -= 2
+                personagem.classe_personagem.atributos['hp'] += 10
+                self.__tela.mostra_mensagem(f"O personagem {personagem.nome} usou a habilidade *Cagada Remunerada* e aumentou seu HP em 10 pontos!")
+                time.sleep(2)
+
+            elif classe == 'Estagiario' and opcao == '2':
+                personagem.classe_personagem.atributos['estamina'] -= 2
+                boss.atributos['defesa'] -= 7.5
+                self.__tela.mostra_mensagem(f"O personagem {personagem.nome} usou a habilidade *Desestabilizar Boss* e diminuiu a defesa do boss em 7.5 pontos!")
+                time.sleep(2)
+
+            elif classe == 'Trainee' and opcao == '1':
+                personagem.classe_personagem.atributos['estamina'] -= 2
+                personagem.classe_personagem.atributos['estamina'] += 10
+                self.__tela.mostra_mensagem(f"O personagem {personagem.nome} usou a habilidade *Hora Extra* e aumentou sua estamina em 10 pontos!")
+                time.sleep(2)
+
+            elif classe == 'Trainee' and opcao == '2':
+                personagem.classe_personagem.atributos['estamina'] -= 2
+                boss.atributos['ataque'] -= 7.5
+                self.__tela.mostra_mensagem(f"O personagem {personagem.nome} usou a habilidade *Desmotivar Inimigo* e reduziu o ataque do boss em 7.5 pontos!")
+                time.sleep(2)
+
+            else:
+                raise OperacaoNaoPermitidaException("Opção inválida, tente novamente")
+            
+        else:
+            self.__tela.mostra_mensagem("O personagem não possui estamina o suficiente para usar uma habilidade!")
 
     def usar_item(self, personagem):
         opcao = self.__personagemController.usar_itens(personagem)
@@ -104,11 +153,11 @@ class BatalhaController():
                 self.__personagemController.ganhar_experiencia(personagem, boss.dificuldade * 100)
                 dungeon.conquistada = True
                 personagem.dungeons_conquistadas.append(dungeon)
-                print(personagem.dungeons_conquistadas)
                 time.sleep(2)
 
             elif resultado == "derrota":
                 self.__tela.mostra_resultado("Você foi derrotado!")
+                time.sleep(2)
 
 
     
