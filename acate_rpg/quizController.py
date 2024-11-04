@@ -1,6 +1,7 @@
 from quizView import QuizView
 from cursoView import CursoView
 from personagemController import PersonagemController
+from quiz import Quiz
 import time
 
 
@@ -150,7 +151,7 @@ class QuizController():
     }
 }
 
-        self.__quizfin = {
+        self.__quizfinanceiro = {
     "1": {
         "a": "Planejar o crescimento da empresa",
         "b": "Controlar receitas e despesas",
@@ -292,7 +293,7 @@ class QuizController():
         "resposta": "a"
     }
 }
-        self.__quizmark = {
+        self.__quizmarketing = {
     "1": {
         "a": "Divulgar produtos ou serviços",
         "b": "Criar embalagens de produtos",
@@ -722,12 +723,12 @@ class QuizController():
         self.__quizView = QuizView()
         self.__cursoView = CursoView()
         
-    def realizar_quiz(self, personagem):
-        self.__cursoView.mostra_cursos(self.__cursoController.cursos)
+    def realizar_quiz(self, personagem, cursos):
+        self.__cursoView.mostra_cursos(cursos)
         nome_curso = self.__cursoView.seleciona_curso()
-        curso_encontrado = False  # Flag para verificar se o curso foi encontrado
+        curso_encontrado = False
 
-        for curso in self.__cursoController.cursos:
+        for curso in cursos:
             if curso.nome == nome_curso:
                 curso_encontrado = True
                 setor = curso.setor
@@ -738,41 +739,37 @@ class QuizController():
                 if curso.realizado:
                     self.__cursoView.mostra_mensagem("Você já tem o certificado desse curso, esqueceu?")
                     time.sleep(2)
-                    return
+                    return None
 
                 if nivel_requerido > personagem.nivel:
                     self.__cursoView.mostra_mensagem("Você não tem nível suficiente para fazer esse curso, volte mais tarde!")
                     time.sleep(2)
-                    return
+                    return None
 
-                # Iniciar o quiz com base no setor
-                if setor == "RH":
-                    resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizrh)
-                elif setor == "Financeiro":
-                    resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizfin)
-                elif setor == "Marketing":
-                    resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizmark)
-                elif setor == "T.I":
-                    resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizti)
-                elif setor == "Vendas":
-                    resultado = self.__quizView.comeca_quiz(dificuldade, setor, self.__quizvendas)
-                else:
-                    resultado = False  # Caso o setor não corresponda a nenhum caso previsto
+                
+                quiz = Quiz(setor, dificuldade)
 
-                # Atualizar a experiência e status do curso se o quiz for concluído com sucesso
-                if resultado:
-                    self.__personagemController.ganhar_experiencia(personagem, experiencia)
-                    curso.realizado = True
-                else:
-                    curso.realizado = False
+                
+                perguntas = getattr(self, f"_QuizController__quiz{setor.lower()}", None)
+                if perguntas is None:
+                    self.__cursoView.mostra_mensagem(f"Setor {setor} não encontrado. Não há perguntas disponíveis para este curso.")
+                    time.sleep(2)
+                    return None
+                if perguntas:
+                    resultado = self.__quizView.comeca_quiz(dificuldade, setor, perguntas)
+                    quiz.gabaritou_miga = resultado  
 
-                return resultado  # Retorna o resultado e sai da função após encontrar o curso
+                    if resultado:
+                        self.__personagemController.ganhar_experiencia(personagem, experiencia)
+                        curso.realizado = True
+                    else:
+                        curso.realizado = False
 
-        # Caso o curso não tenha sido encontrado
+                return resultado  
+
         if not curso_encontrado:
             self.__cursoView.mostra_mensagem("O curso selecionado não existe, tente novamente!")
-            time.sleep(2)
-            return
+
 
 
         

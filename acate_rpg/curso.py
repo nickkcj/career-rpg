@@ -1,62 +1,62 @@
-from quiz import Quiz
 
-class Curso(Quiz):
+
+class Curso():
     def __init__(self, nome, nivel_requerido, xp_ganho, setor, dificuldade, realizado=False):
-        self._nome = nome
-        self._nivel_requerido = nivel_requerido
-        self._xp_ganho = xp_ganho
-        self._setor = setor
-        self._dificuldade = dificuldade
-        self._realizado = realizado
+        self.__nome = nome
+        self.__nivel_requerido = nivel_requerido
+        self.__xp_ganho = xp_ganho
+        self.__setor = setor
+        self.__dificuldade = dificuldade
+        self.__realizado = realizado
  
 
 
     @property
     def nome(self):
-        return self._nome
+        return self.__nome
 
     @nome.setter
     def nome(self, nome):
-        self._nome = nome
+        self.__nome = nome
 
     @property
     def nivel_requerido(self):
-        return self._nivel_requerido
+        return self.__nivel_requerido
 
     @nivel_requerido.setter
     def nivel_requerido(self, nivel_requerido):
-        self._nivel_requerido = nivel_requerido
+        self.__nivel_requerido = nivel_requerido
 
     @property
     def xp_ganho(self):
-        return self._xp_ganho
+        return self.__xp_ganho
 
     @xp_ganho.setter
     def xp_ganho(self, xp_ganho):
-        self._xp_ganho = xp_ganho
+        self.__xp_ganho = xp_ganho
 
     @property
     def setor(self):
-        return self._setor
+        return self.__setor
 
     @setor.setter
     def setor(self, setor):
-        self._setor = setor
+        self.__setor = setor
 
     @property
     def dificuldade(self):
-        return self._dificuldade
+        return self.__dificuldade
 
     @dificuldade.setter
     def dificuldade(self, dificuldade):
-        self._dificuldade = dificuldade
+        self.__dificuldade = dificuldade
 
     @property
     def realizado(self):
-        return self._realizado
+        return self.__realizado
 
     @realizado.setter
     def realizado(self, realizado):
-        self._realizado = realizado
+        self.__realizado = realizado
 
     

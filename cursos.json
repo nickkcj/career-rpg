@@ -11,7 +11,7 @@
         "nome": "Fundamentos de T.I",
         "nivel_requerido": 3,
         "xp_ganho": 200,
-        "setor": "T.I",
+        "setor": "TI",
         "dificuldade": 4,
         "realizado": false
     },
@@ -51,7 +51,7 @@
         "nome": "Inovacao e Transformacao Digital",
         "nivel_requerido": 15,
         "xp_ganho": 750,
-        "setor": "T.I",
+        "setor": "TI",
         "dificuldade": 9,
         "realizado": false
     }

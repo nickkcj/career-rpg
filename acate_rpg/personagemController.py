@@ -53,11 +53,11 @@ class PersonagemController:
         if bosses_derrotados is None:
             bosses_derrotados = []
 
-        # Verifica se o personagem já existe pelo nome
+        
         if any(p.nome == nome for p in self.personagens):
             raise ValueError(f"Um personagem com o nome '{nome}' já existe.")
 
-        # Lógica para criar o novo personagem
+        
         personagem = Personagem(
             nome=nome,
             nivel=nivel,
@@ -210,7 +210,7 @@ class PersonagemController:
             if tipo_item == 1 and personagem.pocao_hp and personagem.pocao_hp.quant > 0:
                 personagem.hp_atual += personagem.pocao_hp.valor
                 personagem.pocao_hp.quant -= 1
-                self.hp_atual = self.hp_atual
+                personagem.hp_atual = personagem.hp_atual
                 self.__personagemView.mostrar_mensagem(f"{personagem.nome} usou Poção de HP!")
             elif tipo_item == 2 and personagem.pocao_est and personagem.pocao_est.quant > 0:
                 personagem.classe_personagem.atributos['estamina'] += personagem.pocao_est.valor

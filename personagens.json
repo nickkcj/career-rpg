@@ -47,9 +47,9 @@
     },
     {
         "nome": "pel\u00c3\u00a9",
-        "nivel": 32,
+        "nivel": 36,
         "hp_atual": 100,
-        "experiencia_total": 8200,
+        "experiencia_total": 9800.0,
         "classe": "CLT",
         "classes_historico": [
             "Trainee",
@@ -57,7 +57,7 @@
             "CLT"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 155,
+        "pontos_disponiveis": 50,
         "pocoes_hp": 2,
         "pocoes_est": 3,
         "atributos": {
@@ -67,14 +67,28 @@
             "estamina": 20
         },
         "cursos_conquistados": 3,
-        "dungeons_conquistadas": [],
-        "bosses_derrotados": []
+        "dungeons_conquistadas": [
+            {
+                "nome": "Manual",
+                "nivel_requerido": 10
+            }
+        ],
+        "bosses_derrotados": [
+            {
+                "nome": "Renan",
+                "nivel_requerido": 10
+            },
+            {
+                "nome": "Boss de RH da nickzin",
+                "nivel_requerido": 2
+            }
+        ]
     },
     {
         "nome": "xamuel",
-        "nivel": 27,
+        "nivel": 30,
         "hp_atual": 100,
-        "experiencia_total": 6322,
+        "experiencia_total": 7622.0,
         "classe": "CLT",
         "classes_historico": [
             "Trainee",
@@ -82,8 +96,8 @@
             "CLT"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 130,
-        "pocoes_hp": 3,
+        "pontos_disponiveis": 65,
+        "pocoes_hp": 1,
         "pocoes_est": 2,
         "atributos": {
             "ataque": 1,
@@ -91,9 +105,35 @@
             "hp": 100,
             "estamina": 20
         },
-        "cursos_conquistados": 2,
-        "dungeons_conquistadas": [],
-        "bosses_derrotados": []
+        "cursos_conquistados": 3,
+        "dungeons_conquistadas": [
+            {
+                "nome": "nickzin2",
+                "nivel_requerido": 1
+            },
+            {
+                "nome": "Manual",
+                "nivel_requerido": 10
+            }
+        ],
+        "bosses_derrotados": [
+            {
+                "nome": "Boss do RH ",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "xamuel",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "xamuel",
+                "nivel_requerido": 10
+            },
+            {
+                "nome": "Renan",
+                "nivel_requerido": 10
+            }
+        ]
     },
     {
         "nome": "romario",

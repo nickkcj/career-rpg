@@ -319,7 +319,7 @@ class SistemaControllerr:
                                 self.__batalhaController.iniciar_batalha(personagem, boss_final, dungeon_selecionada)
 
                 elif opcao == '3':
-                    resultado = self.__quizController.realizar_quiz(personagem)
+                    resultado = self.__quizController.realizar_quiz(personagem, self.__cursoController.cursos)
                     if resultado == True:
                         self.__personagemController.incrementar_curso(personagem)
                         
