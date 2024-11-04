@@ -94,3 +94,7 @@ class CriacaoDungeonException(Exception):
     def __init__(self, solucao="Já existe uma dungeon com esse nome, tente outra!"):
         super().__init__(solucao)
 
+class HpJahCheioException(Exception):
+    def __init__(self, solucao="O Hp Atual já está no máximo!"):
+        super().__init__(solucao)
+

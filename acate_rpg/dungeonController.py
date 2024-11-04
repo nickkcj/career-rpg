@@ -44,7 +44,7 @@ class DungeonController:
             raise CriacaoDungeonException(f"A dungeon com o nome '{dados_dungeon['nome']}' já existe. Escolha um nome diferente.")
             
         if not isinstance(dados_dungeon["nivel_requerido"], int) or not (1 <= int(dados_dungeon["nivel_requerido"]) <= 100):
-            raise NivelRequeridoInvalidoError("O nível requerido deve ser um número inteiro entre 1 e 10.")
+            raise NivelRequeridoInvalidoError("O nível requerido deve ser um número inteiro entre 1 e 100.")
 
         if not isinstance(int(dados_dungeon["xp_ganho"]), int) or not (1 <= int(dados_dungeon["xp_ganho"])):
             raise XpGanhoInvalidoError("XP ganho deve ser um número inteiro.")

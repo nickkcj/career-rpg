@@ -320,8 +320,8 @@
             "dificuldade": 6.0,
             "nivel_requerido": 10,
             "atributos": {
-                "ataque": 9.0,
-                "defesa": 43.0,
+                "ataque": 24.0,
+                "defesa": 18.0,
                 "hp": 120.0,
                 "estamina": 60.0
             }

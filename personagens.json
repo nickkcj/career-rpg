@@ -301,7 +301,7 @@
     {
         "nome": "arnaldo",
         "nivel": 53,
-        "hp_atual": 180,
+        "hp_atual": 190,
         "experiencia_total": 19500,
         "classe": "CLT",
         "classes_historico": [
@@ -311,7 +311,7 @@
         ],
         "habilidades": [],
         "pontos_disponiveis": 200,
-        "pocoes_hp": 2,
+        "pocoes_hp": 1,
         "pocoes_est": 3,
         "atributos": {
             "ataque": 141,
@@ -559,18 +559,7 @@
         "classes_historico": [
             "Trainee"
         ],
-        "habilidades": [
-            {
-                "nome": "Hora Extra",
-                "efeito": "Aumenta a Estamina temporariamente",
-                "tipo": "buff"
-            },
-            {
-                "nome": "Desmotivar Inimigo",
-                "efeito": "Reduz o Ataque do boss",
-                "tipo": "debuff"
-            }
-        ],
+        "habilidades": [],
         "pontos_disponiveis": 22,
         "pocoes_hp": 3,
         "pocoes_est": 3,

@@ -3,7 +3,7 @@ from batalhaView import BatalhaView
 from personagemController import PersonagemController
 import time
 import random
-from exceptions import OperacaoNaoPermitidaException
+from exceptions import OperacaoNaoPermitidaException, HpJahCheioException
 from bossController import BossController
 import os
 class BatalhaController():
@@ -12,6 +12,7 @@ class BatalhaController():
         self.__tela = BatalhaView()
         self.__personagemController = PersonagemController()
         self.__bossController = BossController()
+        self.defesas = 0
 
     def realizar_turno(self, acao_personagem, personagem, boss, dungeon, log):
         if acao_personagem == 1: 
@@ -28,6 +29,7 @@ class BatalhaController():
             self.__personagemController.defender(personagem)
             self.__tela.mostra_mensagem(f"{personagem.nome} aumentou a defesa em {personagem.classe_personagem.atributos['defesa']}!")
             log.adicionar_registro(personagem, boss, dungeon, "defesa")
+            self.defesas += 1
             time.sleep(3)
             self.turno_boss(personagem, boss)
             time.sleep(3)
@@ -48,16 +50,25 @@ class BatalhaController():
 
     def usar_item(self, personagem):
         opcao = self.__personagemController.usar_itens_batalha(personagem)
-        if opcao == '1':
-            personagem.hp_atual += 10
-            personagem.pocao_hp.quant -= 1
-            self.__tela.mostra_mensagem(f"O personagem {personagem.nome} se curou em 10 de vida")
-            time.sleep(2)
+        while True:
+            try:
+                if opcao == '1':
+                    if personagem.hp_atual < personagem.classe_personagem.atributos['hp']:
+                        personagem.hp_atual += 10
+                        personagem.pocao_hp.quant -= 1
+                        self.__tela.mostra_mensagem(f"O personagem {personagem.nome} se curou em 10 de vida")
+                        time.sleep(2)
+                        break
+                    else:
+                        raise HpJahCheioException("Não é possível usar a Poção de HP, o seu HP já está Cheio!")
 
-        else:
-            personagem.classe_personagem.atributos['estamina'] += 10
-            self.__tela.mostra_mensagem(f"O personagem {personagem.nome} restaurou 10 de estamina")
-            time.sleep(2)
+                else:
+                    personagem.classe_personagem.atributos['estamina'] += 10
+                    self.__tela.mostra_mensagem(f"O personagem {personagem.nome} restaurou 10 de estamina")
+                    time.sleep(2)
+                    break
+            except HpJahCheioException as e:
+                self.__tela.mostra_mensagem(str(e))
 
     def turno_boss(self, personagem, boss):
         acao_boss = random.randint(1, 2)  
@@ -110,6 +121,7 @@ class BatalhaController():
                     self.__tela.mostra_mensagem(f"Voce conquistou a {dungeon.nome}!")
                     time.sleep(1)
                     self.__personagemController.ganhar_experiencia(personagem, dungeon.boss_final.dificuldade * 100)
+                    personagem.classe_personagem.atributos['defesa'] -= (self.defesas * 7.5)
                 elif boss.nome == setor.boss.nome:
                     setor.conquistado = True
                     personagem.bosses_derrotados.append(boss)
@@ -117,10 +129,12 @@ class BatalhaController():
                     personagem.hp_atual = min(personagem.hp_atual + 20, personagem.classe_personagem.atributos["hp"])
                     time.sleep(1)
                     self.__personagemController.ganhar_experiencia(personagem, boss.dificuldade * 100)
+                    personagem.classe_personagem.atributos['defesa'] -= (self.defesas * 7.5)
                     setor.conquistado = True
 
             elif resultado == "derrota":
                 self.__tela.mostra_resultado("Você foi derrotado!")
+                personagem.classe_personagem.atributos['defesa'] -= (self.defesas * 7.5)
+                personagem.hp_atual = (personagem.classe_personagem.atributos['hp']/2)
                 time.sleep(2)
-
 

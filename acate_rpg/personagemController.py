@@ -2,7 +2,7 @@ import time
 from personagemView import PersonagemView
 from personagem import Personagem
 from classsePersonagemController import ClassePersonagemController
-from exceptions import CadastroInvalidoException, ItemIndisponivelException, OperacaoNaoPermitidaException
+from exceptions import CadastroInvalidoException, ItemIndisponivelException, OperacaoNaoPermitidaException, HpJahCheioException
 from AbstractCombatente import Combatente
 from batalhaView import BatalhaView
 
@@ -340,17 +340,20 @@ class PersonagemController(Combatente):
         try:
             tipo_item = self.__personagemView.escolher_item(personagem)
             if tipo_item == 1 and personagem.pocao_hp and personagem.pocao_hp.quant > 0:
-                personagem.hp_atual += personagem.pocao_hp.valor
-                personagem.pocao_hp.quant -= 1
-                personagem.hp_atual = personagem.hp_atual
-                self.__personagemView.mostrar_mensagem(f"{personagem.nome} usou Poção de HP!")
+                if personagem.hp_atual < personagem.classe_personagem.atributos['hp']:
+                    personagem.hp_atual += personagem.pocao_hp.valor
+                    personagem.pocao_hp.quant -= 1
+                    personagem.hp_atual = personagem.hp_atual
+                    self.__personagemView.mostrar_mensagem(f"{personagem.nome} usou Poção de HP!")
+                else:
+                    raise HpJahCheioException("Não é possível usar a Poção de HP, o seu HP já está Cheio!")
             elif tipo_item == 2 and personagem.pocao_est and personagem.pocao_est.quant > 0:
                 personagem.classe_personagem.atributos['estamina'] += personagem.pocao_est.valor
                 personagem.pocao_est.quant -= 1
                 self.__personagemView.mostrar_mensagem(f"{personagem.nome} usou Poção de Estamina!")
             else:
                 raise ItemIndisponivelException(item="Poção")
-        except ItemIndisponivelException as e:
+        except (ItemIndisponivelException, HpJahCheioException) as e:
             self.__personagemView.mostrar_mensagem(str(e))
 
     def usar_itens_batalha(self, personagem):
