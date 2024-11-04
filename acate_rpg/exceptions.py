@@ -32,12 +32,14 @@ class CarregamentoDadosException(Exception):
     def __init__(self, arquivo, solucao="Verifique o arquivo e tente novamente"):
         mensagem = f"Erro ao carregar dados do arquivo '{arquivo}'."
         super().__init__(mensagem, solucao)
+        input("\nPressione Enter para voltar ao menu.")
 
 
 class SalvamentoDadosException(Exception):
     def __init__(self, arquivo, solucao="Verifique o espaço em disco e as permissões"):
         mensagem = f"Erro ao salvar dados no arquivo '{arquivo}'."
         super().__init__(mensagem, solucao)
+        input("\nPressione Enter para voltar ao menu.")
 
 
 class XpGanhoInvalidoError(Exception):

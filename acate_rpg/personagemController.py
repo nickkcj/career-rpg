@@ -47,16 +47,28 @@ class PersonagemController:
                 return personagem
         return None
     
-    def criar_personagem(self, nome, nivel, experiencia_total, pontos_disponiveis, nome_classe, dungeons_conquistadas, cursos_conquistados):
-        return Personagem(
+    def criar_personagem(self, nome, nivel=1, experiencia_total=0, pontos_disponiveis=0, nome_classe=None, dungeons_conquistadas=None, bosses_derrotados=None, cursos_conquistados=0):
+        if dungeons_conquistadas is None:
+            dungeons_conquistadas = []
+        if bosses_derrotados is None:
+            bosses_derrotados = []
+
+        # Verifica se o personagem já existe pelo nome
+        if any(p.nome == nome for p in self.personagens):
+            raise ValueError(f"Um personagem com o nome '{nome}' já existe.")
+
+        # Lógica para criar o novo personagem
+        personagem = Personagem(
             nome=nome,
             nivel=nivel,
             experiencia_total=experiencia_total,
             pontos_disponiveis=pontos_disponiveis,
             nome_classe=nome_classe,
             dungeons_conquistadas=dungeons_conquistadas,
+            bosses_derrotados=bosses_derrotados,
             cursos_conquistados=cursos_conquistados
         )
+        return personagem
 
     def mostrar_habilidades(self, personagem: Personagem):
         habilidades_por_classe = {}
@@ -93,6 +105,7 @@ class PersonagemController:
         if novo_nivel > nivel_anterior:
             aumento_niveis = novo_nivel - nivel_anterior
             personagem.pontos_disponiveis += aumento_niveis * 5
+            personagem.hp_atual = personagem.classe_personagem.atributos['hp']
             personagem.nivel = novo_nivel
 
             self.__personagemView.mostrar_mensagem(
@@ -160,11 +173,13 @@ class PersonagemController:
                 'ataque': personagem.classe_personagem.atributos['ataque'],
                 'defesa': personagem.classe_personagem.atributos['defesa'],
                 'hp': personagem.classe_personagem.atributos['hp'],
+                'hp_atual': personagem.hp_atual,
                 'estamina': personagem.classe_personagem.atributos['estamina'],
                 'pocoes_hp': personagem.pocao_hp.quant,
                 'pocoes_est': personagem.pocao_est.quant,
                 'cursos_conquistados': personagem.cursos_conquistados,
-                'dungeons_conquistadas': [dungeon.nome for dungeon in personagem.dungeons_conquistadas]
+                'dungeons_conquistadas': [{'nome': d.get('nome')} if isinstance(d, dict) else {'nome': d.nome} for d in personagem.dungeons_conquistadas],
+                'bosses_derrotados': [{'nome': b.get('nome')} if isinstance(b, dict) else {'nome': b.nome} for b in personagem.bosses_derrotados]
             }
             self.__personagemView.mostrar_status(status)
         except KeyError as e:
@@ -191,10 +206,11 @@ class PersonagemController:
 
     def usar_item(self, personagem: Personagem):
         try:
-            tipo_item = self.__personagemView.escolher_item()
+            tipo_item = self.__personagemView.escolher_item(personagem)
             if tipo_item == 1 and personagem.pocao_hp and personagem.pocao_hp.quant > 0:
-                personagem.classe_personagem.atributos['hp'] += personagem.pocao_hp.valor
+                personagem.hp_atual += personagem.pocao_hp.valor
                 personagem.pocao_hp.quant -= 1
+                self.hp_atual = self.hp_atual
                 self.__personagemView.mostrar_mensagem(f"{personagem.nome} usou Poção de HP!")
             elif tipo_item == 2 and personagem.pocao_est and personagem.pocao_est.quant > 0:
                 personagem.classe_personagem.atributos['estamina'] += personagem.pocao_est.valor

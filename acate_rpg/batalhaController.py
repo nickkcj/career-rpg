@@ -27,7 +27,7 @@ class BatalhaController():
             self.turno_boss(personagem, boss)
             time.sleep(3)
         elif acao_personagem == 3:
-            self.usar_item(personagem)
+            self.__personagemController.usar_item(personagem)
             self.turno_boss(personagem, boss)
             time.sleep(3)
 
@@ -66,7 +66,7 @@ class BatalhaController():
 
             elif classe == 'Estagiario' and opcao == '1':
                 personagem.classe_personagem.atributos['estamina'] -= 2
-                personagem.classe_personagem.atributos['hp'] += 10
+                personagem.hp_atual += 10
                 self.__tela.mostra_mensagem(f"O personagem {personagem.nome} usou a habilidade *Cagada Remunerada* e aumentou seu HP em 10 pontos!")
                 time.sleep(2)
 
@@ -97,7 +97,8 @@ class BatalhaController():
     def usar_item(self, personagem):
         opcao = self.__personagemController.usar_itens_batalha(personagem)
         if opcao == '1':
-            personagem.classe_personagem.atributos['hp'] += 10
+            personagem.hp_atual += 10
+            personagem.pocao_hp.quant -= 1
             self.__tela.mostra_mensagem(f"O personagem {personagem.nome} se curou em 10 de vida")
             time.sleep(2)
 
@@ -110,7 +111,7 @@ class BatalhaController():
         acao_boss = random.randint(1, 2)  
         if acao_boss == 1:
             dano = max(boss.atributos['ataque'] * 2 - personagem.classe_personagem.atributos['defesa'], 1)
-            personagem.classe_personagem.atributos['hp'] -= dano
+            personagem.hp_atual -= dano
             self.__tela.mostra_mensagem(f"{boss.nome} atacou {personagem.nome} e causou {dano} de dano!")
             
         else:      
@@ -122,7 +123,7 @@ class BatalhaController():
         if self.__batalha.boss.atributos['hp'] <= 0:
             self.__batalha.finalizada = True
             return "vitória"
-        elif self.__batalha.personagem.classe_personagem.atributos['hp'] <= 0:
+        elif self.__batalha.personagem.hp_atual <= 0:
             self.__batalha.finalizada = True
             return "derrota"
         return
@@ -141,8 +142,13 @@ class BatalhaController():
                 self.__tela.mostra_resultado("Você venceu!")
                 time.sleep(2)
                 self.__personagemController.ganhar_experiencia(personagem, boss.dificuldade * 100)
-                dungeon.conquistada = True
-                personagem.dungeons_conquistadas.append(dungeon)
+                personagem.bosses_derrotados.append(boss)
+                if boss.nome == dungeon.boss_final.nome:
+                    dungeon.conquistada = True
+                    personagem.dungeons_conquistadas.append(dungeon)
+                    dungeon.boss_final['nome'] = personagem.nome
+                else:
+                    boss.nome = personagem.nome
                 time.sleep(2)
 
             elif resultado == "derrota":

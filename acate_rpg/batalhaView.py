@@ -72,7 +72,7 @@ class BatalhaView:
         espacos_boss = margem_personagem + len(personagem.nome) + (espacos_entre_nomes // 2) + len(" VS ") + ajuste_direita
 
         
-        print(f"{' ' * margem_personagem}{'HP:':<10}{personagem.classe_personagem.atributos['hp']:<10}{' ' * (espacos_boss - margem_personagem - 20)}{'HP:':<10}{boss.atributos['hp']}")
+        print(f"{' ' * margem_personagem}{'HP:':<10}{str(personagem.hp_atual) + ' / ' + str(personagem.classe_personagem.atributos['hp']):<10}{' ' * (espacos_boss - margem_personagem - 20)}{'HP:':<10}{boss.atributos['hp']}")
         print(f"{' ' * margem_personagem}{'Ataque:':<10}{personagem.classe_personagem.atributos['ataque']:<10}{' ' * (espacos_boss - margem_personagem - 20)}{'Ataque:':<10}{boss.atributos['ataque']}")
         print(f"{' ' * margem_personagem}{'Defesa:':<10}{personagem.classe_personagem.atributos['defesa']:<10}{' ' * (espacos_boss - margem_personagem - 20)}{'Defesa:':<10}{boss.atributos['defesa']}")
         print(f"{' ' * margem_personagem}{'Estamina:':<10}{personagem.classe_personagem.atributos['estamina']:<10}{' ' * (espacos_boss - margem_personagem - 20)}{'Estamina:':<10}{boss.atributos['estamina']}")

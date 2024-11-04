@@ -2,6 +2,7 @@
     {
         "nome": "xuxa",
         "nivel": 12,
+        "hp_atual": 100,
         "experiencia_total": 1800,
         "classe": "CLT",
         "classes_historico": [],
@@ -10,17 +11,19 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 100,
-            "defesa": 30,
-            "hp": 130,
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
             "estamina": 20
         },
         "cursos_conquistados": 0,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "kaka",
         "nivel": 32,
+        "hp_atual": 100,
         "experiencia_total": 8222,
         "classe": "CLT",
         "classes_historico": [
@@ -33,17 +36,19 @@
         "pocoes_hp": 3,
         "pocoes_est": 2,
         "atributos": {
-            "ataque": 110,
-            "defesa": 10,
-            "hp": 49,
-            "estamina": 35
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 0,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "pel\u00c3\u00a9",
         "nivel": 32,
+        "hp_atual": 100,
         "experiencia_total": 8200,
         "classe": "CLT",
         "classes_historico": [
@@ -56,17 +61,19 @@
         "pocoes_hp": 2,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 20,
-            "defesa": 10,
-            "hp": 60,
-            "estamina": 30
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 3,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "xamuel",
         "nivel": 27,
+        "hp_atual": 100,
         "experiencia_total": 6322,
         "classe": "CLT",
         "classes_historico": [
@@ -79,22 +86,19 @@
         "pocoes_hp": 3,
         "pocoes_est": 2,
         "atributos": {
-            "ataque": 15,
-            "defesa": 10,
-            "hp": -9,
-            "estamina": 33
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 2,
-        "dungeons_conquistadas": [
-            {
-                "nome": "level up",
-                "nivel_requerido": 10
-            }
-        ]
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "romario",
         "nivel": 13,
+        "hp_atual": 100,
         "experiencia_total": 2000,
         "classe": "CLT",
         "classes_historico": [
@@ -105,17 +109,19 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 0,
-            "estamina": 0
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 0,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "xamazin timaseta",
         "nivel": 29,
+        "hp_atual": 100,
         "experiencia_total": 7000,
         "classe": "CLT",
         "classes_historico": [
@@ -128,17 +134,19 @@
         "pocoes_hp": 3,
         "pocoes_est": 2,
         "atributos": {
-            "ataque": 20,
-            "defesa": 10,
-            "hp": 50,
-            "estamina": 35
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 0,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "puterrier",
         "nivel": 1,
+        "hp_atual": 100,
         "experiencia_total": 0,
         "classe": "Trainee",
         "classes_historico": [
@@ -149,17 +157,19 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 0,
-            "estamina": 0
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 0,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "dunha",
         "nivel": 1,
+        "hp_atual": 100,
         "experiencia_total": 0,
         "classe": "Trainee",
         "classes_historico": [
@@ -170,17 +180,19 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 0,
-            "estamina": 0
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 1,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "maradona",
         "nivel": 1,
+        "hp_atual": 100,
         "experiencia_total": 0,
         "classe": "Trainee",
         "classes_historico": [
@@ -191,17 +203,19 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 0,
-            "estamina": 0
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 0,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "segovinha",
         "nivel": 17,
+        "hp_atual": 100,
         "experiencia_total": 3000,
         "classe": "Estagiario",
         "classes_historico": [
@@ -212,17 +226,19 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 0,
-            "estamina": 0
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 1,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "1",
         "nivel": 1,
+        "hp_atual": 100,
         "experiencia_total": 0,
         "classe": "CLT",
         "classes_historico": [
@@ -233,17 +249,19 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 0,
-            "estamina": 0
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 0,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "arnaldo",
         "nivel": 52,
+        "hp_atual": 100,
         "experiencia_total": 18500,
         "classe": "CLT",
         "classes_historico": [
@@ -256,17 +274,19 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 10,
-            "defesa": 10,
-            "hp": 50,
-            "estamina": 30
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 1,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "gabigol lixo",
         "nivel": 1,
+        "hp_atual": 100,
         "experiencia_total": 0,
         "classe": "CLT",
         "classes_historico": [
@@ -277,17 +297,19 @@
         "pocoes_hp": 0,
         "pocoes_est": 0,
         "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 30,
-            "estamina": 15
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 0,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "mangual",
         "nivel": 1,
+        "hp_atual": 100,
         "experiencia_total": 0,
         "classe": "CLT",
         "classes_historico": [
@@ -298,33 +320,106 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 0,
-            "estamina": 0
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 0,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     },
     {
         "nome": "eneas",
-        "nivel": 17,
-        "experiencia_total": 3000,
-        "classe": "Trainee",
+        "nivel": 31,
+        "hp_atual": 0,
+        "experiencia_total": 8000,
+        "classe": "Estagiario",
         "classes_historico": [
-            "Trainee"
+            "Trainee",
+            "Estagiario"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 90,
+        "pontos_disponiveis": 60,
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 0,
-            "estamina": 0
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 0,
-        "dungeons_conquistadas": []
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
+    },
+    {
+        "nome": "rogerinho",
+        "nivel": 31,
+        "hp_atual": 69,
+        "experiencia_total": 7700,
+        "classe": "Estagiario",
+        "classes_historico": [
+            "Estagiario"
+        ],
+        "habilidades": [],
+        "pontos_disponiveis": 9,
+        "pocoes_hp": 2,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
+        },
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": [
+            {
+                "nome": "Max",
+                "nivel_requerido": 2
+            }
+        ],
+        "bosses_derrotados": []
+    },
+    {
+        "nome": "adiburai",
+        "nivel": 40,
+        "hp_atual": 99,
+        "experiencia_total": 11800.0,
+        "classe": "Estagiario",
+        "classes_historico": [
+            "Estagiario"
+        ],
+        "habilidades": [],
+        "pontos_disponiveis": 20,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
+        },
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": [
+            {
+                "nome": "Max",
+                "nivel_requerido": 2
+            }
+        ],
+        "bosses_derrotados": [
+            {
+                "nome": "Boss de Marketing da Max",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "Boss de Vendas da Max",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "cariri",
+                "nivel_requerido": 2
+            }
+        ]
     }
 ]

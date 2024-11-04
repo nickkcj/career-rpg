@@ -17,3 +17,6 @@ class SetorView():
     
     def pega_opcao_setor(self):
         return input("Selecione o número do setor: ")
+    
+    def pega_opcao_boss(self):
+        return input("Selecione o número de qual processo seletivo quer aplicar: ")

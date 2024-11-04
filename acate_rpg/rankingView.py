@@ -33,7 +33,7 @@ class RankingView:
         else:
             print(f"Dungeons conquistadas por {personagem.nome}:")
             for dungeon in personagem.dungeons_conquistadas:
-                print(f"- {dungeon.nome}")
+                print(f"- {dungeon['nome']}")
 
 
     def mostrar_mensagem(self, mensagem):

@@ -176,8 +176,8 @@
                     "nivel_requerido": 10,
                     "atributos": {
                         "ataque": 2,
-                        "defesa": 6.5,
-                        "hp": -7.0,
+                        "defesa": 1.5,
+                        "hp": 10,
                         "estamina": 5
                     }
                 }
@@ -226,7 +226,7 @@
                     "atributos": {
                         "ataque": 18,
                         "defesa": 13.5,
-                        "hp": 88.5,
+                        "hp": 90,
                         "estamina": 45
                     }
                 }
@@ -275,6 +275,55 @@
                 "defesa": 6.0,
                 "hp": 40.0,
                 "estamina": 20.0
+            }
+        }
+    },
+    {
+        "nome": "Manual",
+        "nivel_requerido": 10,
+        "xp_ganho": 2000,
+        "dificuldade": 6.0,
+        "setores": [
+            {
+                "nome": "Marketing",
+                "dificuldade": 10,
+                "boss": {
+                    "nome": "Boss de Marketing da Manual",
+                    "dificuldade": 10,
+                    "nivel_requerido": 10,
+                    "atributos": {
+                        "ataque": 20,
+                        "defesa": 15.0,
+                        "hp": 100,
+                        "estamina": 50
+                    }
+                }
+            },
+            {
+                "nome": "Vendas",
+                "dificuldade": 2,
+                "boss": {
+                    "nome": "Boss de Vendas da Manual",
+                    "dificuldade": 2,
+                    "nivel_requerido": 10,
+                    "atributos": {
+                        "ataque": 4,
+                        "defesa": 3.0,
+                        "hp": 20,
+                        "estamina": 10
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "Renan",
+            "dificuldade": 6.0,
+            "nivel_requerido": 10,
+            "atributos": {
+                "ataque": 24.0,
+                "defesa": 18.0,
+                "hp": 120.0,
+                "estamina": 60.0
             }
         }
     }

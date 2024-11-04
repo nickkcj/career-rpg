@@ -3,7 +3,7 @@ from pocao_hp import PocaoHP
 from pocao_est import PocaoEstamina
 
 class Personagem():
-    def __init__(self, nome, nivel, experiencia_total, nome_classe: str, pocao_hp: PocaoHP=None, pocao_est: PocaoEstamina=None, pontos_disponiveis=10, dungeons_conquistadas= None, cursos_conquistados=0):
+    def __init__(self, nome, nivel, experiencia_total, nome_classe: str, pocao_hp: PocaoHP=None, pocao_est: PocaoEstamina=None, pontos_disponiveis=10, dungeons_conquistadas=None, bosses_derrotados=None, cursos_conquistados=0):
         self.__nome = nome
         self.__nivel = nivel
         self.__experiencia_total = experiencia_total
@@ -11,36 +11,12 @@ class Personagem():
         self.__classes_historico = [nome_classe]
         self.__habilidades = []
         self.__dungeons_conquistadas = dungeons_conquistadas if dungeons_conquistadas is not None else []
+        self.__bosses_derrotados = bosses_derrotados if bosses_derrotados is not None else []
         self.__cursos_conquistados = cursos_conquistados
-        self.__dungeons_conquistadas = []
         self.__pocao_hp = pocao_hp if pocao_hp else PocaoHP(quant=3)
         self.__pocao_est = pocao_est if pocao_est else PocaoEstamina(quant=3)
         self.__pontos_disponiveis = pontos_disponiveis
-
-    @property
-    def cursos_conquistados(self):
-        return self.__cursos_conquistados
-    
-    @cursos_conquistados.setter
-    def cursos_conquistados(self, cursos_conquistados):
-        self.__cursos_conquistados = cursos_conquistados
-
-    @property
-    def dungeons_conquistadas(self):
-        return self.__dungeons_conquistadas
-    
-    @dungeons_conquistadas.setter
-    def dungeons_conquistadas(self, dungeons_conquistadas):
-        self.__dungeons_conquistadas = dungeons_conquistadas
-
-
-    @property
-    def dungeons_conquistadas(self):
-        return self.__dungeons_conquistadas
-    
-    @dungeons_conquistadas.setter
-    def dungeons_conquistadas(self, dungeons_conquistadas):
-        self.__dungeons_conquistadas = dungeons_conquistadas
+        self.__hp_atual = self.__classe_personagem.atributos['hp']
 
 
     @property
@@ -80,7 +56,7 @@ class Personagem():
     @property
     def classes_historico(self):
         return self.__classes_historico
-    
+
     @classes_historico.setter
     def classes_historico(self, valor):
         self.__classes_historico = valor
@@ -92,6 +68,30 @@ class Personagem():
     @habilidades.setter
     def habilidades(self, habilidades):
         self.__habilidades = habilidades
+
+    @property
+    def dungeons_conquistadas(self):
+        return self.__dungeons_conquistadas
+    
+    @dungeons_conquistadas.setter
+    def dungeons_conquistadas(self, dungeons_conquistadas):
+        self.__dungeons_conquistadas = dungeons_conquistadas
+
+    @property
+    def bosses_derrotados(self):
+        return self.__bosses_derrotados
+    
+    @bosses_derrotados.setter
+    def bosses_derrotados(self, bosses_derrotados):
+        self.__bosses_derrotados = bosses_derrotados
+
+    @property
+    def cursos_conquistados(self):
+        return self.__cursos_conquistados
+    
+    @cursos_conquistados.setter
+    def cursos_conquistados(self, cursos_conquistados):
+        self.__cursos_conquistados = cursos_conquistados
 
     @property
     def pocao_hp(self):
@@ -116,3 +116,11 @@ class Personagem():
     @pontos_disponiveis.setter
     def pontos_disponiveis(self, pontos):
         self.__pontos_disponiveis = pontos
+
+    @property
+    def hp_atual(self):
+        return self.__hp_atual
+
+    @hp_atual.setter
+    def hp_atual(self, novo_hp):
+        self.__hp_atual = max(0, min(novo_hp, self.__classe_personagem.atributos['hp']))

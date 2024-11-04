@@ -16,12 +16,25 @@ class PersonagemView():
         print(f"Pontos disponíveis para distribuir: {dados_personagem['pontos_disponiveis']}")
         print(f"Ataque: {dados_personagem['ataque']}")
         print(f"Defesa: {dados_personagem['defesa']}")
-        print(f"HP: {dados_personagem['hp']}")
+        print(f"HP Máximo: {dados_personagem['hp']}")
+        print(f"HP Atual: {dados_personagem['hp_atual']}")
         print(f"Estamina: {dados_personagem['estamina']}")
         print(f"Poções de HP: {dados_personagem['pocoes_hp']}")
         print(f"Poções de Estamina: {dados_personagem['pocoes_est']}")
         print(f"Cursos Conquistados: {dados_personagem['cursos_conquistados']}")
-        print(f"Dungeons Conquistadas: {', '.join(dados_personagem['dungeons_conquistadas'])}")
+        print("Empresas conquistadas:")
+        if dados_personagem['dungeons_conquistadas']:
+            for dungeon in dados_personagem['dungeons_conquistadas']:
+                print(f" - {dungeon['nome']}")
+        else:
+            print("Nenhuma empresa conquistada.")
+        print(f"Histórico de vagas:")
+        if dados_personagem['bosses_derrotados']:
+            for boss in dados_personagem['bosses_derrotados']:
+                print(f"- {boss['nome']}")
+        else:
+            print("Nenhuma vaga anterior.")
+
     def escolher_atributo(self):
         self.limpar_terminal()
         print("-------- UPAR ATRIBUTOS ----------")
@@ -39,9 +52,9 @@ class PersonagemView():
         pontos = int(input("Quantos pontos deseja aplicar? "))
         return pontos
     
-    def escolher_item(self):
+    def escolher_item(self, personagem):
         self.limpar_terminal()
-        print("Escolha o item para usar:")
+        print(f"\n---Inventário---: Poção HP (quantidade: {personagem.pocao_hp.quant}), Poção Estamina (quantidade: {personagem.pocao_est.quant}")
         print("1 - Poção de HP")
         print("2 - Poção de Estamina")
         return int(input("Digite o número do item: "))

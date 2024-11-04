@@ -181,9 +181,9 @@ class DungeonController:
                         print(f"Erro ao processar a dungeon {d['nome']}: {str(e)}")
                         continue
 
-            self.__dungeonView.mostra_mensagem(f"{len(data)} dungeons carregadas com sucesso!")
+            self.__dungeonView.mostra_mensagem(f"{len(data)} empresas carregadas com sucesso!")
         except Exception as e:
-            self.__dungeonView.mostra_mensagem(f"Erro ao carregar dungeons: {str(e)}")
+            self.__dungeonView.mostra_mensagem(f"Erro ao carregar empresas: {str(e)}")
             input("\nPressione Enter para Voltar")
 
     def listar_dungeons(self):
@@ -191,7 +191,7 @@ class DungeonController:
             self.__dungeonView.mostra_mensagem("Nenhuma dungeon cadastrada.")
             return
 
-        self.__dungeonView.mostra_mensagem("Dungeons cadastradas:")
+        self.__dungeonView.mostra_mensagem("Empresas cadastradas:")
         for dungeon in self.__dungeons:
             self.__dungeonView.mostra_dungeon(dungeon)
             print("\n")
@@ -207,25 +207,37 @@ class DungeonController:
 
         dungeon_selecionada = next((dungeon for dungeon in self.__dungeons if dungeon.nome == dungeon_nome), None)
         if not dungeon_selecionada:
-            self.__dungeonView.mostra_mensagem("Dungeon não encontrada.")
+            self.__dungeonView.mostra_mensagem("Empresa não encontrada.")
             return None, None
         
         if dungeon_selecionada.nivel_requerido > personagem.nivel:
-            self.__dungeonView.mostra_mensagem("Infelizmente esperamos candidatos com mais experiência, boa sorte!")
+            self.__dungeonView.mostra_mensagem("Infelizmente esperamos candidatos com mais experiência, boa sorte na próxima!")
             time.sleep(2)
             return None, None
 
-        self.__dungeonView.mostra_mensagem(f"Setores da dungeon {dungeon_nome}:")
+        self.__dungeonView.mostra_mensagem(f"Setores da empresa {dungeon_nome}:")
         for idx, setor in enumerate(dungeon_selecionada.setores):
             self.__dungeonView.mostra_mensagem(f"{idx + 1} - Setor: {setor.nome}, Dificuldade: {setor.dificuldade}")
 
-        setor_opcao = int(self.__setorView.pega_opcao_setor()) - 1
-        if 0 <= setor_opcao < len(dungeon_selecionada.setores):
-            setor_selecionado = dungeon_selecionada.setores[setor_opcao]
-            return dungeon_selecionada, setor_selecionado
-        else:
-            self.__dungeonView.mostra_mensagem("Setor inválido.")
+        self.__dungeonView.mostra_mensagem("Você deseja aplicar (1) para o processo seletivo de um setor ou (2) para o de diretor geral?")
+        opcao = self.__setorView.pega_opcao_boss()
+
+        if opcao == '1':
+            setor_opcao = int(self.__setorView.pega_opcao_setor()) - 1
+            if 0 <= setor_opcao < len(dungeon_selecionada.setores):
+                setor_selecionado = dungeon_selecionada.setores[setor_opcao]
+                return dungeon_selecionada, setor_selecionado
+            else:
+                self.__dungeonView.mostra_mensagem("Setor inválido.")
+                return dungeon_selecionada, None
+
+        elif opcao == '2':
+            # Aqui você retorna a dungeon selecionada e None para o setor, pois não é necessário escolher um setor
             return dungeon_selecionada, None
+
+        else:
+            self.__dungeonView.mostra_mensagem("Opção inválida.")
+            return None, None
         
     def alterar_dungeon(self):
         if not self.__dungeons:
@@ -412,3 +424,9 @@ class DungeonController:
 
     def calcular_dificuldade(self, dungeon):
         return sum(setor.dificuldade for setor in dungeon.setores) / len(dungeon.setores)
+    
+    def buscar_dungeon_por_nome(self, nome):
+        for dungeon in self.dungeons:
+            if dungeon.nome.lower() == nome.lower():
+                return dungeon
+        return None
