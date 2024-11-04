@@ -9,12 +9,7 @@ class DungeonView:
         n_setores = int(input("Digite o número de setores: "))
         return {"nome": nome, "nivel_requerido": nivel_requerido, "xp_ganho": xp_ganho, "n_setores": n_setores}
 
-    def pega_nome_setor(self, numero):
-        print(f"-------- DADOS DO SETOR {numero} --------")
-        return input("Digite o nome do setor (RH, T.I, Vendas, Financeiro ou Marketing): ")
 
-    def pega_dificuldade_setor(self):
-        return int(input("Qual a dificuldade do setor (1-10): "))
 
     def pega_nome_boss_final(self):
         print("\n")
@@ -23,8 +18,6 @@ class DungeonView:
     def pega_nome_dungeon(self):
         return input("Digite o nome da dungeon que deseja selecionar: ")
 
-    def pega_opcao_setor(self):
-        return input("Selecione o número do setor: ")
 
     def pega_atributo_alteracao(self):
         return input("Digite o nome do atributo a ser alterado ou 'todos' para alterar tudo: ")

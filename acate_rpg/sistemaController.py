@@ -44,7 +44,6 @@ class SistemaControllerr:
         self.__dungeonController = DungeonController()
         self.__batalhaController = BatalhaController(self)
         self.__rankingController = RankingController(self.__personagemController)
-        self.__quizController._QuizController__cursoController = self.__cursoController
         self.__arquivo_personagens = "personagens.json"
         self.carregar_personagens()
         self.carregar_cursos()
