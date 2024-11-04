@@ -15,12 +15,14 @@ from exceptions import (
     NumeroSetoresInvalidoError
 )
 
+from setorView import SetorView
 class DungeonController:
     def __init__(self):
         self.__dungeons = []
         self.__dungeonView = DungeonView()
         self.__setorController = SetorController()
         self.__bossController = BossController()
+        self.__setorView = SetorView()
         self.__arquivo_dungeons = "dungeons.json"
 
     @property
@@ -47,8 +49,8 @@ class DungeonController:
         setores = []
         for i in range(dados_dungeon["n_setores"]):
             print("\n")
-            nome_setor = self.__dungeonView.pega_nome_setor(i + 1)
-            dificuldade_setor = self.__dungeonView.pega_dificuldade_setor()
+            nome_setor = self.__setorView.pega_nome_setor(i + 1)
+            dificuldade_setor = self.__setorView.pega_dificuldade_setor()
 
                 
             if not isinstance(dificuldade_setor, int) or not (1 <= dificuldade_setor <= 10):
@@ -217,7 +219,7 @@ class DungeonController:
         for idx, setor in enumerate(dungeon_selecionada.setores):
             self.__dungeonView.mostra_mensagem(f"{idx + 1} - Setor: {setor.nome}, Dificuldade: {setor.dificuldade}")
 
-        setor_opcao = int(self.__dungeonView.pega_opcao_setor()) - 1
+        setor_opcao = int(self.__setorView.pega_opcao_setor()) - 1
         if 0 <= setor_opcao < len(dungeon_selecionada.setores):
             setor_selecionado = dungeon_selecionada.setores[setor_opcao]
             return dungeon_selecionada, setor_selecionado

@@ -1,19 +1,19 @@
 [
     {
         "nome": "xuxa",
-        "nivel": 100,
-        "experiencia_total": 1500,
+        "nivel": 12,
+        "experiencia_total": 1800,
         "classe": "CLT",
         "classes_historico": [],
         "habilidades": [],
-        "pontos_disponiveis": 250,
+        "pontos_disponiveis": 100,
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 30,
-            "estamina": 0
+            "ataque": 50,
+            "defesa": 30,
+            "hp": 58,
+            "estamina": 50
         },
         "cursos_conquistados": 0
     },
