@@ -9,7 +9,7 @@ class PersonagemView():
         self.limpar_terminal()
         print("-------- STATUS ----------")
         print(f"Nome: {dados_personagem['nome']}")
-        print(f"Nome: {dados_personagem['classe']}")
+        print(f"Classe: {dados_personagem['classe']}")
         print(f"Nível: {dados_personagem['nivel']}")
         print(f"Experiência total: {dados_personagem['experiencia_total']}")
         print(f"Experiência para próximo nível: {dados_personagem['experiencia_para_proximo_nivel']}")
@@ -21,11 +21,17 @@ class PersonagemView():
         print(f"Estamina: {dados_personagem['estamina']}")
         print(f"Poções de HP: {dados_personagem['pocoes_hp']}")
         print(f"Poções de Estamina: {dados_personagem['pocoes_est']}")
+        print()
+        print("-------- PROGRESSO ----------")
+        print()
         print(f"Cursos Conquistados: {dados_personagem['cursos_conquistados']}")
+        print()
         print("Empresas conquistadas:")
         if dados_personagem['dungeons_conquistadas']:
             for dungeon in dados_personagem['dungeons_conquistadas']:
                 print(f" - {dungeon['nome']}")
+            print()
+            
         else:
             print("Nenhuma empresa conquistada.")
         print(f"Histórico de vagas:")

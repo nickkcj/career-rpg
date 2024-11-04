@@ -208,16 +208,16 @@
     },
     {
         "nome": "dunha",
-        "nivel": 1,
-        "hp_atual": 100,
-        "experiencia_total": 0,
+        "nivel": 5,
+        "hp_atual": 97.0,
+        "experiencia_total": 600,
         "classe": "Trainee",
         "classes_historico": [
             "Trainee"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 10,
-        "pocoes_hp": 3,
+        "pontos_disponiveis": 5,
+        "pocoes_hp": 2,
         "pocoes_est": 3,
         "atributos": {
             "ataque": 1,
@@ -225,9 +225,26 @@
             "hp": 100,
             "estamina": 20
         },
-        "cursos_conquistados": 1,
+        "cursos_conquistados": 2,
         "dungeons_conquistadas": [],
-        "bosses_derrotados": []
+        "bosses_derrotados": [
+            {
+                "nome": "Boss de T.I da bossteste",
+                "nivel_requerido": 1
+            },
+            {
+                "nome": "Boss de RH da nickteste2",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "Boss de RH da nickteste",
+                "nivel_requerido": 4
+            },
+            {
+                "nome": "thais",
+                "nivel_requerido": 4
+            }
+        ]
     },
     {
         "nome": "maradona",
@@ -262,7 +279,7 @@
             "Estagiario"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 90,
+        "pontos_disponiveis": 0,
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
@@ -348,15 +365,15 @@
     },
     {
         "nome": "mangual",
-        "nivel": 1,
+        "nivel": 5,
         "hp_atual": 100,
-        "experiencia_total": 0,
+        "experiencia_total": 600,
         "classe": "CLT",
         "classes_historico": [
             "CLT"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 10,
+        "pontos_disponiveis": 0,
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
@@ -365,9 +382,14 @@
             "hp": 100,
             "estamina": 20
         },
-        "cursos_conquistados": 0,
+        "cursos_conquistados": 3,
         "dungeons_conquistadas": [],
-        "bosses_derrotados": []
+        "bosses_derrotados": [
+            {
+                "nome": "Boss de RH da nickzin",
+                "nivel_requerido": 2
+            }
+        ]
     },
     {
         "nome": "eneas",
@@ -458,6 +480,71 @@
             },
             {
                 "nome": "cariri",
+                "nivel_requerido": 2
+            }
+        ]
+    },
+    {
+        "nome": "nickzinx",
+        "nivel": 9,
+        "hp_atual": 100,
+        "experiencia_total": 1300.0,
+        "classe": "CLT",
+        "classes_historico": [
+            "CLT"
+        ],
+        "habilidades": [],
+        "pontos_disponiveis": 5,
+        "pocoes_hp": 0,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
+        },
+        "cursos_conquistados": 2,
+        "dungeons_conquistadas": [
+            {
+                "nome": "bossteste",
+                "nivel_requerido": 1
+            },
+            {
+                "nome": "nickteste2",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "batalha_teste",
+                "nivel_requerido": 1
+            }
+        ],
+        "bosses_derrotados": [
+            {
+                "nome": "bolsonaro",
+                "nivel_requerido": 1
+            },
+            {
+                "nome": "Boss de RH da nickteste2",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "thais",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "Boss de Vendas",
+                "nivel_requerido": 1
+            },
+            {
+                "nome": "Boss de Vendas da nickteste",
+                "nivel_requerido": 4
+            },
+            {
+                "nome": "bolsonaro",
+                "nivel_requerido": 1
+            },
+            {
+                "nome": "Boss de RH da nickzin",
                 "nivel_requerido": 2
             }
         ]

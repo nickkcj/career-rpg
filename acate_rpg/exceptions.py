@@ -89,3 +89,8 @@ class NumeroSetoresInvalidoError(Exception):
 class SetorJahFeitoException(Exception):
     def __init__(self, solucao="O setor já foi conquistado, tente outro!"):
         super().__init__(solucao)
+
+class CriacaoDungeonException(Exception):
+    def __init__(self, solucao="Já existe uma dungeon com esse nome, tente outra!"):
+        super().__init__(solucao)
+

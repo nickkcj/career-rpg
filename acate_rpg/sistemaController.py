@@ -27,7 +27,8 @@ from exceptions import (
     CriacaoSetorException,
     ValorInvalidoBossException,
     SetorJahFeitoException,
-    NumeroSetoresInvalidoError
+    NumeroSetoresInvalidoError,
+    CriacaoDungeonException
 )
 
 
@@ -308,25 +309,31 @@ class SistemaControllerr:
                     while True:
                         try:
                             dungeon_selecionada, setor = self.__dungeonController.selecionar_dungeon_e_setor(personagem)
-                            if setor.conquistado:
-                                raise SetorJahFeitoException("O setor já foi conquistado, tente outro!")
-                                
+
                             if dungeon_selecionada:
                                 if dungeon_selecionada.conquistada:
                                     self.__sistemaView.mostrar_mensagem("Você já passou no processo seletivo dessa empresa, tente outra empresa!")
                                     time.sleep(2)
-                                else:
-                                    if not setor.conquistado:
+                                    continue  
+
+                                if setor:
+                                    if setor.conquistado:
+                                        raise SetorJahFeitoException("O setor já foi conquistado, tente outro!")
+                                    else:
                                         boss = setor.boss
                                         self.__batalhaController.iniciar_batalha(personagem, boss, dungeon_selecionada, setor)
                                         break
-                                    else:
-                                        boss_final = dungeon_selecionada.boss_final
-                                        self.__batalhaController.iniciar_batalha(personagem, boss_final, dungeon_selecionada, setor)
-                                        break
+                                else:
+                                    boss_final = dungeon_selecionada.boss_final
+                                    self.__batalhaController.iniciar_batalha(personagem, boss_final, dungeon_selecionada, setor)
+                                    break
+                            else:
+                                self.__sistemaView.mostrar_mensagem("Nenhuma dungeon selecionada. Tente novamente.")
+                                time.sleep(2)
                         except SetorJahFeitoException as e:
                             self.__sistemaView.mostrar_mensagem(e)
                             time.sleep(2)
+
 
                 elif opcao == '3':
                     resultado = self.__quizController.realizar_quiz(personagem, self.__cursoController.cursos)
@@ -400,7 +407,7 @@ class SistemaControllerr:
                                 NumeroSetoresInvalidoError, 
                                 DificuldadeInvalidaError, 
                                 CriacaoSetorException, 
-                                CriacaoBossException, ValueError) as e:
+                                CriacaoBossException, ValueError, CriacaoDungeonException) as e:
                             self.__sistemaView.mostrar_mensagem(str(e))
                        
                 elif opcao == "2":

@@ -100,7 +100,6 @@ class BatalhaController():
                 self.__tela.mostra_resultado("Você venceu!")
                 time.sleep(2)
                 personagem.bosses_derrotados.append(boss)
-                setor.conquistado = True
                 if boss.nome == dungeon.boss_final.nome:
                     self.__personagemController.ganhar_experiencia(personagem, dungeon.boss_final.dificuldade * 100)
                     dungeon.conquistada = True
@@ -109,6 +108,7 @@ class BatalhaController():
                 
                 else:
                     self.__personagemController.ganhar_experiencia(personagem, boss.dificuldade * 100)
+                    setor.conquistado = True
 
             elif resultado == "derrota":
                 self.__tela.mostra_resultado("Você foi derrotado!")

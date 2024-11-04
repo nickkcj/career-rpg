@@ -1,9 +1,9 @@
 [
     {
-        "nome": "mattel",
+        "nome": "mattel2",
         "nivel_requerido": 1,
-        "xp_ganho": 300,
-        "dificuldade": 7.0,
+        "xp_ganho": 400,
+        "dificuldade": 6.0,
         "setores": [
             {
                 "nome": "Vendas",
@@ -324,6 +324,191 @@
                 "defesa": 18.0,
                 "hp": 120.0,
                 "estamina": 60.0
+            }
+        }
+    },
+    {
+        "nome": "batalha_teste",
+        "nivel_requerido": 1,
+        "xp_ganho": 500,
+        "dificuldade": 2.0,
+        "setores": [
+            {
+                "nome": "Vendass",
+                "dificuldade": 2,
+                "boss": {
+                    "nome": "Boss de Vendass da batalha_teste",
+                    "dificuldade": 2,
+                    "nivel_requerido": 1,
+                    "atributos": {
+                        "ataque": 4,
+                        "defesa": 3.0,
+                        "hp": 20,
+                        "estamina": 10
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "bolsonaro",
+            "dificuldade": 2.0,
+            "nivel_requerido": 1,
+            "atributos": {
+                "ataque": 8.0,
+                "defesa": 6.0,
+                "hp": 40.0,
+                "estamina": 20.0
+            }
+        }
+    },
+    {
+        "nome": "bossteste",
+        "nivel_requerido": 1,
+        "xp_ganho": 500,
+        "dificuldade": 2.0,
+        "setores": [
+            {
+                "nome": "T.I",
+                "dificuldade": 2,
+                "boss": {
+                    "nome": "Boss de T.I da bossteste",
+                    "dificuldade": 2,
+                    "nivel_requerido": 1,
+                    "atributos": {
+                        "ataque": 4,
+                        "defesa": 3.0,
+                        "hp": 20,
+                        "estamina": 10
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "bolsonaro",
+            "dificuldade": 2.0,
+            "nivel_requerido": 1,
+            "atributos": {
+                "ataque": 8.0,
+                "defesa": 6.0,
+                "hp": 40.0,
+                "estamina": 20.0
+            }
+        }
+    },
+    {
+        "nome": "nickteste",
+        "nivel_requerido": 4,
+        "xp_ganho": 500,
+        "dificuldade": 1.5,
+        "setores": [
+            {
+                "nome": "RH",
+                "dificuldade": 2,
+                "boss": {
+                    "nome": "Boss de RH da nickteste",
+                    "dificuldade": 2,
+                    "nivel_requerido": 4,
+                    "atributos": {
+                        "ataque": 4,
+                        "defesa": 3.0,
+                        "hp": 20,
+                        "estamina": 10
+                    }
+                }
+            },
+            {
+                "nome": "Vendas",
+                "dificuldade": 1,
+                "boss": {
+                    "nome": "Boss de Vendas da nickteste",
+                    "dificuldade": 1,
+                    "nivel_requerido": 4,
+                    "atributos": {
+                        "ataque": 2,
+                        "defesa": 1.5,
+                        "hp": 10,
+                        "estamina": 5
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "thais",
+            "dificuldade": 1.5,
+            "nivel_requerido": 4,
+            "atributos": {
+                "ataque": 6.0,
+                "defesa": 4.5,
+                "hp": 30.0,
+                "estamina": 15.0
+            }
+        }
+    },
+    {
+        "nome": "nickteste",
+        "nivel_requerido": 2,
+        "xp_ganho": 500,
+        "dificuldade": 1.0,
+        "setores": [
+            {
+                "nome": "RH",
+                "dificuldade": 1,
+                "boss": {
+                    "nome": "Boss de RH da nickteste",
+                    "dificuldade": 1,
+                    "nivel_requerido": 2,
+                    "atributos": {
+                        "ataque": 2,
+                        "defesa": 1.5,
+                        "hp": 10,
+                        "estamina": 5
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "thais",
+            "dificuldade": 1.0,
+            "nivel_requerido": 2,
+            "atributos": {
+                "ataque": 4.0,
+                "defesa": 3.0,
+                "hp": 20.0,
+                "estamina": 10.0
+            }
+        }
+    },
+    {
+        "nome": "nickteste2",
+        "nivel_requerido": 2,
+        "xp_ganho": 500,
+        "dificuldade": 1.0,
+        "setores": [
+            {
+                "nome": "RH",
+                "dificuldade": 1,
+                "boss": {
+                    "nome": "Boss de RH da nickteste2",
+                    "dificuldade": 1,
+                    "nivel_requerido": 2,
+                    "atributos": {
+                        "ataque": 2,
+                        "defesa": 1.5,
+                        "hp": 10,
+                        "estamina": 5
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "thais",
+            "dificuldade": 1.0,
+            "nivel_requerido": 2,
+            "atributos": {
+                "ataque": 4.0,
+                "defesa": 3.0,
+                "hp": 20.0,
+                "estamina": 10.0
             }
         }
     }

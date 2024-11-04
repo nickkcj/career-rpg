@@ -46,7 +46,7 @@ class PersonagemController(Combatente):
     
 
     def atacar(self, personagem, boss):
-        dano = max(personagem.classe_personagem.atributos['ataque'] - boss.atributos['defesa'], - 1)
+        dano = max(personagem.classe_personagem.atributos['ataque'] - boss.atributos['defesa'],  1)
         return dano
     
     def defender(self, personagem):
