@@ -49,7 +49,6 @@ class BatalhaView:
         print(mensagem)
 
     def mostra_mensagem(self, msg):
-        print("\n")
         print(msg)
         print("\n")
 

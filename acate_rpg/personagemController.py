@@ -48,11 +48,11 @@ class PersonagemController(Combatente):
 
     def atacar(self, personagem, boss):
         try:
-            dano = max(personagem.classe_personagem.atributos['ataque'] - boss.atributos['defesa'], -1)
+            dano = max(personagem.classe_personagem.atributos['ataque'] - boss.atributos['defesa'], 1)
             return dano
         except KeyError as e:
             raise OperacaoNaoPermitidaException("Erro ao calcular dano de ataque") from e
-
+    
     def defender(self, personagem):
         try:
             personagem.classe_personagem.atributos['defesa'] += 7.5
@@ -71,7 +71,7 @@ class PersonagemController(Combatente):
                 mensagem = f"O personagem {personagem.nome} usou a habilidade *Festa da Firma* e aumentou seu ataque em 5 pontos!"
 
             elif classe == 'CLT' and opcao == '2':
-                boss.atributos['hp'] -= 10
+                boss.atributos['hp'] = max(boss.atributos['hp'] - 10, 0)
                 personagem.classe_personagem.atributos['estamina'] -= 5
                 mensagem = f"O personagem {personagem.nome} usou a habilidade *Ataque Corporativo* e diminuiu o HP do boss em 10 pontos!"
 
@@ -91,7 +91,7 @@ class PersonagemController(Combatente):
                 mensagem = f"O personagem {personagem.nome} usou a habilidade *Hora Extra* e aumentou sua estamina em 10 pontos!"
 
             elif classe == 'Trainee' and opcao == '2':
-                boss.atributos['ataque'] -= 7.5
+                boss.atributos['ataque'] = max(boss.atributos['ataque'] - 7.5, 1)
                 personagem.classe_personagem.atributos['estamina'] -= 5
                 mensagem = f"O personagem {personagem.nome} usou a habilidade *Desmotivar Inimigo* e reduziu o ataque do boss em 7.5 pontos!"
 

@@ -13,6 +13,7 @@ from exceptions import (
     CriacaoBossException,
     CriacaoSetorException,
     NumeroSetoresInvalidoError,
+    CriacaoDungeonException,
     SetorInvalidoError
 )
 import os
@@ -37,6 +38,12 @@ class DungeonController:
 
     def cadastrar_dungeon(self):
         dados_dungeon = self.__dungeonView.pega_dados_dungeon()
+        
+        
+        if any(dungeon.nome == dados_dungeon["nome"] for dungeon in self.__dungeons):
+            raise CriacaoDungeonException(f"A dungeon com o nome '{dados_dungeon['nome']}' já existe. Escolha um nome diferente.")
+        
+        if not isinstance(dados_dungeon["nivel_requerido"], int) or not (1 <= int(dados_dungeon["nivel_requerido"]) <= 10):
             
             
         if not isinstance(dados_dungeon["nivel_requerido"], int) or not (1 <= int(dados_dungeon["nivel_requerido"]) <= 100):
@@ -46,53 +53,55 @@ class DungeonController:
         
         if not isinstance(dados_dungeon["n_setores"], int) or not (1 <= dados_dungeon["n_setores"] <= 10):
             raise NumeroSetoresInvalidoError("O número de setores deve ser entre 1 e 10.")
-            
+        
         setores = []
+        setores_permitidos = ['RH', 'T.I', 'Vendas', 'Financeiro', 'Marketing']
+        
         for i in range(dados_dungeon["n_setores"]):
             print("\n")
             nome_setor = self.__setorView.pega_nome_setor(i + 1)
+
+            if nome_setor not in setores_permitidos:
+                raise CriacaoSetorException(f"O setor '{nome_setor}' não é válido. Os setores permitidos são: {', '.join(setores_permitidos)}.")
+
             dificuldade_setor = self.__setorView.pega_dificuldade_setor()
 
-                
             if not isinstance(dificuldade_setor, int) or not (1 <= dificuldade_setor <= 10):
                 raise DificuldadeInvalidaError("A dificuldade do setor deve ser um número inteiro entre 1 e 10.")
-                
+            
             setor = self.__setorController.criar_setor_com_boss(
                 nome_setor, dificuldade_setor, dados_dungeon["nivel_requerido"], dados_dungeon["nome"]
             )
-                
+            
             if setor:
                 setores.append(setor)
             else:
                 raise CriacaoSetorException("Erro ao criar setor com boss.")
 
-            
         dificuldade_media = round(sum(setor.dificuldade for setor in setores) / len(setores), 1)
 
-            
         nome_boss_final = self.__dungeonView.pega_nome_boss_final()
         boss_final = self.__bossController.criar_boss_final(
             nome_boss_final, dificuldade_media, dados_dungeon["nivel_requerido"]
         )
-            
+
         time.sleep(2)
 
-            
         dungeon = Dungeon(
             dados_dungeon["nome"], dados_dungeon["nivel_requerido"], dados_dungeon["xp_ganho"],
             dificuldade_media, setores, boss_final
         )
-            
-           
+
         self.__dungeons.append(dungeon)
         print(f"Dungeon: {dungeon.nome}")
         print(f"Boss final: {self.__bossController.to_dict(boss_final)}")
         self.salvar_dungeons()
-            
-        
+
         self.__dungeonView.mostra_dungeon(dungeon)
         time.sleep(2)
         input("\nPressione Enter para voltar ao menu.")
+
+
 
 
     def salvar_dungeons(self):

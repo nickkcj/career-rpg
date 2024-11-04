@@ -320,8 +320,8 @@
             "dificuldade": 6.0,
             "nivel_requerido": 10,
             "atributos": {
-                "ataque": 24.0,
-                "defesa": 18.0,
+                "ataque": 9.0,
+                "defesa": 43.0,
                 "hp": 120.0,
                 "estamina": 60.0
             }
@@ -474,7 +474,7 @@
         "nome": "nidec",
         "nivel_requerido": 20,
         "xp_ganho": 1111,
-        "dificuldade": 7.0,
+        "dificuldade": 5.0,
         "setores": [
             {
                 "nome": "RH",
@@ -493,7 +493,7 @@
             },
             {
                 "nome": "T.I",
-                "dificuldade": 8,
+                "dificuldade": 4.0,
                 "boss": {
                     "nome": "Diretor de T.I da nidec",
                     "dificuldade": 8,

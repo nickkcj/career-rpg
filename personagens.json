@@ -549,5 +549,39 @@
                 "nivel_requerido": 2
             }
         ]
+    },
+    {
+        "nome": "menoh",
+        "nivel": 8,
+        "hp_atual": 100,
+        "experiencia_total": 1000,
+        "classe": "Trainee",
+        "classes_historico": [
+            "Trainee"
+        ],
+        "habilidades": [
+            {
+                "nome": "Hora Extra",
+                "efeito": "Aumenta a Estamina temporariamente",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Desmotivar Inimigo",
+                "efeito": "Reduz o Ataque do boss",
+                "tipo": "debuff"
+            }
+        ],
+        "pontos_disponiveis": 22,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 15,
+            "defesa": 32.5,
+            "hp": 100,
+            "estamina": 10
+        },
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
     }
 ]
