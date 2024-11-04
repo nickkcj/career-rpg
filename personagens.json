@@ -255,7 +255,7 @@
     {
         "nome": "segovinha",
         "nivel": 17,
-        "hp_atual": 100,
+        "hp_atual": 130,
         "experiencia_total": 3000,
         "classe": "Estagiario",
         "classes_historico": [
@@ -266,10 +266,10 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 21,
+            "defesa": 21,
+            "hp": 130,
+            "estamina": 30
         },
         "cursos_conquistados": 1,
         "dungeons_conquistadas": [],
@@ -300,9 +300,9 @@
     },
     {
         "nome": "arnaldo",
-        "nivel": 52,
-        "hp_atual": 200,
-        "experiencia_total": 18500,
+        "nivel": 53,
+        "hp_atual": 180,
+        "experiencia_total": 19500,
         "classe": "CLT",
         "classes_historico": [
             "Trainee",
@@ -310,18 +310,23 @@
             "CLT"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 265,
-        "pocoes_hp": 3,
+        "pontos_disponiveis": 200,
+        "pocoes_hp": 2,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 41,
-            "defesa": 41,
+            "ataque": 141,
+            "defesa": 91,
             "hp": 200,
             "estamina": 60
         },
         "cursos_conquistados": 1,
         "dungeons_conquistadas": [],
-        "bosses_derrotados": []
+        "bosses_derrotados": [
+            {
+                "nome": "Boss de T.I da furia",
+                "nivel_requerido": 10
+            }
+        ]
     },
     {
         "nome": "gabigol lixo",
@@ -372,7 +377,7 @@
     {
         "nome": "eneas",
         "nivel": 31,
-        "hp_atual": 100,
+        "hp_atual": 130,
         "experiencia_total": 8000,
         "classe": "Estagiario",
         "classes_historico": [
@@ -384,10 +389,10 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 21,
+            "defesa": 21,
+            "hp": 130,
+            "estamina": 30
         },
         "cursos_conquistados": 0,
         "dungeons_conquistadas": [],
@@ -396,7 +401,7 @@
     {
         "nome": "rogerinho",
         "nivel": 31,
-        "hp_atual": 100,
+        "hp_atual": 130,
         "experiencia_total": 7700,
         "classe": "Estagiario",
         "classes_historico": [
@@ -407,10 +412,10 @@
         "pocoes_hp": 2,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 21,
+            "defesa": 21,
+            "hp": 130,
+            "estamina": 30
         },
         "cursos_conquistados": 0,
         "dungeons_conquistadas": [
@@ -424,7 +429,7 @@
     {
         "nome": "adiburai",
         "nivel": 40,
-        "hp_atual": 100,
+        "hp_atual": 130,
         "experiencia_total": 11800.0,
         "classe": "Estagiario",
         "classes_historico": [
@@ -435,10 +440,10 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 21,
+            "defesa": 21,
+            "hp": 130,
+            "estamina": 30
         },
         "cursos_conquistados": 0,
         "dungeons_conquistadas": [
@@ -465,7 +470,7 @@
     {
         "nome": "naxumeros",
         "nivel": 1,
-        "hp_atual": 100,
+        "hp_atual": 130,
         "experiencia_total": 0,
         "classe": "Estagiario",
         "classes_historico": [
@@ -476,10 +481,10 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 21,
+            "defesa": 21,
+            "hp": 130,
+            "estamina": 30
         },
         "cursos_conquistados": 0,
         "dungeons_conquistadas": [],
@@ -514,6 +519,34 @@
             {
                 "nome": "Boss de RH da furia",
                 "nivel_requerido": 10
+            }
+        ]
+    },
+    {
+        "nome": "pastor",
+        "nivel": 2,
+        "hp_atual": 200,
+        "experiencia_total": 200,
+        "classe": "CLT",
+        "classes_historico": [
+            "CLT"
+        ],
+        "habilidades": [],
+        "pontos_disponiveis": 5,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 41,
+            "defesa": 41,
+            "hp": 200,
+            "estamina": 60
+        },
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": [
+            {
+                "nome": "Boss de RH da nickzin",
+                "nivel_requerido": 2
             }
         ]
     }

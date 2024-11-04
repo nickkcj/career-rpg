@@ -19,9 +19,10 @@ class BatalhaController():
             boss.atributos['hp'] -= dano
             self.__tela.mostra_mensagem(f"{personagem.nome} atacou {boss.nome} e causou {dano} de dano!")
             time.sleep(3)
+            self.verificar_vencedor()
             self.turno_boss(personagem, boss)
             time.sleep(3)
-            
+
         elif acao_personagem == 2:
             self.__personagemController.defender(personagem)
             self.__tela.mostra_mensagem(f"{personagem.nome} aumentou a defesa em {personagem.classe_personagem.atributos['defesa']}!")
@@ -35,12 +36,12 @@ class BatalhaController():
 
         elif acao_personagem == 4:
             self.__personagemController.usar_habilidade(personagem, boss)
+            self.verificar_vencedor()
             self.turno_boss(personagem, boss)
             time.sleep(3)
 
         else:
             raise OperacaoNaoPermitidaException("Opção inválida, tente novamente.")
-
 
     def usar_item(self, personagem):
         opcao = self.__personagemController.usar_itens_batalha(personagem)
@@ -88,6 +89,7 @@ class BatalhaController():
             while True:
                 try:
                     self.realizar_turno(acao_personagem, self.__batalha.personagem, boss)
+                    self.verificar_vencedor()
                     break
 
                 except OperacaoNaoPermitidaException:
@@ -99,15 +101,18 @@ class BatalhaController():
             if resultado == "vitória":
                 self.__tela.mostra_resultado("Você venceu!")
                 time.sleep(2)
-                personagem.bosses_derrotados.append(boss)
-                setor.conquistado = True
                 if boss.nome == dungeon.boss_final.nome:
-                    self.__personagemController.ganhar_experiencia(personagem, dungeon.boss_final.dificuldade * 100)
                     dungeon.conquistada = True
                     personagem.dungeons_conquistadas.append(dungeon)
-
-                
-                else:
+                    self.__tela.mostra_mensagem(f"Voce conquistou a {dungeon.nome}!")
+                    time.sleep(1)
+                    self.__personagemController.ganhar_experiencia(personagem, dungeon.boss_final.dificuldade * 100)
+                elif boss.nome == setor.boss.nome:
+                    setor.conquistado = True
+                    personagem.bosses_derrotados.append(boss)
+                    self.__tela.mostra_mensagem(f"Voce conquistou o setor {setor.nome} da {dungeon.nome}!")
+                    personagem.hp_atual = min(personagem.hp_atual + 20, personagem.classe_personagem.atributos["hp"])
+                    time.sleep(1)
                     self.__personagemController.ganhar_experiencia(personagem, boss.dificuldade * 100)
 
             elif resultado == "derrota":
@@ -115,7 +120,3 @@ class BatalhaController():
                 time.sleep(2)
 
 
-    
-
-
-                

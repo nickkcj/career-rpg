@@ -169,11 +169,25 @@ class SistemaControllerr:
                     )
 
                     if personagem_existente:
+                        personagem_existente.nivel = dados_personagem.get('nivel', personagem_existente.nivel)
                         personagem_existente.hp_atual = dados_personagem.get('hp_atual', personagem_existente.hp_atual)
+                        personagem_existente.experiencia_total = dados_personagem.get('experiencia_total', personagem_existente.experiencia_total)
+                        personagem_existente.pontos_disponiveis = dados_personagem.get('pontos_disponiveis', personagem_existente.pontos_disponiveis)
                         personagem_existente.pocao_hp.quant = dados_personagem.get('pocoes_hp', personagem_existente.pocao_hp.quant)
                         personagem_existente.pocao_est.quant = dados_personagem.get('pocoes_est', personagem_existente.pocao_est.quant)
-                        personagem_existente.classe_personagem.atributos.update(dados_personagem.get('atributos', {}))
+                        personagem_existente.cursos_conquistados = dados_personagem.get('cursos_conquistados', personagem_existente.cursos_conquistados)
                         personagem_existente.classes_historico = dados_personagem.get('classes_historico', personagem_existente.classes_historico)
+                        personagem_existente.bosses_derrotados = dados_personagem.get('bosses_derrotados', personagem_existente.bosses_derrotados)
+                        personagem_existente.dungeons_conquistadas = dados_personagem.get('dungeons_conquistadas', personagem_existente.dungeons_conquistadas)
+                        
+                        if 'atributos' in dados_personagem:
+                            atributos_salvos = dados_personagem['atributos']
+                            personagem_existente.classe_personagem.atributos['ataque'] = atributos_salvos.get('ataque', personagem_existente.classe_personagem.atributos['ataque'])
+                            personagem_existente.classe_personagem.atributos['defesa'] = atributos_salvos.get('defesa', personagem_existente.classe_personagem.atributos['defesa'])
+                            personagem_existente.classe_personagem.atributos['hp'] = atributos_salvos.get('hp', personagem_existente.classe_personagem.atributos['hp'])
+                            personagem_existente.classe_personagem.atributos['estamina'] = atributos_salvos.get('estamina', personagem_existente.classe_personagem.atributos['estamina'])
+                            personagem_existente.hp_maximo = personagem_existente.classe_personagem.atributos['hp']
+
                     else:
                         personagem = self.__personagemController.criar_personagem(
                             nome=dados_personagem['nome'],
@@ -190,7 +204,9 @@ class SistemaControllerr:
                         personagem.pocao_est.quant = dados_personagem.get('pocoes_est', 0)
                         personagem.hp_atual = dados_personagem.get('hp_atual', personagem.classe_personagem.atributos['hp'])
                         personagem.classes_historico = dados_personagem.get('classes_historico', [])
-                        personagem.hp_atual = personagem.classe_personagem.atributos['hp']
+                        
+                        if 'atributos' in dados_personagem:
+                            personagem.classe_personagem.atributos.update(dados_personagem['atributos'])
 
                         self.__personagemController.personagens.append(personagem)
 
@@ -306,7 +322,7 @@ class SistemaControllerr:
                     while True:
                         try:
                             dungeon_selecionada, setor = self.__dungeonController.selecionar_dungeon_e_setor(personagem)
-                            if setor.conquistado:
+                            if setor is not None and setor.conquistado:
                                 raise SetorJahFeitoException("O setor já foi conquistado, tente outro!")
                                 
                             if dungeon_selecionada:
@@ -314,7 +330,7 @@ class SistemaControllerr:
                                     self.__sistemaView.mostrar_mensagem("Você já passou no processo seletivo dessa empresa, tente outra empresa!")
                                     time.sleep(2)
                                 else:
-                                    if not setor.conquistado:
+                                    if setor is not None and not setor.conquistado:
                                         boss = setor.boss
                                         self.__batalhaController.iniciar_batalha(personagem, boss, dungeon_selecionada, setor)
                                         break

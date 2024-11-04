@@ -116,7 +116,7 @@
         "nome": "Mindflyers",
         "nivel_requerido": 9,
         "xp_ganho": 10,
-        "dificuldade": 5.0,
+        "dificuldade": 6.0,
         "setores": [
             {
                 "nome": "Marketing",
@@ -279,10 +279,10 @@
         }
     },
     {
-        "nome": "Manual",
-        "nivel_requerido": 10,
-        "xp_ganho": 2000,
-        "dificuldade": 6.0,
+        "nome": "Pedrobras",
+        "nivel_requerido": 7,
+        "xp_ganho": 12,
+        "dificuldade": 4.0,
         "setores": [
             {
                 "nome": "Marketing",
@@ -388,6 +388,134 @@
                 "defesa": 30.0,
                 "hp": 200.0,
                 "estamina": 100.0
+            }
+        }
+    },
+    {
+        "nome": "intelbras",
+        "nivel_requerido": 10,
+        "xp_ganho": 300,
+        "dificuldade": 5.8,
+        "setores": [
+            {
+                "nome": "RH",
+                "dificuldade": 2,
+                "boss": {
+                    "nome": "Diretor de RH da intelbras",
+                    "dificuldade": 2,
+                    "nivel_requerido": 10,
+                    "atributos": {
+                        "ataque": 4,
+                        "defesa": 3.0,
+                        "hp": 20,
+                        "estamina": 10
+                    }
+                }
+            },
+            {
+                "nome": "T.I",
+                "dificuldade": 10,
+                "boss": {
+                    "nome": "Diretor de T.I da intelbras",
+                    "dificuldade": 10,
+                    "nivel_requerido": 10,
+                    "atributos": {
+                        "ataque": 20,
+                        "defesa": 15.0,
+                        "hp": 100,
+                        "estamina": 50
+                    }
+                }
+            },
+            {
+                "nome": "Vendas",
+                "dificuldade": 6,
+                "boss": {
+                    "nome": "Diretor de Vendas da intelbras",
+                    "dificuldade": 6,
+                    "nivel_requerido": 10,
+                    "atributos": {
+                        "ataque": 12,
+                        "defesa": 9.0,
+                        "hp": 60,
+                        "estamina": 30
+                    }
+                }
+            },
+            {
+                "nome": "Marketing",
+                "dificuldade": 5,
+                "boss": {
+                    "nome": "Diretor de Marketing da intelbras",
+                    "dificuldade": 5,
+                    "nivel_requerido": 10,
+                    "atributos": {
+                        "ataque": 10,
+                        "defesa": 7.5,
+                        "hp": 50,
+                        "estamina": 25
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "FazO \u00c9le da Silva",
+            "dificuldade": 5.8,
+            "nivel_requerido": 10,
+            "atributos": {
+                "ataque": 23.2,
+                "defesa": 17.4,
+                "hp": 116.0,
+                "estamina": 58.0
+            }
+        }
+    },
+    {
+        "nome": "nidec",
+        "nivel_requerido": 20,
+        "xp_ganho": 1111,
+        "dificuldade": 7.0,
+        "setores": [
+            {
+                "nome": "RH",
+                "dificuldade": 6,
+                "boss": {
+                    "nome": "Diretor de RH da nidec",
+                    "dificuldade": 6,
+                    "nivel_requerido": 20,
+                    "atributos": {
+                        "ataque": 12,
+                        "defesa": 9.0,
+                        "hp": 60,
+                        "estamina": 30
+                    }
+                }
+            },
+            {
+                "nome": "T.I",
+                "dificuldade": 8,
+                "boss": {
+                    "nome": "Diretor de T.I da nidec",
+                    "dificuldade": 8,
+                    "nivel_requerido": 20,
+                    "atributos": {
+                        "ataque": 16,
+                        "defesa": 12.0,
+                        "hp": 80,
+                        "estamina": 40
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "rogerio",
+            "dificuldade": 7.0,
+            "nivel_requerido": 20,
+            "atributos": {
+                "ataque": 28.0,
+                "defesa": 21.0,
+                "hp": 140.0,
+                "estamina": 70.0
             }
         }
     }
