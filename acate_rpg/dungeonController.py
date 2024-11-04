@@ -13,7 +13,8 @@ from exceptions import (
     CriacaoBossException,
     CriacaoSetorException,
     NumeroSetoresInvalidoError,
-    CriacaoDungeonException
+    CriacaoDungeonException,
+    SetorInvalidoError
 )
 import os
 from setorView import SetorView

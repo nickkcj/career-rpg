@@ -1,4 +1,4 @@
-
+from gamelogger import LogJogadas
 import json
 import time
 import os
@@ -37,6 +37,7 @@ class SistemaControllerr:
     def __init__(self):
         self.__sistema = Sistema()
         self.__sistemaView = SistemaView()
+        self.__log = LogJogadas()
         self.__personagemController = PersonagemController()
         self.__cursoController = CursoController()
         self.__quizController = QuizController()
@@ -50,6 +51,14 @@ class SistemaControllerr:
         self.carregar_cursos()
         self.carregar_dungeons()
 
+
+    @property
+    def log(self):
+        return self.__log
+    
+    @log.setter
+    def log(self, log):
+        self.__log = log
 
     @property
     def cursoController(self):
@@ -201,7 +210,7 @@ class SistemaControllerr:
         except FileNotFoundError:
             raise CarregamentoDadosException(arquivo=self.__arquivo_personagens)
         except json.JSONDecodeError:
-            raise CarregamentoDadosException(arquivo=self.__arquivo_personagens, mensagem="Erro ao decodificar os dados JSON.")
+            raise CarregamentoDadosException(arquivo=self.__arquivo_personagens)
         except Exception as e:
             raise CarregamentoDadosException(arquivo=self.__arquivo_personagens, mensagem=str(e))
 
@@ -319,11 +328,11 @@ class SistemaControllerr:
                                         raise SetorJahFeitoException("O setor já foi conquistado, tente outro!")
                                     else:
                                         boss = setor.boss
-                                        self.__batalhaController.iniciar_batalha(personagem, boss, dungeon_selecionada, setor)
+                                        self.__batalhaController.iniciar_batalha(personagem, boss, dungeon_selecionada, setor, self.__log)
                                         break
                                 else:
                                     boss_final = dungeon_selecionada.boss_final
-                                    self.__batalhaController.iniciar_batalha(personagem, boss_final, dungeon_selecionada, setor)
+                                    self.__batalhaController.iniciar_batalha(personagem, boss_final, dungeon_selecionada, setor, self.__log)
                                     break
                             else:
                                 self.__sistemaView.mostrar_mensagem("Nenhuma dungeon selecionada. Tente novamente.")
@@ -338,6 +347,10 @@ class SistemaControllerr:
                     if resultado == True:
                         self.__personagemController.incrementar_curso(personagem)
 
+                elif opcao == '4':
+                    self.menu_log(personagem)
+                    
+
                 elif opcao == '0':
                     self.menu_jogador()
                 else:
@@ -347,6 +360,40 @@ class SistemaControllerr:
                 time.sleep(2)
             except ValueError:
                 self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
+
+    def menu_log(self, personagem):
+        while True:
+            try:
+
+                self.limpar_terminal()
+                self.__sistemaView.menu_log()
+                opcao = self.__sistemaView.pegar_opcao()
+
+                if opcao == '1':
+                    self.limpar_terminal()
+                    self.__log.listar_registros()
+
+                elif opcao == '2':
+                    self.limpar_terminal()
+                    self.__log.listar_registros()
+                    index = int(input("Digite o index que você quer alterar o registro: "))
+                    self.__log.alterar_registro(index)
+
+                elif opcao == '3':
+                    self.limpar()
+                    self.__log.listar_registros()
+                    index = int(input("Digite o index que você quer excluir o registro: "))
+                    self.__log.excluir_registro(index)
+
+                elif opcao == '4':
+                    self.menu_principal_personagem(personagem)
+
+                else:
+                    raise OperacaoNaoPermitidaException
+            
+            except OperacaoNaoPermitidaException:
+                self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido")
+
 
     def opcoes_personagem(self, personagem):
         while True:

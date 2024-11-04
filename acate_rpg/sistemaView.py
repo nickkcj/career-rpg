@@ -53,7 +53,18 @@ class SistemaView:
         print("1 - Meu Personagem")
         print("2 - Batalha")
         print("3 - Cursos")
+        print("4 - Gerenciar Log de Jogadas")
         print("0 - Voltar ao Menu Personagem")
+
+
+    def menu_log(self):
+        print("--------- MENU LOG ---------")
+        print("1 - Ver Logs de Jogada")
+        print("2 - Alterar Logs de Jogada")
+        print("3 - Remover Logs de Jogada")
+        print("4 - Voltar")
+        
+
 
     def menu_ranking(self):
         self.limpar_terminal()

@@ -13,11 +13,12 @@ class BatalhaController():
         self.__personagemController = PersonagemController()
         self.__bossController = BossController()
 
-    def realizar_turno(self, acao_personagem, personagem, boss):
+    def realizar_turno(self, acao_personagem, personagem, boss, dungeon, log):
         if acao_personagem == 1: 
             dano = self.__personagemController.atacar(personagem, boss)
-            boss.atributos['hp'] -= dano
+            boss.atributos['hp'] = max(boss.atributos['hp'] - dano, 0)
             self.__tela.mostra_mensagem(f"{personagem.nome} atacou {boss.nome} e causou {dano} de dano!")
+            log.adicionar_registro(personagem, boss, dungeon, "ataque")
             time.sleep(3)
             self.turno_boss(personagem, boss)
             time.sleep(3)
@@ -25,16 +26,19 @@ class BatalhaController():
         elif acao_personagem == 2:
             self.__personagemController.defender(personagem)
             self.__tela.mostra_mensagem(f"{personagem.nome} aumentou a defesa em {personagem.classe_personagem.atributos['defesa']}!")
+            log.adicionar_registro(personagem, boss, dungeon, "defesa")
             time.sleep(3)
             self.turno_boss(personagem, boss)
             time.sleep(3)
         elif acao_personagem == 3:
             self.__personagemController.usar_item(personagem)
+            log.adicionar_registro(personagem, boss, dungeon, "usar item")
             self.turno_boss(personagem, boss)
             time.sleep(3)
 
         elif acao_personagem == 4:
             self.__personagemController.usar_habilidade(personagem, boss)
+            log.adicionar_registro(personagem, boss, dungeon, "usar habilidade")
             self.turno_boss(personagem, boss)
             time.sleep(3)
 
@@ -78,7 +82,7 @@ class BatalhaController():
             return "derrota"
         return
 
-    def iniciar_batalha(self, personagem, boss, dungeon, setor):
+    def iniciar_batalha(self, personagem, boss, dungeon, setor, log):
         self.__batalha.personagem = personagem
         self.__batalha.boss = boss
         self.__batalha.finalizada = False
@@ -87,7 +91,7 @@ class BatalhaController():
             acao_personagem = self.__tela.tela_opcoes()
             while True:
                 try:
-                    self.realizar_turno(acao_personagem, self.__batalha.personagem, boss)
+                    self.realizar_turno(acao_personagem, self.__batalha.personagem, boss, dungeon, log)
                     break
 
                 except OperacaoNaoPermitidaException:
