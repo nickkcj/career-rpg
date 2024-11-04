@@ -3,12 +3,15 @@ from personagemView import PersonagemView
 from personagem import Personagem
 from classePersonagem import ClassePersonagem
 from exceptions import CadastroInvalidoException, ItemIndisponivelException, OperacaoNaoPermitidaException
+from AbstractCombatente import Combatente
+from batalhaView import BatalhaView
 
 
-class PersonagemController:
+class PersonagemController(Combatente):
     def __init__(self):
         self.__personagens = []
         self.__personagemView = PersonagemView()
+        self.__batalhaView = BatalhaView()
         self.__habilidades_por_classe = {
             "Trainee": [
                 {"nome": "Hora Extra", "efeito": "Aumenta a Estamina temporariamente", "tipo": "buff"},
@@ -40,6 +43,61 @@ class PersonagemController:
     @property
     def niveis_para_evolucao(self):
         return self.__niveis_para_evolucao
+    
+
+    def atacar(self, personagem, boss):
+        dano = max(personagem.classe_personagem.atributos['ataque'] - boss.atributos['defesa'], - 1)
+        return dano
+    
+    def defender(self, personagem):
+        personagem.classe_personagem.atributos['defesa'] += 7.5
+
+    def usar_habilidade(self, personagem, boss):
+        classe = personagem.classe_personagem.nome_classe
+        opcao = self.__batalhaView.escolher_habilidade(classe)
+        
+        if personagem.classe_personagem.atributos['estamina'] >= 2:
+            
+            if classe == 'CLT' and opcao == '1':
+                personagem.classe_personagem.atributos['ataque'] += 5
+                personagem.classe_personagem.atributos['estamina'] -= 5
+                mensagem = f"O personagem {personagem.nome} usou a habilidade *Festa da Firma* e aumentou seu ataque em 5 pontos!"
+
+            elif classe == 'CLT' and opcao == '2':
+                boss.atributos['hp'] -= 10
+                personagem.classe_personagem.atributos['estamina'] -= 5
+                mensagem = f"O personagem {personagem.nome} usou a habilidade *Ataque Corporativo* e diminuiu o HP do boss em 10 pontos!"
+
+            elif classe == 'Estagiario' and opcao == '1':
+                personagem.hp_atual += 10
+                personagem.classe_personagem.atributos['estamina'] -= 5
+                mensagem = f"O personagem {personagem.nome} usou a habilidade *Cagada Remunerada* e aumentou seu HP em 10 pontos!"
+
+            elif classe == 'Estagiario' and opcao == '2':
+                boss.atributos['defesa'] = max(boss.atributos['defesa'] - 5, 1)
+                personagem.classe_personagem.atributos['estamina'] -= 5
+                mensagem = f"O personagem {personagem.nome} usou a habilidade *Desestabilizar Boss* e diminuiu a defesa do boss em 5 pontos!"
+
+            elif classe == 'Trainee' and opcao == '1':
+                personagem.classe_personagem.atributos['estamina'] += 15
+                personagem.classe_personagem.atributos['estamina'] -= 5
+                mensagem = f"O personagem {personagem.nome} usou a habilidade *Hora Extra* e aumentou sua estamina em 10 pontos!"
+
+            elif classe == 'Trainee' and opcao == '2':
+                boss.atributos['ataque'] -= 7.5
+                personagem.classe_personagem.atributos['estamina'] -= 5
+                mensagem = f"O personagem {personagem.nome} usou a habilidade *Desmotivar Inimigo* e reduziu o ataque do boss em 7.5 pontos!"
+
+            else:
+                raise OperacaoNaoPermitidaException("Opção inválida, tente novamente")
+
+            self.__batalhaView.mostra_mensagem(mensagem)
+            
+
+        else:
+            self.__batalhaView.mostra_mensagem("O personagem não possui estamina o suficiente para usar uma habilidade!")
+              
+
 
     def pega_personagem_por_nome(self, nome: str):
         for personagem in self.__personagens:

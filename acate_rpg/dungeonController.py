@@ -14,7 +14,7 @@ from exceptions import (
     CriacaoSetorException,
     NumeroSetoresInvalidoError
 )
-
+import os
 from setorView import SetorView
 class DungeonController:
     def __init__(self):
@@ -204,6 +204,7 @@ class DungeonController:
 
         self.listar_dungeons()
         dungeon_nome = self.__dungeonView.pega_nome_dungeon()
+        os.system('cls' if os.name == 'nt' else 'clear')
 
         dungeon_selecionada = next((dungeon for dungeon in self.__dungeons if dungeon.nome == dungeon_nome), None)
         if not dungeon_selecionada:

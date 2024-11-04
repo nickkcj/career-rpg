@@ -3,6 +3,7 @@ class Setor:
         self.__nome = nome
         self.__dificuldade = dificuldade
         self.__boss = boss
+        self.__conquistado = False
 
     @property
     def nome(self):
@@ -11,6 +12,14 @@ class Setor:
     @nome.setter
     def nome(self, nome):
         self.__nome = nome
+
+    @property
+    def conquistado(self):
+        return self.__conquistado
+    
+    @conquistado.setter
+    def conquistado(self, conquistado):
+        self.__conquistado = conquistado
 
     @property
     def dificuldade(self):

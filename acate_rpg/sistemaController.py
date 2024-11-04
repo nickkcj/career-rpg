@@ -26,7 +26,7 @@ from exceptions import (
     CriacaoBossException,
     CriacaoSetorException,
     ValorInvalidoBossException,
-    AtributoInexistenteBossException,
+    SetorJahFeitoException,
     NumeroSetoresInvalidoError
 )
 
@@ -305,18 +305,28 @@ class SistemaControllerr:
                 if opcao == '1':
                     self.opcoes_personagem(personagem)
                 elif opcao == '2':
-                    dungeon_selecionada, setor = self.__dungeonController.selecionar_dungeon_e_setor(personagem)
-                    if dungeon_selecionada:
-                        if dungeon_selecionada.conquistada:
-                            self.__sistemaView.mostrar_mensagem("Você já passou no processo seletivo dessa empresa, tente outra empresa!")
+                    while True:
+                        try:
+                            dungeon_selecionada, setor = self.__dungeonController.selecionar_dungeon_e_setor(personagem)
+                            if setor.conquistado:
+                                raise SetorJahFeitoException("O setor já foi conquistado, tente outro!")
+                                
+                            if dungeon_selecionada:
+                                if dungeon_selecionada.conquistada:
+                                    self.__sistemaView.mostrar_mensagem("Você já passou no processo seletivo dessa empresa, tente outra empresa!")
+                                    time.sleep(2)
+                                else:
+                                    if not setor.conquistado:
+                                        boss = setor.boss
+                                        self.__batalhaController.iniciar_batalha(personagem, boss, dungeon_selecionada, setor)
+                                        break
+                                    else:
+                                        boss_final = dungeon_selecionada.boss_final
+                                        self.__batalhaController.iniciar_batalha(personagem, boss_final, dungeon_selecionada, setor)
+                                        break
+                        except SetorJahFeitoException as e:
+                            self.__sistemaView.mostrar_mensagem(e)
                             time.sleep(2)
-                        else:
-                            if setor:
-                                boss = setor.boss
-                                self.__batalhaController.iniciar_batalha(personagem, boss, dungeon_selecionada)
-                            else:
-                                boss_final = dungeon_selecionada.boss_final
-                                self.__batalhaController.iniciar_batalha(personagem, boss_final, dungeon_selecionada)
 
                 elif opcao == '3':
                     resultado = self.__quizController.realizar_quiz(personagem, self.__cursoController.cursos)

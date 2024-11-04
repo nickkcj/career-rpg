@@ -1,8 +1,8 @@
 from boss import Boss
 import time
+from AbstractCombatente import Combatente
 
-
-class BossController:
+class BossController(Combatente):
     def criar_boss(self, nome, dificuldade, nivel_requerido, ataque, defesa, hp, estamina):
         ataque = dificuldade * 2
         defesa = dificuldade * 1.5
@@ -36,3 +36,11 @@ class BossController:
 
     def criar_boss_de_dicionario(self, boss_data):
         return Boss(nome=boss_data["nome"], dificuldade=boss_data["dificuldade"], nivel_requerido=boss_data["nivel_requerido"], atributos=boss_data["atributos"])
+
+
+    def atacar(self, personagem, boss):
+        dano = max(boss.atributos['ataque'] * 2 - personagem.classe_personagem.atributos['defesa'], 1)
+        return dano
+    
+    def defender(self, boss):
+        boss.atributos['defesa'] += 5

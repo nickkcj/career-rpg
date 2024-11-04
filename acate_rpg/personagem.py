@@ -2,6 +2,7 @@ from classePersonagem import ClassePersonagem
 from pocao_hp import PocaoHP
 from pocao_est import PocaoEstamina
 
+
 class Personagem():
     def __init__(self, nome, nivel, experiencia_total, nome_classe: str, pocao_hp: PocaoHP=None, pocao_est: PocaoEstamina=None, pontos_disponiveis=10, dungeons_conquistadas=None, bosses_derrotados=None, cursos_conquistados=0):
         self.__nome = nome

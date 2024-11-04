@@ -85,3 +85,7 @@ class AtributoInexistenteBossException(Exception):
 class NumeroSetoresInvalidoError(Exception):
     def __init__(self, solucao="O número de setores deve ser entre 1 e 10."):
         super().__init__(solucao)
+
+class SetorJahFeitoException(Exception):
+    def __init__(self, solucao="O setor já foi conquistado, tente outro!"):
+        super().__init__(solucao)
