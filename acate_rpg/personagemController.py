@@ -1,7 +1,7 @@
 import time
 from personagemView import PersonagemView
 from personagem import Personagem
-from classePersonagem import ClassePersonagem
+from classsePersonagemController import ClassePersonagemController
 from exceptions import CadastroInvalidoException, ItemIndisponivelException, OperacaoNaoPermitidaException
 from AbstractCombatente import Combatente
 from batalhaView import BatalhaView
@@ -12,6 +12,7 @@ class PersonagemController(Combatente):
         self.__personagens = []
         self.__personagemView = PersonagemView()
         self.__batalhaView = BatalhaView()
+        self.__classeController = ClassePersonagemController()
         self.__habilidades_por_classe = {
             "Trainee": [
                 {"nome": "Hora Extra", "efeito": "Aumenta a Estamina temporariamente", "tipo": "buff"},
@@ -126,6 +127,12 @@ class PersonagemController(Combatente):
             bosses_derrotados=bosses_derrotados,
             cursos_conquistados=cursos_conquistados
         )
+        personagem.classes_historico = [nome_classe]
+
+        classe_inicial = personagem.classes_historico[0]
+        if classe_inicial in ["Estagiário", "CLT"]:
+            self.__classeController.definir_atributos_iniciais(personagem.classe_personagem)
+
         return personagem
 
     def mostrar_habilidades(self, personagem: Personagem):

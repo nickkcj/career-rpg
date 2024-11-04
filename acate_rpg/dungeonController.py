@@ -239,13 +239,12 @@ class DungeonController:
                 return dungeon_selecionada, None
 
         elif opcao == '2':
-            # Aqui você retorna a dungeon selecionada e None para o setor, pois não é necessário escolher um setor
             return dungeon_selecionada, None
 
         else:
             self.__dungeonView.mostra_mensagem("Opção inválida.")
             return None, None
-        
+
     def alterar_dungeon(self):
         if not self.__dungeons:
             raise OperacaoNaoPermitidaException("Nenhuma dungeon cadastrada.")
@@ -284,6 +283,16 @@ class DungeonController:
             
         elif atributo == "boss final":
             self.alterar_boss(dungeon.boss_final)
+
+        elif atributo == 'dificuldade':
+            try:
+                nova_dificuldade = float(input("Digite a nova dificuldade: "))
+                if nova_dificuldade < 0:
+                    raise ValueError("A dificuldade deve ser um número não negativo.")
+                dungeon.dificuldade = nova_dificuldade
+                self.__dungeonView.mostra_mensagem(f"Atributo {atributo} alterado com sucesso.")
+            except ValueError as e:
+                self.__dungeonView.mostra_mensagem(f"Erro ao alterar dificuldade da {dungeon.nome}: {str(e)}")
             
         elif hasattr(dungeon, atributo):
             novo_valor = input(f"Digite o novo valor para {atributo}: ")
@@ -300,39 +309,62 @@ class DungeonController:
             print("Esta dungeon não possui setores.")
             return
 
-        print("Setores da Dungeon:")
+        self.__dungeonView.mensagem_basica("\nSetores da Dungeon:")
         for i, setor in enumerate(setores):
-            print(f"{i + 1}. Nome: {setor.nome}, Dificuldade: {setor.dificuldade}")
+            self.__dungeonView.mensagem_basica(f"{i + 1}. Nome: {setor.nome}, Dificuldade: {setor.dificuldade}")
 
         setor_num = int(input("Escolha o número do setor que deseja alterar ou excluir: ")) - 1
         if setor_num < 0 or setor_num >= len(setores):
-            print("Número de setor inválido.")
-            return
+            raise ValueError("Número de setor inválido.")
 
         setor = setores[setor_num]
         acao = input("Digite 'alterar' para alterar o setor ou 'excluir' para excluir: ").lower()
-        
+        nomes_disponiveis = ["RH", "T.I", "Vendas", "Financeiro", "Marketing"]
+
         if acao == "alterar":
-            atributo = input("Digite o nome do atributo a ser alterado ou 'todos' para alterar tudo: ").lower()
+            atributo = input("Digite o nome do atributo a ser alterado, 'boss' para alterar os dados do boss deste setor ou 'todos' para alterar tudo: ").lower()
             if atributo == "todos":
-                novo_nome = input("Digite o novo nome do setor: ")
+                novo_nome = input("Digite o novo nome do setor (disponíveis: RH, T.I, Vendas, Financeiro, Marketing): ")
+                if novo_nome not in nomes_disponiveis:
+                    raise SetorInvalidoError("Nome do setor inválido.")
                 setor.nome = novo_nome
-                novo_dificuldade = float(input("Digite a nova dificuldade: "))
-                setor.dificuldade = novo_dificuldade
-                self.__dungeonView.mostra_mensagem("Todos os atributos do setor foram alterados com sucesso.")
+                
+                try:
+                    novo_dificuldade = float(input("Digite a nova dificuldade: "))
+                    if novo_dificuldade < 0:
+                        raise ValueError("A dificuldade deve ser um número não negativo.")
+                    setor.dificuldade = novo_dificuldade
+                    dungeon.dificuldade = self.calcular_dificuldade(dungeon)
+                    self.__dungeonView.mostra_mensagem("Todos os atributos do setor foram alterados com sucesso.")
+                except ValueError as e:
+                    self.__dungeonView.mostra_mensagem(f"Erro: {str(e)}")
+
             elif hasattr(setor, atributo):
                 novo_valor = input(f"Digite o novo valor para {atributo}: ")
-                setattr(dungeon, atributo, novo_valor)
-                self.__dungeonView.mostra_mensagem(f"Atributo {atributo} alterado com sucesso.")
+                if atributo == 'nome':
+                    if novo_valor not in nomes_disponiveis:
+                        raise SetorInvalidoError("Nome do setor inválido.")
+                    setor.nome = novo_valor
+                elif atributo == 'dificuldade':
+                    try:
+                        novo_valor_float = float(novo_valor)
+                        if novo_valor_float < 0:
+                            raise ValueError("A dificuldade deve ser um número não negativo.")
+                        setor.dificuldade = novo_valor_float
+                        dungeon.dificuldade = self.calcular_dificuldade(dungeon)
+                        self.__dungeonView.mostra_mensagem(f"Atributo {atributo} alterado com sucesso.")
+                    except ValueError as e:
+                        self.__dungeonView.mostra_mensagem(f"Erro: {str(e)}")
+                elif atributo == "boss":
+                    try:
+                        self.alterar_boss(setor.boss)
+                    except ValueError:
+                        self.__dungeonView.mostra_mensagem("Este setor não possui um boss para alterar.")
+                else:
+                    setattr(setor, atributo, novo_valor)
+                    self.__dungeonView.mostra_mensagem(f"Atributo {atributo} alterado com sucesso.")
             else:
                 self.__dungeonView.mostra_mensagem("Atributo inválido.")
-
-        elif acao == "boss":
-            if setor.boss:
-                self.alterar_boss(setor.boss)
-            else:
-                self.__dungeonView.mostra_mensagem("Este setor não possui um boss para alterar.")
-                #impossivel, mas vamos deixar pra ver se não dá erro
 
         elif acao == "excluir":
             if len(setores) == 1:
@@ -352,7 +384,7 @@ class DungeonController:
 
     def alterar_boss(self, boss):
         try:
-            print("Alterar atributos do Boss:")
+            self.__dungeonView.mostra_mensagem("Alterando atributos do Boss:")
             self.__bossController.to_dict(boss)
             opcao = input("Digite o nome do atributo a ser alterado ou 'todos' para alterar tudo: ").lower()
             
@@ -373,6 +405,8 @@ class DungeonController:
 
             elif opcao == "dificuldade":
                 nova_dificuldade = int(input("Digite a nova dificuldade: "))
+                if nova_dificuldade < 0:
+                    raise ValueError("Dificuldade deve ser um número não negativo, de 1-10.")
                 boss.dificuldade = nova_dificuldade
                 atributos_recalculados = self.__bossController.criar_boss(
                     boss.nome, boss.dificuldade, boss.nivel_requerido, 0, 0, 0, 0).atributos

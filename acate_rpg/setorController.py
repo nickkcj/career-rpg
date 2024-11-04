@@ -10,7 +10,7 @@ class SetorController:
 
     def criar_setor_com_boss(self, nome_setor, dificuldade_setor, nivel_requerido, nome_dungeon):
         try:
-            boss = self.__bossController.criar_boss(nome=f"Boss de {nome_setor} da {nome_dungeon}", dificuldade=dificuldade_setor, nivel_requerido=nivel_requerido, ataque=0, defesa=0, hp=0, estamina=0)
+            boss = self.__bossController.criar_boss(nome=f"Diretor de {nome_setor} da {nome_dungeon}", dificuldade=dificuldade_setor, nivel_requerido=nivel_requerido, ataque=0, defesa=0, hp=0, estamina=0)
             return Setor(nome=nome_setor, dificuldade=dificuldade_setor, boss=boss)
         except Exception as e:
             raise CriacaoSetorException(f"Erro ao criar setor: {str(e)}")

@@ -32,6 +32,9 @@ class DungeonView:
         print("****************************************")
         time.sleep(1)
 
+    def mensagem_basica(self, msg):
+        print(msg)
+
     def mostra_dungeons_enum(self, dungeons):
         for idx, dungeon in enumerate(dungeons):
             print(f"{idx + 1}. Nome: {dungeon.nome}, Nível Requerido: {dungeon.nivel_requerido}")
@@ -44,6 +47,6 @@ class DungeonView:
         print("Setores:")
         for setor in dungeon.setores:
             print(f" - Setor: {setor.nome} (Dificuldade: {setor.dificuldade})")
-            print(f"   Boss: {setor.boss.nome}")
-        print(f"Boss Final: {dungeon.boss_final.nome}")
+            print(f"   Boss: {setor.boss.nome} - Dificuldade: {setor.boss.dificuldade} - Nivel: {setor.boss.nivel_requerido}")
+        print(f"Boss Final: {dungeon.boss_final.nome} - Dificuldade: {dungeon.boss_final.dificuldade} - Nivel: {dungeon.boss_final.nivel_requerido}")
 

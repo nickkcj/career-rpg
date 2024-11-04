@@ -2,7 +2,7 @@
     {
         "nome": "xuxa",
         "nivel": 12,
-        "hp_atual": 100,
+        "hp_atual": 200,
         "experiencia_total": 1800,
         "classe": "CLT",
         "classes_historico": [],
@@ -11,10 +11,10 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 41,
+            "defesa": 41,
+            "hp": 200,
+            "estamina": 60
         },
         "cursos_conquistados": 0,
         "dungeons_conquistadas": [],
@@ -23,7 +23,7 @@
     {
         "nome": "kaka",
         "nivel": 32,
-        "hp_atual": 100,
+        "hp_atual": 200,
         "experiencia_total": 8222,
         "classe": "CLT",
         "classes_historico": [
@@ -36,10 +36,10 @@
         "pocoes_hp": 3,
         "pocoes_est": 2,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 41,
+            "defesa": 41,
+            "hp": 200,
+            "estamina": 60
         },
         "cursos_conquistados": 0,
         "dungeons_conquistadas": [],
@@ -48,7 +48,7 @@
     {
         "nome": "pel\u00c3\u00a9",
         "nivel": 36,
-        "hp_atual": 100,
+        "hp_atual": 200,
         "experiencia_total": 9800.0,
         "classe": "CLT",
         "classes_historico": [
@@ -61,10 +61,10 @@
         "pocoes_hp": 2,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 41,
+            "defesa": 41,
+            "hp": 200,
+            "estamina": 60
         },
         "cursos_conquistados": 3,
         "dungeons_conquistadas": [
@@ -87,7 +87,7 @@
     {
         "nome": "xamuel",
         "nivel": 30,
-        "hp_atual": 100,
+        "hp_atual": 200,
         "experiencia_total": 7622.0,
         "classe": "CLT",
         "classes_historico": [
@@ -100,10 +100,10 @@
         "pocoes_hp": 1,
         "pocoes_est": 2,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 41,
+            "defesa": 41,
+            "hp": 200,
+            "estamina": 60
         },
         "cursos_conquistados": 3,
         "dungeons_conquistadas": [
@@ -138,7 +138,7 @@
     {
         "nome": "romario",
         "nivel": 13,
-        "hp_atual": 100,
+        "hp_atual": 200,
         "experiencia_total": 2000,
         "classe": "CLT",
         "classes_historico": [
@@ -149,10 +149,10 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 41,
+            "defesa": 41,
+            "hp": 200,
+            "estamina": 60
         },
         "cursos_conquistados": 0,
         "dungeons_conquistadas": [],
@@ -161,7 +161,7 @@
     {
         "nome": "xamazin timaseta",
         "nivel": 29,
-        "hp_atual": 100,
+        "hp_atual": 200,
         "experiencia_total": 7000,
         "classe": "CLT",
         "classes_historico": [
@@ -174,10 +174,10 @@
         "pocoes_hp": 3,
         "pocoes_est": 2,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 41,
+            "defesa": 41,
+            "hp": 200,
+            "estamina": 60
         },
         "cursos_conquistados": 0,
         "dungeons_conquistadas": [],
@@ -295,7 +295,7 @@
     {
         "nome": "1",
         "nivel": 1,
-        "hp_atual": 100,
+        "hp_atual": 200,
         "experiencia_total": 0,
         "classe": "CLT",
         "classes_historico": [
@@ -306,10 +306,10 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 41,
+            "defesa": 41,
+            "hp": 200,
+            "estamina": 60
         },
         "cursos_conquistados": 0,
         "dungeons_conquistadas": [],
@@ -318,7 +318,7 @@
     {
         "nome": "arnaldo",
         "nivel": 52,
-        "hp_atual": 100,
+        "hp_atual": 200,
         "experiencia_total": 18500,
         "classe": "CLT",
         "classes_historico": [
@@ -331,10 +331,10 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 41,
+            "defesa": 41,
+            "hp": 200,
+            "estamina": 60
         },
         "cursos_conquistados": 1,
         "dungeons_conquistadas": [],
@@ -343,7 +343,7 @@
     {
         "nome": "gabigol lixo",
         "nivel": 1,
-        "hp_atual": 100,
+        "hp_atual": 200,
         "experiencia_total": 0,
         "classe": "CLT",
         "classes_historico": [
@@ -354,10 +354,10 @@
         "pocoes_hp": 0,
         "pocoes_est": 0,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 41,
+            "defesa": 41,
+            "hp": 200,
+            "estamina": 60
         },
         "cursos_conquistados": 0,
         "dungeons_conquistadas": [],
@@ -365,9 +365,15 @@
     },
     {
         "nome": "mangual",
+<<<<<<< HEAD
         "nivel": 5,
         "hp_atual": 100,
         "experiencia_total": 600,
+=======
+        "nivel": 1,
+        "hp_atual": 200,
+        "experiencia_total": 0,
+>>>>>>> 7ef20249a3bdc8cd4897069138dbd17a33064d9c
         "classe": "CLT",
         "classes_historico": [
             "CLT"
@@ -377,10 +383,10 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 1,
-            "defesa": 1,
-            "hp": 100,
-            "estamina": 20
+            "ataque": 41,
+            "defesa": 41,
+            "hp": 200,
+            "estamina": 60
         },
         "cursos_conquistados": 3,
         "dungeons_conquistadas": [],
@@ -394,7 +400,7 @@
     {
         "nome": "eneas",
         "nivel": 31,
-        "hp_atual": 0,
+        "hp_atual": 100,
         "experiencia_total": 8000,
         "classe": "Estagiario",
         "classes_historico": [
@@ -418,7 +424,7 @@
     {
         "nome": "rogerinho",
         "nivel": 31,
-        "hp_atual": 69,
+        "hp_atual": 100,
         "experiencia_total": 7700,
         "classe": "Estagiario",
         "classes_historico": [
@@ -446,7 +452,7 @@
     {
         "nome": "adiburai",
         "nivel": 40,
-        "hp_atual": 99,
+        "hp_atual": 100,
         "experiencia_total": 11800.0,
         "classe": "Estagiario",
         "classes_historico": [
@@ -485,6 +491,7 @@
         ]
     },
     {
+<<<<<<< HEAD
         "nome": "nickzinx",
         "nivel": 9,
         "hp_atual": 100,
@@ -496,6 +503,19 @@
         "habilidades": [],
         "pontos_disponiveis": 5,
         "pocoes_hp": 0,
+=======
+        "nome": "naxumeros",
+        "nivel": 1,
+        "hp_atual": 100,
+        "experiencia_total": 0,
+        "classe": "Estagiario",
+        "classes_historico": [
+            "Estagiario"
+        ],
+        "habilidades": [],
+        "pontos_disponiveis": 10,
+        "pocoes_hp": 3,
+>>>>>>> 7ef20249a3bdc8cd4897069138dbd17a33064d9c
         "pocoes_est": 3,
         "atributos": {
             "ataque": 1,
@@ -503,6 +523,7 @@
             "hp": 100,
             "estamina": 20
         },
+<<<<<<< HEAD
         "cursos_conquistados": 2,
         "dungeons_conquistadas": [
             {
@@ -546,6 +567,41 @@
             {
                 "nome": "Boss de RH da nickzin",
                 "nivel_requerido": 2
+=======
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": []
+    },
+    {
+        "nome": "abadinome",
+        "nivel": 29,
+        "hp_atual": 200,
+        "experiencia_total": 7000,
+        "classe": "CLT",
+        "classes_historico": [
+            "CLT"
+        ],
+        "habilidades": [],
+        "pontos_disponiveis": 30,
+        "pocoes_hp": 3,
+        "pocoes_est": 3,
+        "atributos": {
+            "ataque": 41,
+            "defesa": 41,
+            "hp": 200,
+            "estamina": 60
+        },
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": [],
+        "bosses_derrotados": [
+            {
+                "nome": "Boss de Marketing da Manual",
+                "nivel_requerido": 10
+            },
+            {
+                "nome": "Boss de RH da furia",
+                "nivel_requerido": 10
+>>>>>>> 7ef20249a3bdc8cd4897069138dbd17a33064d9c
             }
         ]
     }
