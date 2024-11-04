@@ -47,14 +47,6 @@ class PersonagemController:
                 return personagem
         return None
     
-
-    def usar_itens(self, personagem):
-        self.__personagemView.mostrar_mensagem(f"---Inventário---: Poção HP (quantidade: {personagem.pocao_hp.quant}), Poção Estamina (quantidade: {personagem.pocao_est.quant}")
-        print("1 - Usar poção HP")
-        print("2 - Usar poção Estamina")
-        opcao = input("Digite o item que você quer usar: ")
-        return opcao
-    
     def criar_personagem(self, nome, nivel, experiencia_total, pontos_disponiveis, nome_classe, dungeons_conquistadas, cursos_conquistados):
         return Personagem(
             nome=nome,
@@ -171,7 +163,8 @@ class PersonagemController:
                 'estamina': personagem.classe_personagem.atributos['estamina'],
                 'pocoes_hp': personagem.pocao_hp.quant,
                 'pocoes_est': personagem.pocao_est.quant,
-                'cursos_conquistados': personagem.cursos_conquistados
+                'cursos_conquistados': personagem.cursos_conquistados,
+                'dungeons_conquistadas': [dungeon.nome for dungeon in personagem.dungeons_conquistadas]
             }
             self.__personagemView.mostrar_status(status)
         except KeyError as e:
@@ -212,13 +205,11 @@ class PersonagemController:
         except ItemIndisponivelException as e:
             self.__personagemView.mostrar_mensagem(str(e))
 
-    def usar_habilidade(self, classe_personagem: Personagem):
-        #colocar a logica em que o jogador escolhe qual habilidade ele quer usar,
-        #podendo escolher entre 3 habilidades, que tem efeitos diferentes no inimigo.
-        pass
-
-
-
-
+    def usar_itens_batalha(self, personagem):
+        self.__personagemView.mostrar_mensagem(f"---Inventário---: Poção HP (quantidade: {personagem.pocao_hp.quant}), Poção Estamina (quantidade: {personagem.pocao_est.quant}")
+        print("1 - Usar poção HP")
+        print("2 - Usar poção Estamina")
+        opcao = input("Digite o item que você quer usar: ")
+        return opcao
 
     

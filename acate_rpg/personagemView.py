@@ -21,7 +21,7 @@ class PersonagemView():
         print(f"Poções de HP: {dados_personagem['pocoes_hp']}")
         print(f"Poções de Estamina: {dados_personagem['pocoes_est']}")
         print(f"Cursos Conquistados: {dados_personagem['cursos_conquistados']}")
-
+        print(f"Dungeons Conquistadas: {', '.join(dados_personagem['dungeons_conquistadas'])}")
     def escolher_atributo(self):
         self.limpar_terminal()
         print("-------- UPAR ATRIBUTOS ----------")

@@ -145,7 +145,8 @@ class SistemaControllerr:
                     'pocoes_hp': personagem.pocao_hp.quant,
                     'pocoes_est': personagem.pocao_est.quant,
                     'atributos': personagem.classe_personagem.atributos,
-                    'cursos_conquistados': personagem.cursos_conquistados
+                    'cursos_conquistados': personagem.cursos_conquistados,
+                    'dungeons_conquistadas': [{'nome': d.nome, 'nivel_requerido': d.nivel_requerido} for d in personagem.dungeons_conquistadas]
                 })
             with open(self.__arquivo_personagens, 'w') as arquivo:
                 json.dump(personagens_salvar, arquivo, indent=4)
@@ -165,7 +166,7 @@ class SistemaControllerr:
                         experiencia_total=dados_personagem.get('experiencia_total', 0),
                         pontos_disponiveis=dados_personagem.get('pontos_disponiveis', 0),
                         nome_classe=dados_personagem['classe'],
-                        dungeons_conquistadas=dados_personagem.get('dungeons_conquistadas', 0),
+                        dungeons_conquistadas=dados_personagem.get('dungeons_conquistadas', []),
                         cursos_conquistados=dados_personagem.get('cursos_conquistados', 0)
                     )
                     

@@ -17,7 +17,6 @@ class RankingController:
         self.__ranking_view.exibir_ranking_nivel(personagens_ordenados)
 
     def exibir_ranking_dungeons(self):
-        pass
         personagens = self.atualizar_personagens_ranking()
         personagens_ordenados = sorted(personagens, key=lambda p: len(p.dungeons_conquistadas), reverse=True)
         self.__ranking_view.exibir_ranking_dungeons(personagens_ordenados)

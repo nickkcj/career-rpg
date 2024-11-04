@@ -3,14 +3,14 @@ from pocao_hp import PocaoHP
 from pocao_est import PocaoEstamina
 
 class Personagem():
-    def __init__(self, nome, nivel, experiencia_total, nome_classe: str, pocao_hp: PocaoHP=None, pocao_est: PocaoEstamina=None, pontos_disponiveis=10, dungeons_conquistadas= [], cursos_conquistados=0):
+    def __init__(self, nome, nivel, experiencia_total, nome_classe: str, pocao_hp: PocaoHP=None, pocao_est: PocaoEstamina=None, pontos_disponiveis=10, dungeons_conquistadas= None, cursos_conquistados=0):
         self.__nome = nome
         self.__nivel = nivel
         self.__experiencia_total = experiencia_total
         self.__classe_personagem = ClassePersonagem(nome_classe=nome_classe)
         self.__classes_historico = [nome_classe]
         self.__habilidades = []
-        self.__dungeons_conquistadas = dungeons_conquistadas
+        self.__dungeons_conquistadas = dungeons_conquistadas if dungeons_conquistadas is not None else []
         self.__cursos_conquistados = cursos_conquistados
         self.__dungeons_conquistadas = []
         self.__pocao_hp = pocao_hp if pocao_hp else PocaoHP(quant=3)

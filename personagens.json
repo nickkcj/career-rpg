@@ -6,21 +6,22 @@
         "classe": "CLT",
         "classes_historico": [],
         "habilidades": [],
-        "pontos_disponiveis": 250,
+        "pontos_disponiveis": 0,
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 0,
-            "defesa": 0,
-            "hp": 30,
-            "estamina": 0
+            "ataque": 100,
+            "defesa": 30,
+            "hp": 130,
+            "estamina": 20
         },
-        "cursos_conquistados": 0
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": []
     },
     {
         "nome": "kaka",
         "nivel": 32,
-        "experiencia_total": 8122,
+        "experiencia_total": 8222,
         "classe": "CLT",
         "classes_historico": [
             "Trainee",
@@ -34,10 +35,11 @@
         "atributos": {
             "ataque": 110,
             "defesa": 10,
-            "hp": 50,
+            "hp": 49,
             "estamina": 35
         },
-        "cursos_conquistados": 0
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": []
     },
     {
         "nome": "pel\u00c3\u00a9",
@@ -59,12 +61,13 @@
             "hp": 60,
             "estamina": 30
         },
-        "cursos_conquistados": 3
+        "cursos_conquistados": 3,
+        "dungeons_conquistadas": []
     },
     {
         "nome": "xamuel",
         "nivel": 27,
-        "experiencia_total": 6222,
+        "experiencia_total": 6322,
         "classe": "CLT",
         "classes_historico": [
             "Trainee",
@@ -76,12 +79,18 @@
         "pocoes_hp": 3,
         "pocoes_est": 2,
         "atributos": {
-            "ataque": 10,
+            "ataque": 15,
             "defesa": 10,
-            "hp": 60,
-            "estamina": 35
+            "hp": -9,
+            "estamina": 33
         },
-        "cursos_conquistados": 2
+        "cursos_conquistados": 2,
+        "dungeons_conquistadas": [
+            {
+                "nome": "level up",
+                "nivel_requerido": 10
+            }
+        ]
     },
     {
         "nome": "romario",
@@ -101,7 +110,8 @@
             "hp": 0,
             "estamina": 0
         },
-        "cursos_conquistados": 0
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": []
     },
     {
         "nome": "xamazin timaseta",
@@ -123,7 +133,8 @@
             "hp": 50,
             "estamina": 35
         },
-        "cursos_conquistados": 0
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": []
     },
     {
         "nome": "puterrier",
@@ -143,7 +154,8 @@
             "hp": 0,
             "estamina": 0
         },
-        "cursos_conquistados": 0
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": []
     },
     {
         "nome": "dunha",
@@ -163,7 +175,8 @@
             "hp": 0,
             "estamina": 0
         },
-        "cursos_conquistados": 1
+        "cursos_conquistados": 1,
+        "dungeons_conquistadas": []
     },
     {
         "nome": "maradona",
@@ -183,7 +196,8 @@
             "hp": 0,
             "estamina": 0
         },
-        "cursos_conquistados": 0
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": []
     },
     {
         "nome": "segovinha",
@@ -203,7 +217,8 @@
             "hp": 0,
             "estamina": 0
         },
-        "cursos_conquistados": 1
+        "cursos_conquistados": 1,
+        "dungeons_conquistadas": []
     },
     {
         "nome": "1",
@@ -223,7 +238,8 @@
             "hp": 0,
             "estamina": 0
         },
-        "cursos_conquistados": 0
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": []
     },
     {
         "nome": "arnaldo",
@@ -245,7 +261,8 @@
             "hp": 50,
             "estamina": 30
         },
-        "cursos_conquistados": 1
+        "cursos_conquistados": 1,
+        "dungeons_conquistadas": []
     },
     {
         "nome": "gabigol lixo",
@@ -265,7 +282,8 @@
             "hp": 30,
             "estamina": 15
         },
-        "cursos_conquistados": 0
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": []
     },
     {
         "nome": "mangual",
@@ -285,7 +303,8 @@
             "hp": 0,
             "estamina": 0
         },
-        "cursos_conquistados": 0
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": []
     },
     {
         "nome": "eneas",
@@ -305,6 +324,7 @@
             "hp": 0,
             "estamina": 0
         },
-        "cursos_conquistados": 0
+        "cursos_conquistados": 0,
+        "dungeons_conquistadas": []
     }
 ]

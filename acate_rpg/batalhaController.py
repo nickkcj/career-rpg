@@ -95,7 +95,7 @@ class BatalhaController():
             self.__tela.mostra_mensagem("O personagem não possui estamina o suficiente para usar uma habilidade!")
 
     def usar_item(self, personagem):
-        opcao = self.__personagemController.usar_itens(personagem)
+        opcao = self.__personagemController.usar_itens_batalha(personagem)
         if opcao == '1':
             personagem.classe_personagem.atributos['hp'] += 10
             self.__tela.mostra_mensagem(f"O personagem {personagem.nome} se curou em 10 de vida")
@@ -105,8 +105,6 @@ class BatalhaController():
             personagem.classe_personagem.atributos['estamina'] += 10
             self.__tela.mostra_mensagem(f"O personagem {personagem.nome} restaurou 10 de estamina")
             time.sleep(2)
-
-
 
     def turno_boss(self, personagem, boss):
         acao_boss = random.randint(1, 2)  
@@ -119,12 +117,6 @@ class BatalhaController():
             boss.atributos['defesa'] += 5
             
             self.__tela.mostra_mensagem(f"{boss.nome} se defendeu! Defesa aumentada para {boss.atributos['defesa']}.")
-
-
-
-        
-
-        
 
     def verificar_vencedor(self):
         if self.__batalha.boss.atributos['hp'] <= 0:

@@ -176,8 +176,8 @@
                     "nivel_requerido": 10,
                     "atributos": {
                         "ataque": 2,
-                        "defesa": 1.5,
-                        "hp": 10,
+                        "defesa": 6.5,
+                        "hp": -7.0,
                         "estamina": 5
                     }
                 }
@@ -226,7 +226,7 @@
                     "atributos": {
                         "ataque": 18,
                         "defesa": 13.5,
-                        "hp": 90,
+                        "hp": 88.5,
                         "estamina": 45
                     }
                 }
@@ -260,7 +260,7 @@
                     "atributos": {
                         "ataque": 4,
                         "defesa": 3.0,
-                        "hp": 16.0,
+                        "hp": 20,
                         "estamina": 10
                     }
                 }
