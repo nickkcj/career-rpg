@@ -326,5 +326,69 @@
                 "estamina": 60.0
             }
         }
+    },
+    {
+        "nome": "furia",
+        "nivel_requerido": 10,
+        "xp_ganho": 3000,
+        "dificuldade": 10.0,
+        "setores": [
+            {
+                "nome": "T.I",
+                "dificuldade": 10,
+                "boss": {
+                    "nome": "Boss de T.I da furia",
+                    "dificuldade": 10,
+                    "nivel_requerido": 10,
+                    "atributos": {
+                        "ataque": 20,
+                        "defesa": 15.0,
+                        "hp": 100,
+                        "estamina": 50
+                    }
+                }
+            },
+            {
+                "nome": "RH",
+                "dificuldade": 10,
+                "boss": {
+                    "nome": "Boss de RH da furia",
+                    "dificuldade": 10,
+                    "nivel_requerido": 10,
+                    "atributos": {
+                        "ataque": 20,
+                        "defesa": 15.0,
+                        "hp": 100,
+                        "estamina": 50
+                    }
+                }
+            },
+            {
+                "nome": "Marketing",
+                "dificuldade": 10,
+                "boss": {
+                    "nome": "Boss de Marketing da furia",
+                    "dificuldade": 10,
+                    "nivel_requerido": 10,
+                    "atributos": {
+                        "ataque": 20,
+                        "defesa": 15.0,
+                        "hp": 100,
+                        "estamina": 50
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "fallen",
+            "dificuldade": 10.0,
+            "nivel_requerido": 10,
+            "atributos": {
+                "ataque": 40.0,
+                "defesa": 30.0,
+                "hp": 200.0,
+                "estamina": 100.0
+            }
+        }
     }
 ]

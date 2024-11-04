@@ -164,20 +164,17 @@ class SistemaControllerr:
             with open(self.__arquivo_personagens, 'r') as arquivo:
                 personagens_carregados = json.load(arquivo)
                 for dados_personagem in personagens_carregados:
-                    # Verifica se o personagem já existe pelo nome
                     personagem_existente = next(
                         (p for p in self.__personagemController.personagens if p.nome == dados_personagem['nome']), None
                     )
 
                     if personagem_existente:
-                        # Atualiza apenas os atributos que podem ser alterados
                         personagem_existente.hp_atual = dados_personagem.get('hp_atual', personagem_existente.hp_atual)
                         personagem_existente.pocao_hp.quant = dados_personagem.get('pocoes_hp', personagem_existente.pocao_hp.quant)
                         personagem_existente.pocao_est.quant = dados_personagem.get('pocoes_est', personagem_existente.pocao_est.quant)
                         personagem_existente.classe_personagem.atributos.update(dados_personagem.get('atributos', {}))
                         personagem_existente.classes_historico = dados_personagem.get('classes_historico', personagem_existente.classes_historico)
                     else:
-                        # Se não existir, cria um novo personagem
                         personagem = self.__personagemController.criar_personagem(
                             nome=dados_personagem['nome'],
                             nivel=dados_personagem.get('nivel', 1),
@@ -193,6 +190,7 @@ class SistemaControllerr:
                         personagem.pocao_est.quant = dados_personagem.get('pocoes_est', 0)
                         personagem.hp_atual = dados_personagem.get('hp_atual', personagem.classe_personagem.atributos['hp'])
                         personagem.classes_historico = dados_personagem.get('classes_historico', [])
+                        personagem.hp_atual = personagem.classe_personagem.atributos['hp']
 
                         self.__personagemController.personagens.append(personagem)
 
@@ -332,7 +330,7 @@ class SistemaControllerr:
                     resultado = self.__quizController.realizar_quiz(personagem, self.__cursoController.cursos)
                     if resultado == True:
                         self.__personagemController.incrementar_curso(personagem)
-                        
+
                 elif opcao == '0':
                     self.menu_jogador()
                 else:

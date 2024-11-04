@@ -9,7 +9,7 @@ class PersonagemView():
         self.limpar_terminal()
         print("-------- STATUS ----------")
         print(f"Nome: {dados_personagem['nome']}")
-        print(f"Nome: {dados_personagem['classe']}")
+        print(f"Classe: {dados_personagem['classe']}")
         print(f"Nível: {dados_personagem['nivel']}")
         print(f"Experiência total: {dados_personagem['experiencia_total']}")
         print(f"Experiência para próximo nível: {dados_personagem['experiencia_para_proximo_nivel']}")
