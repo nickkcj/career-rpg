@@ -208,16 +208,16 @@
     },
     {
         "nome": "dunha",
-        "nivel": 1,
+        "nivel": 5,
         "hp_atual": 100,
-        "experiencia_total": 0,
+        "experiencia_total": 600,
         "classe": "Trainee",
         "classes_historico": [
             "Trainee"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 10,
-        "pocoes_hp": 3,
+        "pontos_disponiveis": 5,
+        "pocoes_hp": 2,
         "pocoes_est": 3,
         "atributos": {
             "ataque": 1,
@@ -225,9 +225,26 @@
             "hp": 100,
             "estamina": 20
         },
-        "cursos_conquistados": 1,
+        "cursos_conquistados": 2,
         "dungeons_conquistadas": [],
-        "bosses_derrotados": []
+        "bosses_derrotados": [
+            {
+                "nome": "Boss de T.I da bossteste",
+                "nivel_requerido": 1
+            },
+            {
+                "nome": "Boss de RH da nickteste2",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "Boss de RH da nickteste",
+                "nivel_requerido": 4
+            },
+            {
+                "nome": "thais",
+                "nivel_requerido": 4
+            }
+        ]
     },
     {
         "nome": "maradona",
@@ -255,21 +272,21 @@
     {
         "nome": "segovinha",
         "nivel": 17,
-        "hp_atual": 130,
+        "hp_atual": 100,
         "experiencia_total": 3000,
         "classe": "Estagiario",
         "classes_historico": [
             "Estagiario"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 90,
+        "pontos_disponiveis": 0,
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 21,
-            "defesa": 21,
-            "hp": 130,
-            "estamina": 30
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 1,
         "dungeons_conquistadas": [],
@@ -300,9 +317,9 @@
     },
     {
         "nome": "arnaldo",
-        "nivel": 53,
-        "hp_atual": 190,
-        "experiencia_total": 19500,
+        "nivel": 52,
+        "hp_atual": 200,
+        "experiencia_total": 18500,
         "classe": "CLT",
         "classes_historico": [
             "Trainee",
@@ -310,23 +327,18 @@
             "CLT"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 200,
-        "pocoes_hp": 1,
+        "pontos_disponiveis": 265,
+        "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 141,
-            "defesa": 91,
+            "ataque": 41,
+            "defesa": 41,
             "hp": 200,
             "estamina": 60
         },
         "cursos_conquistados": 1,
         "dungeons_conquistadas": [],
-        "bosses_derrotados": [
-            {
-                "nome": "Boss de T.I da furia",
-                "nivel_requerido": 10
-            }
-        ]
+        "bosses_derrotados": []
     },
     {
         "nome": "gabigol lixo",
@@ -353,15 +365,15 @@
     },
     {
         "nome": "mangual",
-        "nivel": 1,
+        "nivel": 5,
         "hp_atual": 200,
-        "experiencia_total": 0,
+        "experiencia_total": 600,
         "classe": "CLT",
         "classes_historico": [
             "CLT"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 10,
+        "pontos_disponiveis": 0,
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
@@ -370,14 +382,19 @@
             "hp": 200,
             "estamina": 60
         },
-        "cursos_conquistados": 0,
+        "cursos_conquistados": 3,
         "dungeons_conquistadas": [],
-        "bosses_derrotados": []
+        "bosses_derrotados": [
+            {
+                "nome": "Boss de RH da nickzin",
+                "nivel_requerido": 2
+            }
+        ]
     },
     {
         "nome": "eneas",
         "nivel": 31,
-        "hp_atual": 130,
+        "hp_atual": 100,
         "experiencia_total": 8000,
         "classe": "Estagiario",
         "classes_historico": [
@@ -389,10 +406,10 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 21,
-            "defesa": 21,
-            "hp": 130,
-            "estamina": 30
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 0,
         "dungeons_conquistadas": [],
@@ -401,7 +418,7 @@
     {
         "nome": "rogerinho",
         "nivel": 31,
-        "hp_atual": 130,
+        "hp_atual": 100,
         "experiencia_total": 7700,
         "classe": "Estagiario",
         "classes_historico": [
@@ -412,10 +429,10 @@
         "pocoes_hp": 2,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 21,
-            "defesa": 21,
-            "hp": 130,
-            "estamina": 30
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 0,
         "dungeons_conquistadas": [
@@ -429,7 +446,7 @@
     {
         "nome": "adiburai",
         "nivel": 40,
-        "hp_atual": 130,
+        "hp_atual": 100,
         "experiencia_total": 11800.0,
         "classe": "Estagiario",
         "classes_historico": [
@@ -440,10 +457,10 @@
         "pocoes_hp": 3,
         "pocoes_est": 3,
         "atributos": {
-            "ataque": 21,
-            "defesa": 21,
-            "hp": 130,
-            "estamina": 30
+            "ataque": 1,
+            "defesa": 1,
+            "hp": 100,
+            "estamina": 20
         },
         "cursos_conquistados": 0,
         "dungeons_conquistadas": [
@@ -468,72 +485,17 @@
         ]
     },
     {
-        "nome": "naxumeros",
-        "nivel": 1,
-        "hp_atual": 130,
-        "experiencia_total": 0,
-        "classe": "Estagiario",
-        "classes_historico": [
-            "Estagiario"
-        ],
-        "habilidades": [],
-        "pontos_disponiveis": 10,
-        "pocoes_hp": 3,
-        "pocoes_est": 3,
-        "atributos": {
-            "ataque": 21,
-            "defesa": 21,
-            "hp": 130,
-            "estamina": 30
-        },
-        "cursos_conquistados": 0,
-        "dungeons_conquistadas": [],
-        "bosses_derrotados": []
-    },
-    {
-        "nome": "abadinome",
-        "nivel": 29,
+        "nome": "nickzinx",
+        "nivel": 9,
         "hp_atual": 200,
-        "experiencia_total": 7000,
-        "classe": "CLT",
-        "classes_historico": [
-            "CLT"
-        ],
-        "habilidades": [],
-        "pontos_disponiveis": 30,
-        "pocoes_hp": 3,
-        "pocoes_est": 3,
-        "atributos": {
-            "ataque": 41,
-            "defesa": 41,
-            "hp": 200,
-            "estamina": 60
-        },
-        "cursos_conquistados": 0,
-        "dungeons_conquistadas": [],
-        "bosses_derrotados": [
-            {
-                "nome": "Boss de Marketing da Manual",
-                "nivel_requerido": 10
-            },
-            {
-                "nome": "Boss de RH da furia",
-                "nivel_requerido": 10
-            }
-        ]
-    },
-    {
-        "nome": "pastor",
-        "nivel": 2,
-        "hp_atual": 200,
-        "experiencia_total": 200,
+        "experiencia_total": 1300.0,
         "classe": "CLT",
         "classes_historico": [
             "CLT"
         ],
         "habilidades": [],
         "pontos_disponiveis": 5,
-        "pocoes_hp": 3,
+        "pocoes_hp": 0,
         "pocoes_est": 3,
         "atributos": {
             "ataque": 41,
@@ -541,9 +503,46 @@
             "hp": 200,
             "estamina": 60
         },
-        "cursos_conquistados": 0,
-        "dungeons_conquistadas": [],
+        "cursos_conquistados": 2,
+        "dungeons_conquistadas": [
+            {
+                "nome": "bossteste",
+                "nivel_requerido": 1
+            },
+            {
+                "nome": "nickteste2",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "batalha_teste",
+                "nivel_requerido": 1
+            }
+        ],
         "bosses_derrotados": [
+            {
+                "nome": "bolsonaro",
+                "nivel_requerido": 1
+            },
+            {
+                "nome": "Boss de RH da nickteste2",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "thais",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "Boss de Vendas",
+                "nivel_requerido": 1
+            },
+            {
+                "nome": "Boss de Vendas da nickteste",
+                "nivel_requerido": 4
+            },
+            {
+                "nome": "bolsonaro",
+                "nivel_requerido": 1
+            },
             {
                 "nome": "Boss de RH da nickzin",
                 "nivel_requerido": 2
@@ -551,26 +550,46 @@
         ]
     },
     {
-        "nome": "menoh",
-        "nivel": 8,
-        "hp_atual": 100,
-        "experiencia_total": 1000,
-        "classe": "Trainee",
+        "nome": "thais",
+        "nivel": 3,
+        "hp_atual": 200,
+        "experiencia_total": 300,
+        "classe": "CLT",
         "classes_historico": [
-            "Trainee"
+            "CLT"
         ],
-        "habilidades": [],
-        "pontos_disponiveis": 22,
-        "pocoes_hp": 3,
-        "pocoes_est": 3,
+        "habilidades": [
+            {
+                "nome": "Festa da Firma",
+                "efeito": "Aumenta o Ataque do personagem",
+                "tipo": "buff"
+            },
+            {
+                "nome": "Ataque Corporativo",
+                "efeito": "Dano direto ao HP do boss",
+                "tipo": "dano"
+            }
+        ],
+        "pontos_disponiveis": 10,
+        "pocoes_hp": 2,
+        "pocoes_est": 2,
         "atributos": {
-            "ataque": 15,
-            "defesa": 32.5,
-            "hp": 100,
-            "estamina": 10
+            "ataque": 56,
+            "defesa": 41.0,
+            "hp": 200,
+            "estamina": 60
         },
-        "cursos_conquistados": 0,
+        "cursos_conquistados": 1,
         "dungeons_conquistadas": [],
-        "bosses_derrotados": []
+        "bosses_derrotados": [
+            {
+                "nome": "Boss de RH da nickzin",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "Boss de RH da nickzin",
+                "nivel_requerido": 2
+            }
+        ]
     }
 ]

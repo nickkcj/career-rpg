@@ -2,7 +2,6 @@ from gamelogger import LogJogadas
 import json
 import time
 import os
-from sistema import Sistema
 from sistemaView import SistemaView
 from personagemController import PersonagemController
 from cursoController import CursoController
@@ -35,7 +34,6 @@ from exceptions import (
 
 class SistemaControllerr:
     def __init__(self):
-        self.__sistema = Sistema()
         self.__sistemaView = SistemaView()
         self.__log = LogJogadas()
         self.__personagemController = PersonagemController()
@@ -122,7 +120,7 @@ class SistemaControllerr:
             personagem.classes_historico = [dados_personagem["classe"]]
 
             self.__personagemController.personagens.append(personagem)
-            self.__sistema.adicionar_personagem(personagem)
+    
             
             self.__sistemaView.mostrar_mensagem(
                 f"Personagem {personagem.nome} da classe {personagem.classe_personagem.nome_classe} criado com sucesso! "
@@ -394,7 +392,7 @@ class SistemaControllerr:
                     self.__log.alterar_registro(index)
 
                 elif opcao == '3':
-                    self.limpar()
+                    self.limpar_terminal()
                     self.__log.listar_registros()
                     index = int(input("Digite o index que você quer excluir o registro: "))
                     self.__log.excluir_registro(index)

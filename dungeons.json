@@ -1,9 +1,9 @@
 [
     {
-        "nome": "mattel",
+        "nome": "mattel2",
         "nivel_requerido": 1,
-        "xp_ganho": 300,
-        "dificuldade": 7.0,
+        "xp_ganho": 400,
+        "dificuldade": 6.0,
         "setores": [
             {
                 "nome": "Vendas",
@@ -116,7 +116,7 @@
         "nome": "Mindflyers",
         "nivel_requerido": 9,
         "xp_ganho": 10,
-        "dificuldade": 6.0,
+        "dificuldade": 5.0,
         "setores": [
             {
                 "nome": "Marketing",
@@ -259,8 +259,8 @@
                     "nivel_requerido": 2,
                     "atributos": {
                         "ataque": 4,
-                        "defesa": 3.0,
-                        "hp": 20,
+                        "defesa": 18.0,
+                        "hp": 0,
                         "estamina": 10
                     }
                 }
@@ -279,10 +279,10 @@
         }
     },
     {
-        "nome": "Pedrobras",
-        "nivel_requerido": 7,
-        "xp_ganho": 12,
-        "dificuldade": 4.0,
+        "nome": "Manual",
+        "nivel_requerido": 10,
+        "xp_ganho": 2000,
+        "dificuldade": 6.0,
         "setores": [
             {
                 "nome": "Marketing",
@@ -328,82 +328,18 @@
         }
     },
     {
-        "nome": "furia",
-        "nivel_requerido": 10,
-        "xp_ganho": 3000,
-        "dificuldade": 10.0,
-        "setores": [
-            {
-                "nome": "T.I",
-                "dificuldade": 10,
-                "boss": {
-                    "nome": "Boss de T.I da furia",
-                    "dificuldade": 10,
-                    "nivel_requerido": 10,
-                    "atributos": {
-                        "ataque": 20,
-                        "defesa": 15.0,
-                        "hp": 100,
-                        "estamina": 50
-                    }
-                }
-            },
-            {
-                "nome": "RH",
-                "dificuldade": 10,
-                "boss": {
-                    "nome": "Boss de RH da furia",
-                    "dificuldade": 10,
-                    "nivel_requerido": 10,
-                    "atributos": {
-                        "ataque": 20,
-                        "defesa": 15.0,
-                        "hp": 100,
-                        "estamina": 50
-                    }
-                }
-            },
-            {
-                "nome": "Marketing",
-                "dificuldade": 10,
-                "boss": {
-                    "nome": "Boss de Marketing da furia",
-                    "dificuldade": 10,
-                    "nivel_requerido": 10,
-                    "atributos": {
-                        "ataque": 20,
-                        "defesa": 15.0,
-                        "hp": 100,
-                        "estamina": 50
-                    }
-                }
-            }
-        ],
-        "boss_final": {
-            "nome": "fallen",
-            "dificuldade": 10.0,
-            "nivel_requerido": 10,
-            "atributos": {
-                "ataque": 40.0,
-                "defesa": 30.0,
-                "hp": 200.0,
-                "estamina": 100.0
-            }
-        }
-    },
-    {
-        "nome": "intelbras",
-        "nivel_requerido": 10,
-        "xp_ganho": 300,
-        "dificuldade": 5.8,
+        "nome": "nick",
+        "nivel_requerido": 2,
+        "xp_ganho": 50,
+        "dificuldade": 2.0,
         "setores": [
             {
                 "nome": "RH",
                 "dificuldade": 2,
                 "boss": {
-                    "nome": "Diretor de RH da intelbras",
+                    "nome": "Diretor de RH da nick",
                     "dificuldade": 2,
-                    "nivel_requerido": 10,
+                    "nivel_requerido": 2,
                     "atributos": {
                         "ataque": 4,
                         "defesa": 3.0,
@@ -411,111 +347,17 @@
                         "estamina": 10
                     }
                 }
-            },
-            {
-                "nome": "T.I",
-                "dificuldade": 10,
-                "boss": {
-                    "nome": "Diretor de T.I da intelbras",
-                    "dificuldade": 10,
-                    "nivel_requerido": 10,
-                    "atributos": {
-                        "ataque": 20,
-                        "defesa": 15.0,
-                        "hp": 100,
-                        "estamina": 50
-                    }
-                }
-            },
-            {
-                "nome": "Vendas",
-                "dificuldade": 6,
-                "boss": {
-                    "nome": "Diretor de Vendas da intelbras",
-                    "dificuldade": 6,
-                    "nivel_requerido": 10,
-                    "atributos": {
-                        "ataque": 12,
-                        "defesa": 9.0,
-                        "hp": 60,
-                        "estamina": 30
-                    }
-                }
-            },
-            {
-                "nome": "Marketing",
-                "dificuldade": 5,
-                "boss": {
-                    "nome": "Diretor de Marketing da intelbras",
-                    "dificuldade": 5,
-                    "nivel_requerido": 10,
-                    "atributos": {
-                        "ataque": 10,
-                        "defesa": 7.5,
-                        "hp": 50,
-                        "estamina": 25
-                    }
-                }
             }
         ],
         "boss_final": {
-            "nome": "FazO \u00c9le da Silva",
-            "dificuldade": 5.8,
-            "nivel_requerido": 10,
+            "nome": "dso",
+            "dificuldade": 2.0,
+            "nivel_requerido": 2,
             "atributos": {
-                "ataque": 23.2,
-                "defesa": 17.4,
-                "hp": 116.0,
-                "estamina": 58.0
-            }
-        }
-    },
-    {
-        "nome": "nidec",
-        "nivel_requerido": 20,
-        "xp_ganho": 1111,
-        "dificuldade": 5.0,
-        "setores": [
-            {
-                "nome": "RH",
-                "dificuldade": 6,
-                "boss": {
-                    "nome": "Diretor de RH da nidec",
-                    "dificuldade": 6,
-                    "nivel_requerido": 20,
-                    "atributos": {
-                        "ataque": 12,
-                        "defesa": 9.0,
-                        "hp": 60,
-                        "estamina": 30
-                    }
-                }
-            },
-            {
-                "nome": "T.I",
-                "dificuldade": 4.0,
-                "boss": {
-                    "nome": "Diretor de T.I da nidec",
-                    "dificuldade": 8,
-                    "nivel_requerido": 20,
-                    "atributos": {
-                        "ataque": 16,
-                        "defesa": 12.0,
-                        "hp": 80,
-                        "estamina": 40
-                    }
-                }
-            }
-        ],
-        "boss_final": {
-            "nome": "rogerio",
-            "dificuldade": 7.0,
-            "nivel_requerido": 20,
-            "atributos": {
-                "ataque": 28.0,
-                "defesa": 21.0,
-                "hp": 140.0,
-                "estamina": 70.0
+                "ataque": 8.0,
+                "defesa": 6.0,
+                "hp": 40.0,
+                "estamina": 20.0
             }
         }
     }

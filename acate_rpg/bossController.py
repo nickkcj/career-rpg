@@ -1,5 +1,4 @@
 from boss import Boss
-import time
 from AbstractCombatente import Combatente
 
 class BossController(Combatente):
