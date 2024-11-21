@@ -1,6 +1,7 @@
 from batalha import Batalha
 from batalhaView import BatalhaView
 from personagemController import PersonagemController
+from classePersonagemController import ClassePersonagemController
 import time
 import random
 from exceptions import OperacaoNaoPermitidaException, HpJahCheioException
@@ -12,11 +13,12 @@ class BatalhaController():
         self.__tela = BatalhaView()
         self.__personagemController = PersonagemController()
         self.__bossController = BossController()
+        self.__classepersonagemController = ClassePersonagemController()
         self.defesas = 0
 
     def realizar_turno(self, acao_personagem, personagem, boss, dungeon, log):
         if acao_personagem == 1: 
-            dano = self.__personagemController.atacar(personagem, boss)
+            dano = personagem.classe_personagem.atacar(boss)
             boss.atributos['hp'] = max(boss.atributos['hp'] - dano, 0)
             self.__tela.mostra_mensagem(f"{personagem.nome} atacou {boss.nome} e causou {dano} de dano!")
             log.adicionar_registro(personagem, boss, dungeon, "ataque")
@@ -26,7 +28,7 @@ class BatalhaController():
             time.sleep(3)
 
         elif acao_personagem == 2:
-            self.__personagemController.defender(personagem)
+            self.__classepersonagemController.defender(personagem)
             self.__tela.mostra_mensagem(f"{personagem.nome} aumentou a defesa em {personagem.classe_personagem.atributos['defesa']}!")
             log.adicionar_registro(personagem, boss, dungeon, "defesa")
             self.defesas += 1
@@ -73,7 +75,7 @@ class BatalhaController():
     def turno_boss(self, personagem, boss):
         acao_boss = random.randint(1, 2)  
         if acao_boss == 1:
-            dano = self.__bossController.atacar(personagem, boss)
+            dano = self.__bossController.atacar(boss, personagem)
             personagem.hp_atual -= dano
             self.__tela.mostra_mensagem(f"{boss.nome} atacou {personagem.nome} e causou {dano} de dano!")
             time.sleep(1.5)

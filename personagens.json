@@ -86,9 +86,9 @@
     },
     {
         "nome": "xamuel",
-        "nivel": 30,
+        "nivel": 34,
         "hp_atual": 200,
-        "experiencia_total": 7622.0,
+        "experiencia_total": 9222.0,
         "classe": "CLT",
         "classes_historico": [
             "Trainee",
@@ -96,14 +96,14 @@
             "CLT"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 65,
-        "pocoes_hp": 1,
+        "pontos_disponiveis": 85,
+        "pocoes_hp": 0,
         "pocoes_est": 2,
         "atributos": {
             "ataque": 41,
-            "defesa": 41,
+            "defesa": 38.5,
             "hp": 200,
-            "estamina": 60
+            "estamina": 55
         },
         "cursos_conquistados": 3,
         "dungeons_conquistadas": [
@@ -114,6 +114,10 @@
             {
                 "nome": "Manual",
                 "nivel_requerido": 10
+            },
+            {
+                "nome": "nick",
+                "nivel_requerido": 2
             }
         ],
         "bosses_derrotados": [
@@ -132,6 +136,34 @@
             {
                 "nome": "Renan",
                 "nivel_requerido": 10
+            },
+            {
+                "nome": "Diretor de RH da nick",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "Diretor de RH da nick",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "dso",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "Boss de Marketing da Manual",
+                "nivel_requerido": 10
+            },
+            {
+                "nome": "Boss de Marketing da Manual",
+                "nivel_requerido": 10
+            },
+            {
+                "nome": "Boss de RH da nickzin",
+                "nivel_requerido": 2
+            },
+            {
+                "nome": "Boss de RH da nickzin",
+                "nivel_requerido": 2
             }
         ]
     },
@@ -558,18 +590,7 @@
         "classes_historico": [
             "CLT"
         ],
-        "habilidades": [
-            {
-                "nome": "Festa da Firma",
-                "efeito": "Aumenta o Ataque do personagem",
-                "tipo": "buff"
-            },
-            {
-                "nome": "Ataque Corporativo",
-                "efeito": "Dano direto ao HP do boss",
-                "tipo": "dano"
-            }
-        ],
+        "habilidades": [],
         "pontos_disponiveis": 10,
         "pocoes_hp": 2,
         "pocoes_est": 2,

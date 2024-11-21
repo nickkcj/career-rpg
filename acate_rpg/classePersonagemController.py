@@ -23,3 +23,14 @@ class ClassePersonagemController():
                 raise ValueError(f"Atributo inválido ao definir atributos iniciais: {e}")
         else:
             raise ValueError(f"Classe {classe_personagem.nome_classe} não tem modificador definido.")
+        
+
+    def atacar(self, personagem: ClassePersonagem, alvo):
+        dano = personagem.classe_personagem.atacar(alvo)
+        return dano
+    
+    def defender(self, personagem: ClassePersonagem):
+        personagem.classe_personagem.defender()
+
+    def receber_dano(self, personagem: ClassePersonagem, dano):
+        personagem.classe_personagem.receber_dano(dano)
