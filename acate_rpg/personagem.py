@@ -125,3 +125,8 @@ class Personagem():
     @hp_atual.setter
     def hp_atual(self, novo_hp):
         self.__hp_atual = max(0, min(novo_hp, self.__classe_personagem.atributos['hp']))
+
+
+
+    
+

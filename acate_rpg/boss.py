@@ -1,6 +1,5 @@
-from atributo import Atributo
-
-class Boss(Atributo):
+from entidadejogavel import EntidadeJogavel
+class Boss(EntidadeJogavel):
     def __init__(self, nome, dificuldade, nivel_requerido, ataque=0, defesa=0, hp=0, estamina=0):
         super().__init__(ataque, defesa, hp, estamina)
         self.__nome = nome
@@ -43,7 +42,19 @@ class Boss(Atributo):
         return self.__atributos
 
     @atributos.setter
-    def atributos(self, atributos: Atributo):
+    def atributos(self, atributos: EntidadeJogavel):
         self.__atributos = atributos
+
+    
+    def atacar(self, alvo):
+        dano = self.__atributos["ataque"] * 1.5 - alvo.classe_personagem.defesa
+        dano = max(dano, 1)
+        return dano
+    
+    def defender(self):
+        self.__atributos["defesa"] += 5
+
+    def receber_dano(self, dano):
+        self.__atributos["hp"] =- dano
 
         

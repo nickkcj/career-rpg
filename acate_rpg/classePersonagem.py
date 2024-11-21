@@ -1,6 +1,6 @@
-from atributo import Atributo
+from entidadejogavel import EntidadeJogavel
 
-class ClassePersonagem(Atributo):
+class ClassePersonagem(EntidadeJogavel):
     def __init__(self, nome_classe, evolucao=0, ataque=1, defesa=1, hp=100, estamina=20):
         super().__init__(ataque, defesa, hp, estamina)
         self.__nome_classe = nome_classe
@@ -22,6 +22,18 @@ class ClassePersonagem(Atributo):
     @evolucao.setter
     def evolucao(self, evolucao):
         self.__evolucao = evolucao
+
+
+    def atacar(self, alvo):
+        dano = self.ataque - alvo.defesa
+        dano = max(dano, 1)
+        return dano
+    
+    def defender(self):
+        self.defesa += 5
+
+    def receber_dano(self, dano):
+        self.hp -= dano
 
 
 

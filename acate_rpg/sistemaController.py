@@ -3,6 +3,7 @@ import json
 import time
 import os
 from sistemaView import SistemaView
+from gameloggerController import LogController
 from personagemController import PersonagemController
 from cursoController import CursoController
 from quizController import QuizController
@@ -35,7 +36,7 @@ from exceptions import (
 class SistemaControllerr:
     def __init__(self):
         self.__sistemaView = SistemaView()
-        self.__log = LogJogadas()
+        self.__log = LogController()
         self.__personagemController = PersonagemController()
         self.__cursoController = CursoController()
         self.__quizController = QuizController()
@@ -388,7 +389,6 @@ class SistemaControllerr:
                 elif opcao == '2':
                     self.limpar_terminal()
                     self.__log.listar_registros()
-                    index = int(input("Digite o index que você quer alterar o registro: "))
                     self.__log.alterar_registro(index)
 
                 elif opcao == '3':

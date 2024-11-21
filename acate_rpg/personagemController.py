@@ -1,13 +1,12 @@
 import time
 from personagemView import PersonagemView
 from personagem import Personagem
-from classsePersonagemController import ClassePersonagemController
+from classePersonagemController import ClassePersonagemController
 from exceptions import CadastroInvalidoException, ItemIndisponivelException, OperacaoNaoPermitidaException, HpJahCheioException
-from AbstractCombatente import Combatente
 from batalhaView import BatalhaView
 
 
-class PersonagemController(Combatente):
+class PersonagemController():
     def __init__(self):
         self.__personagens = []
         self.__personagemView = PersonagemView()
@@ -45,19 +44,6 @@ class PersonagemController(Combatente):
     def niveis_para_evolucao(self):
         return self.__niveis_para_evolucao
     
-
-    def atacar(self, personagem, boss):
-        try:
-            dano = max(personagem.classe_personagem.atributos['ataque'] - boss.atributos['defesa'], 1)
-            return dano
-        except KeyError as e:
-            raise OperacaoNaoPermitidaException("Erro ao calcular dano de ataque") from e
-    
-    def defender(self, personagem):
-        try:
-            personagem.classe_personagem.atributos['defesa'] += 7.5
-        except KeyError as e:
-            raise OperacaoNaoPermitidaException("Erro ao defender") from e
 
     def usar_habilidade(self, personagem, boss):
         classe = personagem.classe_personagem.nome_classe
@@ -362,5 +348,6 @@ class PersonagemController(Combatente):
         print("2 - Usar poção Estamina")
         opcao = input("Digite o item que você quer usar: ")
         return opcao
+
 
     
