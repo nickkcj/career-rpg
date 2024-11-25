@@ -324,7 +324,11 @@ class PersonagemController():
 
     def usar_item(self, personagem: Personagem):
         try:
-            tipo_item = self.__personagemView.escolher_item(personagem)
+            itens_personagem = {
+                'pocoes_hp': personagem.pocao_hp.quant,
+                'pocoes_est': personagem.pocao_est.quant,
+            }
+            tipo_item = self.__personagemView.escolher_item(itens_personagem)
             if tipo_item == 1 and personagem.pocao_hp and personagem.pocao_hp.quant > 0:
                 if personagem.hp_atual < personagem.classe_personagem.atributos['hp']:
                     personagem.hp_atual += personagem.pocao_hp.valor
