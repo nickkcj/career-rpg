@@ -34,51 +34,10 @@ class CursoController():
 
     def cadastrar_curso(self):
         while True:  
-            erros = []  
             dados_curso = self.__cursoView.pega_dados_curso()
-            try:
-                if not dados_curso["xp_ganho"].isdigit():  
-                    raise XpGanhoInvalidoError("O XP ganho deve ser um número inteiro.")
-                dados_curso["xp_ganho"] = int(dados_curso["xp_ganho"])
-            except XpGanhoInvalidoError as e:
-                erros.append(str(e))
-            try:
-                if not dados_curso["nivel_requerido"].isdigit():  
-                    raise NivelRequeridoInvalidoError("O nível requerido deve ser um número inteiro entre 1 e 10.")
-                dados_curso["nivel_requerido"] = int(dados_curso["nivel_requerido"])
-                if not (1 <= dados_curso["nivel_requerido"] <= 10):
-                    raise NivelRequeridoInvalidoError("O nível requerido deve ser um número entre 1 e 10.")
-            except NivelRequeridoInvalidoError as e:
-                erros.append(str(e))
-
-                
-            setores_validos = ["RH", "T.I", "Vendas", "Marketing", "Financeiro"]
-            try:
-                if dados_curso.get("setor") not in setores_validos:
-                    raise SetorInvalidoError(f"O setor deve ser um dos seguintes: {', '.join(setores_validos)}.")
-            except SetorInvalidoError as e:
-                erros.append(str(e))
-
-                
-            try:
-                if not dados_curso["dificuldade"].isdigit():  
-                    raise DificuldadeInvalidaError("A dificuldade deve ser um número inteiro entre 1 e 10.")
-                dados_curso["dificuldade"] = int(dados_curso["dificuldade"])
-                if not (1 <= dados_curso["dificuldade"] <= 10):
-                    raise DificuldadeInvalidaError("A dificuldade deve ser um número entre 1 e 10.")
-            except DificuldadeInvalidaError as e:
-                erros.append(str(e))
-
-                
-            if erros:
-                mensagem_erro = "Erros ao cadastrar curso:\n" + "\n".join(erros)
-                self.__cursoView.mostra_mensagem(mensagem_erro)
-                time.sleep(3)
-                os.system('cls' if os.name == 'nt' else 'clear')
-
-            else:
+            
                     
-                curso = Curso(
+            curso = Curso(
                     dados_curso["nome"], 
                     dados_curso["nivel_requerido"], 
                     dados_curso["xp_ganho"], 
@@ -86,10 +45,9 @@ class CursoController():
                     dados_curso["dificuldade"], 
                     dados_curso["realizado"]
                 )
-                self.cursos.append(curso)
-                self.__cursoView.mostra_mensagem(f"O curso {dados_curso['nome']} foi cadastrado com sucesso \n")
-                os.system('cls' if os.name == 'nt' else 'clear')
-                break  
+            self.cursos.append(curso)
+            self.__cursoView.mostra_mensagem(f"O curso {dados_curso['nome']} foi cadastrado com sucesso \n")
+            break  
 
   
 
@@ -138,7 +96,26 @@ class CursoController():
 
 
     def mostrar_cursos(self):
-        self.__cursoView.mostra_cursos(self.cursos)
+        cursos_dicionarios = [self.to_dict() for curso in self.cursos]
+        self.__cursoView.mostra_cursos(cursos_dicionarios)
+
+
+    def to_dict(self):
+        return [
+            {
+                "nome": curso.nome,
+                "nivel_requerido": curso.nivel_requerido,
+                "xp_ganho": curso.xp_ganho,
+                "setor": curso.setor,
+                "dificuldade": curso.dificuldade,
+                "realizado": curso.realizado,
+            }
+            for curso in self.cursos
+        ]
+
+
+
+
 
 
 

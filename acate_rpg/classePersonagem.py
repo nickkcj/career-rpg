@@ -32,8 +32,6 @@ class ClassePersonagem(EntidadeJogavel):
     def defender(self):
         self.defesa += 5
 
-    def receber_dano(self, dano):
-        self.hp -= dano
 
 
 

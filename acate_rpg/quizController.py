@@ -729,14 +729,16 @@ class QuizController():
         curso_encontrado = False
 
         for curso in cursos:
-            if curso.nome == nome_curso:
+            if curso["nome"] == nome_curso:
                 curso_encontrado = True
-                setor = curso.setor
-                dificuldade = curso.dificuldade
-                experiencia = curso.xp_ganho
-                nivel_requerido = curso.nivel_requerido
+                setor = curso["setor"]
+                dificuldade = curso["dificuldade"]
+                experiencia = curso["xp_ganho"]
+                nivel_requerido = curso["nivel_requerido"]
+                
 
-                if curso.realizado:
+
+                if curso["realizado"]:
                     self.__cursoView.mostra_mensagem("Você já tem o certificado desse curso, esqueceu?")
                     time.sleep(2)
                     return None

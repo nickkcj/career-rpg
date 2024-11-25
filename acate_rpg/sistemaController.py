@@ -356,7 +356,7 @@ class SistemaControllerr:
 
 
                 elif opcao == '3':
-                    resultado = self.__quizController.realizar_quiz(personagem, self.__cursoController.cursos)
+                    resultado = self.__quizController.realizar_quiz(personagem, self.__cursoController.to_dict())
                     if resultado == True:
                         self.__personagemController.incrementar_curso(personagem)
 
