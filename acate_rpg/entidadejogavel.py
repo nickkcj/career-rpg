@@ -15,14 +15,8 @@ class EntidadeJogavel(ABC):
         pass
 
     @abstractmethod
-    def receber_dano(self, dano):
-        pass
-
-    @abstractmethod
     def defender(self):
         pass
-
-
 
     @property
     def atributos(self):

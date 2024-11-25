@@ -54,7 +54,5 @@ class Boss(EntidadeJogavel):
     def defender(self):
         self.__atributos["defesa"] += 5
 
-    def receber_dano(self, dano):
-        self.__atributos["hp"] =- dano
 
         
