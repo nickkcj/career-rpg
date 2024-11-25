@@ -1,45 +1,56 @@
 import os
 import time
+import PySimpleGUI as psg
 class PersonagemView():
 
     def limpar_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def mostrar_status(self, dados_personagem):
-        self.limpar_terminal()
-        print("-------- STATUS ----------")
-        print(f"Nome: {dados_personagem['nome']}")
-        print(f"Classe: {dados_personagem['classe']}")
-        print(f"Nível: {dados_personagem['nivel']}")
-        print(f"Experiência total: {dados_personagem['experiencia_total']}")
-        print(f"Experiência para próximo nível: {dados_personagem['experiencia_para_proximo_nivel']}")
-        print(f"Pontos disponíveis para distribuir: {dados_personagem['pontos_disponiveis']}")
-        print(f"Ataque: {dados_personagem['ataque']}")
-        print(f"Defesa: {dados_personagem['defesa']}")
-        print(f"HP Máximo: {dados_personagem['hp']}")
-        print(f"HP Atual: {dados_personagem['hp_atual']}")
-        print(f"Estamina: {dados_personagem['estamina']}")
-        print(f"Poções de HP: {dados_personagem['pocoes_hp']}")
-        print(f"Poções de Estamina: {dados_personagem['pocoes_est']}")
-        print()
-        print("-------- PROGRESSO ----------")
-        print()
-        print(f"Cursos Conquistados: {dados_personagem['cursos_conquistados']}")
-        print()
-        print("Empresas conquistadas:")
-        if dados_personagem['dungeons_conquistadas']:
-            for dungeon in dados_personagem['dungeons_conquistadas']:
-                print(f" - {dungeon['nome']}")
-            print()
-            
-        else:
-            print("Nenhuma empresa conquistada.")
-        print(f"Histórico de vagas:")
-        if dados_personagem['bosses_derrotados']:
-            for boss in dados_personagem['bosses_derrotados']:
-                print(f"- {boss['nome']}")
-        else:
-            print("Nenhuma vaga anterior.")
+        psg.ChangeLookAndFeel('DarkGreen4')
+        layout = [
+            [psg.Text("-------- STATUS ----------", font=("Arial", 14, "bold"))],
+            [psg.Text(f"Nome: {dados_personagem['nome']}")],
+            [psg.Text(f"Classe: {dados_personagem['classe']}")],
+            [psg.Text(f"Nível: {dados_personagem['nivel']}")],
+            [psg.Text(f"Experiência total: {dados_personagem['experiencia_total']}")],
+            [psg.Text(f"Experiência para próximo nível: {dados_personagem['experiencia_para_proximo_nivel']}")],
+            [psg.Text(f"Pontos disponíveis para distribuir: {dados_personagem['pontos_disponiveis']}")],
+            [psg.Text(f"Ataque: {dados_personagem['ataque']}")],
+            [psg.Text(f"Defesa: {dados_personagem['defesa']}")],
+            [psg.Text(f"HP Máximo: {dados_personagem['hp']}")],
+            [psg.Text(f"HP Atual: {dados_personagem['hp_atual']}")],
+            [psg.Text(f"Estamina: {dados_personagem['estamina']}")],
+            [psg.Text(f"Poções de HP: {dados_personagem['pocoes_hp']}")],
+            [psg.Text(f"Poções de Estamina: {dados_personagem['pocoes_est']}")],
+            [psg.Text("")],
+            [psg.Text("-------- PROGRESSO ----------", font=("Arial", 14, "bold"))],
+            [psg.Text(f"Cursos Conquistados: {dados_personagem['cursos_conquistados']}")],
+            [psg.Text("Empresas conquistadas:")],
+            [psg.Listbox(
+                values=[dungeon['nome'] for dungeon in dados_personagem['dungeons_conquistadas']],
+                size=(40, 5),
+                no_scrollbar=len(dados_personagem['dungeons_conquistadas']) <= 5,
+                key="EMPRESAS_CONQUISTADAS"
+            )],
+            [psg.Text("Histórico de vagas:")],
+            [psg.Listbox(
+                values=[boss['nome'] for boss in dados_personagem['bosses_derrotados']],
+                size=(40, 5),
+                no_scrollbar=len(dados_personagem['bosses_derrotados']) <= 5,
+                key="HISTORICO_DE_VAGAS"
+            )],
+            [psg.Button("Fechar", key="FECHAR")]
+        ]
+
+        janela = psg.Window("Status do Personagem", layout, modal=True)
+
+        while True:
+            evento, _ = janela.read()
+            if evento in (psg.WINDOW_CLOSED, "FECHAR"):
+                break
+
+        janela.close()
 
     def escolher_atributo(self):
         self.limpar_terminal()
@@ -58,22 +69,31 @@ class PersonagemView():
         pontos = int(input("Quantos pontos deseja aplicar? "))
         return pontos
     
-    def escolher_item(self, personagem):
-        self.limpar_terminal()
-        print(f"\n---Inventário---: Poção HP (quantidade: {personagem.pocao_hp.quant}), Poção Estamina (quantidade: {personagem.pocao_est.quant}")
-        print("1 - Poção de HP")
-        print("2 - Poção de Estamina")
-        return int(input("Digite o número do item: "))
+    def escolher_item(self, itens_personagem):
+        layout = [
+            [psg.Text("--- Inventário ---", font=("Arial", 14, "bold"))],
+            [psg.Text(f"Poção HP (quantidade: {itens_personagem['pocoes_hp']})")],
+            [psg.Text(f"Poção Estamina (quantidade: {itens_personagem['pocoes_est']})")],
+            [psg.Button("Poção de HP", key="HP")],
+            [psg.Button("Poção de Estamina", key="EST")],
+            [psg.Button("Cancelar", key="CANCELAR")]
+        ]
 
-    def escolher_habilidade(self):
-        self.limpar_terminal()
-        print("Escolha a habilidade:")
-        print("1 - hab1")
-        print("2 - hab2")
-        print("3 - hab3")
-        #Colocar logica para que as habilidades mostradas sejam somente aquelas que a classe tem, tipo, trainee só tem
-        # a primeira habilidade, enquanto o estagiario tem a primeira e a segunda, e o CLT tem a primeira, segunda e a terceira.
-        return int(input("Digite o número da habilidade: "))
+        janela = psg.Window("Usar Item", layout, modal=True)
+
+        evento = janela.read()
+
+        if evento in (psg.WINDOW_CLOSED, "CANCELAR"):
+            janela.close()
+            return None
+            
+        if evento == "HP":
+            janela.close()
+            return 1
+            
+        if evento == "EST":
+            janela.close()
+            return 2
 
     def mostrar_habilidades(self, habilidades_por_classe):
         self.limpar_terminal()
