@@ -263,20 +263,17 @@ class SistemaControllerr:
             self.__sistemaView.mostrar_mensagem(str(e))
 
     def menu_usuario(self):
-        self.limpar_terminal()
         while True:
             try:
-                self.limpar_terminal()
-                self.__sistemaView.menu_inicial()
-                opcao = self.__sistemaView.pegar_opcao()
+                event = self.__sistemaView.menu_inicial()
 
-                if opcao == '1':
+                if event == '1':
                     self.menu_jogador()
-                elif opcao == '2':
+                elif event == '2':
                     self.menu_dungeons_empresa()
-                elif opcao == '3':
+                elif event == '3':
                     self.menu_ranking()
-                elif opcao == '0':
+                elif event == '0':
                     self.salvar_personagens()
                     self.dungeonController.salvar_dungeons()
                     self.__sistemaView.mostrar_mensagem("Saindo do sistema...")
@@ -291,20 +288,18 @@ class SistemaControllerr:
                 self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
 
     def menu_jogador(self):
-        self.limpar_terminal()
         while True:
             try:
-                self.__sistemaView.menu_jogador()
-                opcao = self.__sistemaView.pegar_opcao()
+                evento = self.__sistemaView.menu_jogador()
 
-                if opcao == '1':
+                if evento == "1":
                     self.cadastrar_personagem()
-                elif opcao == '2':
+                elif evento == "2":
                     personagem = self.selecionar_personagem()
                     if personagem:
                         self.mostrar_status(personagem)
                         self.menu_principal_personagem(personagem)
-                elif opcao == '0':
+                elif evento == '0':
                     self.salvar_personagens()
                     self.__dungeonController.salvar_dungeons()
                     self.__sistemaView.mostrar_mensagem("Voltando ao menu inicial...")

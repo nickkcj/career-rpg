@@ -1,21 +1,46 @@
 import os
 import time
+import PySimpleGUI as sg
 class SistemaView:
+    def __init__(self):
+        self.window = None
+
     def limpar_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
 
+    def open(self):
+        button, values = self.window.Read()
+        return button, values
+    
+    def close(self):
+        self.window.Close()
+
     def menu_inicial(self):
-        self.limpar_terminal()
-        print("##########################################")
-        print("Bem vindo ao RPG do Mercado de Trabalho!!")
-        print("##########################################")
-        print("")
-        print("Você quer ser um personagem, uma empresa, ou só quer ver o Ranking?")
-        print("1 - Personagem")
-        print("2 - Empresa")
-        print("3 - Ranking")
-        print("0 - Nah, sair")
-        print("")
+        sg.theme("DarkGreen5")  
+
+        layout = [
+            [sg.Text("Bem-vindo ao RPG do Mercado de Trabalho!!", 
+                    justification='center', 
+                    font=("Georgia", 36))],
+            [sg.Image(filename="assets/images/background.jpg", size=(1000, 500), pad=(0, 20))],  # Aumentei o espaçamento entre o título e a imagem
+            [sg.Button("Gerenciar Personagens", key="1", size=(15, 2), font=("Segoe UI", 16),pad=(2,20)),  
+            sg.Button("Gerenciar\nDungeons", key="2", size=(15, 2), font=("Segoe UI", 16),pad=(2,20)), 
+            sg.Button("Ver o Ranking", key="3", size=(15, 2), font=("Segoe UI", 16), pad=(2,20))],
+            [sg.Button("Sair", key="0", size=(8, 1), font=("Segoe UI", 16))]  # Aumentei o espaçamento do botão "Sair"
+        ] 
+
+        self.window = sg.Window("Menu Inicial", layout, size=(1000, 800), element_justification='center', finalize=True, resizable=True)
+        self.window.maximize()
+        while True:
+            event, _ = self.open()
+            self.window.maximize()
+
+            if event in ("0", sg.WINDOW_CLOSED):
+                exit()
+            
+            return event
+
+            
 
     def menu_principal_empresa(self):
         self.limpar_terminal()
@@ -39,12 +64,33 @@ class SistemaView:
         print("0. Voltar")
 
     def menu_jogador(self):
-        self.limpar_terminal()
-        print("--------- MENU JOGADOR ---------")
-        print("Olá Jogador, o que você quer fazer?")
-        print("1 - Cadastrar Personagem")
-        print("2 - Selecionar Personagem")
-        print("0 - Sair")
+        layout = [
+            [sg.Image("assets/images/personagem.jpg", size=(700, 450), pad=(0,30))],
+            [sg.Text("--------- MENU JOGADOR ---------", font=("Helvetica", 16), justification="center")],
+            [sg.Text("Olá Jogador, o que você quer fazer?", font=("Helvetica", 23), justification="center", pad=(0,10))],
+            [sg.Button("Cadastrar Personagem", key="1", size=(50, 2), font=("Helvetica", 15), pad=(0,4))],
+            [sg.Button("Selecionar Personagem", key="2", size=(50, 2), font=("Helvetica", 15), pad=(0,4))],
+            [sg.Button("Sair", key="0", size=(50, 2), font=("Helvetica", 15), pad=(0,4))]
+        ]
+
+        
+        self.window = sg.Window(
+            "Menu Jogador", layout, element_justification="center", size=(1000, 800), finalize=True
+        )
+        
+        self.window.maximize()
+
+        while True:
+            event, _ = self.window.read()
+
+            if event in (sg.WINDOW_CLOSED, "0"):
+                sg.popup("Fechando o jogo...")
+                break
+
+            
+            else:
+                return event
+                
 
     def menu_principal_personagem(self, nome_personagem):
         self.limpar_terminal()
@@ -75,17 +121,86 @@ class SistemaView:
         print("0 - Voltar")
 
     def mostrar_personagens(self, personagens):
-        self.limpar_terminal()
         if not personagens:
-            print("##############################")
-            print(" Nenhum personagem cadastrado!")
-            print("##############################")
-            time.sleep(2)
+            sg.popup("Nenhum personagem cadastrado!", title="Aviso")
             return
-        print("--------- PERSONAGENS CADASTRADOS ---------")
-        print("Selecione um personagem:")
-        for idx, personagem in enumerate(personagens, start=1):
-            print(f"{idx} - {personagem.nome} - Nível: {personagem.nivel} - Classe: {personagem.classe_personagem.nome_classe}")
+
+        banner_path = "assets/images/banner1.png"  
+
+        layout = [
+        [
+            sg.Column(
+                [[sg.Image(banner_path, size=(157, 800))]],  # Banner esquerdo
+                pad=(0, 30),
+                element_justification="center",
+                vertical_alignment="center",
+                size=(157, 800),
+            ),
+            sg.Column(
+                [
+                    [sg.Text("--------- PERSONAGENS CADASTRADOS ---------", font=("Helvetica", 20), justification="center", pad=(0, 20))],
+                    [sg.Text("Selecione um personagem:", font=("Helvetica", 14), justification="left", pad=(0, 10))],
+                    [
+                        sg.Listbox(
+                            values=[
+                                f"{idx} - {personagem.nome} - Nível: {personagem.nivel} - Classe: {personagem.classe_personagem.nome_classe}"
+                                for idx, personagem in enumerate(personagens, start=1)
+                            ],
+                            size=(50, 20),
+                            key="personagem_selecionado",
+                            font=("Helvetica", 14),
+                            enable_events=True,
+                            select_mode=sg.LISTBOX_SELECT_MODE_SINGLE,
+                        )
+                    ],
+                    [
+                        sg.Button("Confirmar", size=(15, 1), font=("Helvetica", 14)),
+                        sg.Button("Cancelar", size=(15, 1), font=("Helvetica", 14)),
+                    ],
+                ],
+                element_justification="center",
+                vertical_alignment="center",
+                pad=(20, 0),
+            ),
+            sg.Column(
+                [[sg.Image(banner_path, size=(157, 800))]],  # Banner direito
+                pad=(0, 30),
+                element_justification="center",
+                vertical_alignment="center",
+                size=(157, 800),
+            ),
+        ]
+    ]
+
+        window = sg.Window(
+            "Personagens Cadastrados",
+            layout,
+            element_justification="center",
+            size=(1200, 800),
+            finalize=True,
+            resizable=True,
+        )
+
+
+        while True:
+            event, values = self.window.read()
+
+            if event in (sg.WINDOW_CLOSED, "Cancelar"):
+                sg.popup("Operação cancelada!", title="Aviso")
+                self.window.close()
+                return None
+
+            if event == "Confirmar":
+                personagem_selecionado = values["personagem_selecionado"]
+
+                if not personagem_selecionado:
+                    sg.popup("Por favor, selecione um personagem!", title="Erro")
+                else:
+                    idx_selecionado = int(personagem_selecionado[0].split(" - ")[0]) - 1
+                    self.window.close()
+                    return personagens[idx_selecionado]
+
+
 
     def pegar_personagem_selecionado(self):
         return input("Digite o número do personagem que deseja selecionar: ").strip()
@@ -94,43 +209,55 @@ class SistemaView:
         return input("Escolha uma opção: ").strip()
 
     def pega_dados_personagem(self):
-        self.limpar_terminal()
-        print("----------CADASTRO PERSONAGEM---------")
-        
-        while True:
-            nome = input("Nome: ").strip()
-            if nome:
-                break
-            print("Nome inválido! Por favor, insira um nome válido.")
+        layout = [
+            [sg.Text("---------- CADASTRO DE PERSONAGEM ---------", font=("Helvetica", 20), justification="center", pad=(0, 20))],
+            [sg.Text("Nome:", font=("Helvetica", 14), justification="left", pad=(0, 10))],
+            [sg.InputText(key="nome", size=(30, 1), font=("Helvetica", 14))],
+            [sg.Text("Escolha uma classe:", font=("Helvetica", 14), justification="left", pad=(0, 10))],
+            [sg.Combo(
+                ["CLT (Bom no early game)", "Estagiário (Médio no early, bom no late)", "Trainee (Fraco no early, muito forte no late)"],
+                key="classe", 
+                readonly=True, 
+                size=(40, 1),
+                font=("Helvetica", 14)
+            )],
+            [sg.Button("Confirmar", size=(15, 1), font=("Helvetica", 14)), sg.Button("Cancelar", size=(15, 1), font=("Helvetica", 14))]
+        ]
+
+        self.window = sg.Window(
+            "Cadastro de Personagem", 
+            layout, 
+            element_justification="center", 
+            size=(600, 400), 
+            finalize=True
+        )
 
         while True:
-            try:
-                print("-------- CLASSES ----------")
-                print("Escolha uma classe:")
-                print("1 - CLT (Bom no early game)")
-                print("2 - Estagiário (Médio no early, bom no late)")
-                print("3 - Trainee (Fraco no early, muito forte no late)")
+            event, values = self.window.read()
 
-                opcao = int(input("Digite o número da classe: "))
-                if opcao == 1:
-                    classe = "CLT"
-                elif opcao == 2:
-                    classe = "Estagiario"
-                elif opcao == 3:
-                    classe = "Trainee"
+            if event in (sg.WINDOW_CLOSED, "Cancelar"):
+                sg.popup("Cadastro cancelado!")
+                self.window.close()
+                return None
+
+            if event == "Confirmar":
+                nome = values["nome"].strip()
+                classe = values["classe"]
+
+                if not nome:
+                    sg.popup("Por favor, insira um nome válido!", title="Erro")
+                elif not classe:
+                    sg.popup("Por favor, escolha uma classe!", title="Erro")
                 else:
-                    print("Opção inválida! Escolha entre 1, 2, ou 3.")
-                    continue
-                break
-            except ValueError:
-                print("Entrada inválida! Digite um número para selecionar a classe.")
-
-        return {
-            "nome": nome,
-            "classe": classe,
-            "nivel": 1,
-            "experiencia_total": 0
-        }
+                    classe_nome = classe.split(" ")[0]
+                    sg.popup("Personagem cadastrado com sucesso!")
+                    self.window.close()
+                    return {
+                        "nome": nome,
+                        "classe": classe_nome,
+                        "nivel": 1,
+                        "experiencia_total": 0
+                    }
 
     def mostrar_opcoes_personagem(self):
         print("\n--------- MEU PERSONAGEM ---------")
