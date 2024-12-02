@@ -306,13 +306,20 @@ class PersonagemController():
     def upar_atributos(self, personagem: Personagem):
         try:
             if personagem.pontos_disponiveis > 0:
-                atributo_escolhido = self.__personagemView.escolher_atributo()
-                pontos = self.__personagemView.pega_quantidade_pontos()
+                atributo_escolhido, pontos = self.__personagemView.escolher_atributo_e_quantidade()
+
+                if atributo_escolhido is None or pontos is None:
+                    self.__personagemView.mostrar_mensagem("Ação cancelada.")
+                    return
+
                 if pontos <= personagem.pontos_disponiveis:
                     if atributo_escolhido in personagem.classe_personagem.atributos:
                         personagem.classe_personagem.atributos[atributo_escolhido] += pontos
                         personagem.pontos_disponiveis -= pontos
-                        self.__personagemView.mostrar_mensagem(f"Atributo {atributo_escolhido} aumentado em {pontos} pontos!")
+
+                        self.__personagemView.mostrar_mensagem(
+                            f"Atributo {atributo_escolhido} aumentado em {pontos} pontos!"
+                        )
                     else:
                         raise CadastroInvalidoException(entidade="Personagem", campo=atributo_escolhido)
                 else:
@@ -321,6 +328,10 @@ class PersonagemController():
                 self.__personagemView.mostrar_mensagem("Você não tem pontos disponíveis para distribuir.")
         except CadastroInvalidoException as e:
             self.__personagemView.mostrar_mensagem(str(e))
+        except OperacaoNaoPermitidaException as e:
+            self.__personagemView.mostrar_mensagem(str(e))
+        except ValueError:
+            self.__personagemView.mostrar_mensagem("Valor inválido para pontos. Tente novamente.")
 
     def usar_item(self, personagem: Personagem):
         try:
