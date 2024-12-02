@@ -52,22 +52,58 @@ class PersonagemView():
 
         janela.close()
 
-    def escolher_atributo(self):
-        self.limpar_terminal()
-        print("-------- UPAR ATRIBUTOS ----------")
-        print("Escolha o atributo para aumentar:")
-        print("1 - Ataque")
-        print("2 - Defesa")
-        print("3 - HP")
-        print("4 - Estamina")
-        opcao = int(input("Digite o número do atributo: "))
-        atributos = {1: "ataque", 2: "defesa", 3: "hp", 4: "estamina"}
-        return atributos.get(opcao, None)
-    
-    def pega_quantidade_pontos(self):
-        print("-------- UPAR ATRIBUTOS ----------")
-        pontos = int(input("Quantos pontos deseja aplicar? "))
-        return pontos
+    def escolher_atributo_e_quantidade(self):
+        layout_atributos = [
+            [psg.Text("-------- UPAR ATRIBUTOS ----------")],
+            [psg.Text("Escolha um atributo para aumentar:")],
+            [psg.Button("Ataque", key="ataque")],
+            [psg.Button("Defesa", key="defesa")],
+            [psg.Button("HP", key="hp")],
+            [psg.Button("Estamina", key="estamina")],
+            [psg.Button("Cancelar", key="CANCELAR")]
+        ]
+
+        janela_atributos = psg.Window("Upar Atributos", layout_atributos, modal=True)
+
+        while True:
+            evento, _ = janela_atributos.read()
+
+            if evento in (psg.WINDOW_CLOSED, "CANCELAR"):
+                janela_atributos.close()
+                return None, None
+
+            if evento in ["ataque", "defesa", "hp", "estamina"]:
+                atributo_escolhido = evento
+                janela_atributos.close()
+                break
+
+        layout_pontos = [
+            [psg.Text("-------- UPAR ATRIBUTOS ----------")],
+            [psg.Text(f"Você escolheu: {atributo_escolhido}")],
+            [psg.Text("Quantos pontos deseja aplicar?")],
+            [psg.InputText(key="quantidade", do_not_clear=False)],
+            [psg.Button("Confirmar", key="CONFIRMAR"), psg.Button("Cancelar", key="CANCELAR")]
+        ]
+
+        janela_pontos = psg.Window("Definir Pontos", layout_pontos, modal=True)
+
+        while True:
+            evento, valores = janela_pontos.read()
+
+            if evento in (psg.WINDOW_CLOSED, "CANCELAR"):
+                janela_pontos.close()
+                return None, None
+
+            if evento == "CONFIRMAR":
+                try:
+                    pontos = int(valores["quantidade"])
+                    if pontos > 0:
+                        janela_pontos.close()
+                        return atributo_escolhido, pontos
+                    else:
+                        psg.popup_error("Por favor, insira um número maior que 0.")
+                except ValueError:
+                    psg.popup_error("Por favor, insira um número válido.")
     
     def escolher_item(self, itens_personagem):
         layout = [
@@ -81,7 +117,7 @@ class PersonagemView():
 
         janela = psg.Window("Usar Item", layout, modal=True)
 
-        evento = janela.read()
+        evento, _ = janela.read()
 
         if evento in (psg.WINDOW_CLOSED, "CANCELAR"):
             janela.close()
@@ -97,20 +133,40 @@ class PersonagemView():
 
     def mostrar_habilidades(self, habilidades_por_classe):
         self.limpar_terminal()
-        print("--------- HABILIDADES DO PERSONAGEM ---------")
 
+        texto_habilidades = "--------- HABILIDADES DO PERSONAGEM ---------\n"
         for classe, habilidades in habilidades_por_classe.items():
-            print(f"\n{classe}:")
+            texto_habilidades += f"\n{classe}:\n"
             for habilidade in habilidades:
-                print(f" - {habilidade['nome']} - {habilidade['efeito']} ({habilidade['tipo']})")
-        
-        input("\nPressione Enter para voltar ao menu.")
+                texto_habilidades += f" - {habilidade['nome']} - {habilidade['efeito']} ({habilidade['tipo']})\n"
+
+        layout = [
+            [psg.Text(texto_habilidades, font=("Arial", 12), size=(50, 20))],
+            [psg.Button("Voltar", key="VOLTAR")]
+        ]
+
+        janela = psg.Window("Habilidades do Personagem", layout, modal=True)
+
+        while True:
+            evento, _ = janela.read()
+
+            if evento in (psg.WINDOW_CLOSED, "VOLTAR"):
+                janela.close()
+                break
 
     def mostrar_mensagem(self, msg):
-        self.limpar_terminal()
-        print("****************************************")
-        print(msg)
-        print("****************************************")
-        time.sleep(1)
+        layout = [
+            [psg.Text("**************************************************", text_color="white", background_color="blue", font=("Helvetica", 12), justification="center")],
+            [psg.Text(msg, text_color="yellow", background_color="blue", font=("Helvetica", 14, "bold"), justification="center")],
+            [psg.Text("**************************************************", text_color="white", background_color="blue", font=("Helvetica", 12), justification="center")],
+            [psg.Button("OK", key="OK", size=(10, 1), button_color=("white", "green"))]
+        ]
 
-        
+        janela = psg.Window("Mensagem", layout, modal=True, background_color="blue", element_justification="center")
+
+        while True:
+            evento, _ = janela.read()
+            if evento in (psg.WINDOW_CLOSED, "OK"):
+                break
+
+        janela.close()
