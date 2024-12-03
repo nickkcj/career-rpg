@@ -355,8 +355,8 @@
             "nivel_requerido": 2,
             "atributos": {
                 "ataque": 8.0,
-                "defesa": 11.0,
-                "hp": 0,
+                "defesa": 6.0,
+                "hp": 40.0,
                 "estamina": 20.0
             }
         }

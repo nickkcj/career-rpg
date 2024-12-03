@@ -96,11 +96,11 @@
             "CLT"
         ],
         "habilidades": [],
-        "pontos_disponiveis": 85,
+        "pontos_disponiveis": 75,
         "pocoes_hp": 0,
         "pocoes_est": 2,
         "atributos": {
-            "ataque": 41,
+            "ataque": 51,
             "defesa": 38.5,
             "hp": 200,
             "estamina": 55

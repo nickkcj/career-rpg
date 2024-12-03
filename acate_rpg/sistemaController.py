@@ -244,7 +244,12 @@ class SistemaControllerr:
     def selecionar_personagem(self):
         try:
             personagens = self.__personagemController.personagens
-            self.__sistemaView.mostrar_personagens(personagens)
+            dados_personagem = {
+                "nome": personagem.nome,
+                "classe": personagem.classe,
+                "nivel": personagem.nivel,
+            }
+            self.__sistemaView.mostrar_personagens(dados_personagem)
 
             escolha = self.__sistemaView.pegar_personagem_selecionado()
             if escolha.isdigit() and 1 <= int(escolha) <= len(personagens):
@@ -298,7 +303,7 @@ class SistemaControllerr:
                 opcao = self.__sistemaView.pegar_opcao()
 
                 if opcao == '1':
-                    self.cadastrar_personagem()
+                    self.__personagemController.incluir_personagem()
                 elif opcao == '2':
                     personagem = self.selecionar_personagem()
                     if personagem:

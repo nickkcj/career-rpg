@@ -74,9 +74,9 @@ class SistemaView:
         print("3 - Ranking por Cursos Concluídos")
         print("0 - Voltar")
 
-    def mostrar_personagens(self, personagens):
+    def mostrar_personagens(self, dados_personagem):
         self.limpar_terminal()
-        if not personagens:
+        if not dados_personagem:
             print("##############################")
             print(" Nenhum personagem cadastrado!")
             print("##############################")
@@ -84,8 +84,8 @@ class SistemaView:
             return
         print("--------- PERSONAGENS CADASTRADOS ---------")
         print("Selecione um personagem:")
-        for idx, personagem in enumerate(personagens, start=1):
-            print(f"{idx} - {personagem.nome} - Nível: {personagem.nivel} - Classe: {personagem.classe_personagem.nome_classe}")
+        for idx, dados_personagem in enumerate(dados_personagem, start=1):
+            print(f"{idx} - {dados_personagem["nome"]} - Nível: {dados_personagem["nivel"]} - Classe: {dados_personagem["classe"]}")
 
     def pegar_personagem_selecionado(self):
         return input("Digite o número do personagem que deseja selecionar: ").strip()

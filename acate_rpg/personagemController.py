@@ -1,6 +1,7 @@
 import time
 from personagemView import PersonagemView
 from personagem import Personagem
+from personagemDAO import PersonagemDAO
 from classePersonagemController import ClassePersonagemController
 from exceptions import CadastroInvalidoException, ItemIndisponivelException, OperacaoNaoPermitidaException, HpJahCheioException
 from batalhaView import BatalhaView
@@ -9,6 +10,7 @@ from batalhaView import BatalhaView
 class PersonagemController():
     def __init__(self):
         self.__personagens = []
+        self.__personagem_dao = PersonagemDAO()
         self.__personagemView = PersonagemView()
         self.__batalhaView = BatalhaView()
         self.__classeController = ClassePersonagemController()
@@ -93,11 +95,48 @@ class PersonagemController():
 
 
     def pega_personagem_por_nome(self, nome: str):
-        personagem = next((p for p in self.__personagens if p.nome == nome), None)
+        personagem = next((p for p in self.__personagem_dao.get_all() if p.nome == nome), None)
         if personagem is None:
             raise CadastroInvalidoException(f"Personagem '{nome}' não encontrado.")
         return personagem
     
+    def incluir_personagem(self):
+        try:
+            dados_personagem = self.__personagemView.pega_dados_personagem()
+            if not dados_personagem['classe']:
+                raise CadastroInvalidoException(entidade="Personagem", campo="classe")
+
+            for personagem_existente in self.__personagens:
+                if personagem_existente.nome == dados_personagem["nome"]:
+                    raise CadastroInvalidoException(entidade="Personagem", campo="nome")
+
+            personagem = self.criar_personagem(
+                nome=dados_personagem["nome"],
+                nivel=dados_personagem.get("nivel", 1),
+                experiencia_total=dados_personagem.get("experiencia_total", 0),
+                pontos_disponiveis=dados_personagem.get("pontos_disponiveis", 10),
+                nome_classe=dados_personagem["classe"],
+                dungeons_conquistadas=dados_personagem.get("dungeons_conquistadas", []),
+                bosses_derrotados=dados_personagem.get("bosses_derrotados", []),
+                cursos_conquistados=dados_personagem.get("cursos_conquistados", 0)
+            )
+
+            personagem.habilidades = self.habilidades_por_classe.get(dados_personagem["classe"], [])
+            personagem.classes_historico = [dados_personagem["classe"]]
+
+            self.__personagem_dao.add(personagem)
+            
+            self.__personagemView.mostrar_mensagem(
+                f"Personagem {personagem.nome} da classe {personagem.classe_personagem.nome_classe} criado com sucesso! "
+                f"Nível: {personagem.nivel}, Experiência: {personagem.experiencia_total}"
+            )
+        
+        except CadastroInvalidoException as e:
+            self.__personagemView.mostrar_mensagem(str(e))
+            time.sleep(2)
+        except Exception as e:
+            self.__personagemView.mostrar_mensagem(f"Erro inesperado: {str(e)}")
+
     def criar_personagem(self, nome, nivel=1, experiencia_total=0, pontos_disponiveis=0, nome_classe=None, dungeons_conquistadas=None, bosses_derrotados=None, cursos_conquistados=0):
         try:
             if dungeons_conquistadas is None:
@@ -127,6 +166,12 @@ class PersonagemController():
 
         except AttributeError as e:
             raise OperacaoNaoPermitidaException("Erro ao criar personagem") from e
+
+    def lista_personagens(self):
+        dados_personagens = []
+        for personagem in self.__personagem_dao.get_all():
+            dados_personagens.append({"nome": personagem.nome, "classe": personagem.classe, "nivel": personagem.nivel})
+        self.__personagemView.mostrar_personagens(dados_personagens)
 
     def mostrar_habilidades(self, personagem: Personagem):
         try:

@@ -6,6 +6,66 @@ class PersonagemView():
     def limpar_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
 
+    def pega_dados_personagem(self):
+        while True:
+            layout_nome = [
+                [psg.Text("---------- CADASTRO PERSONAGEM ---------", font=("Helvetica", 16))],
+                [psg.Text("Digite o nome do personagem:", font=("Helvetica", 12))],
+                [psg.InputText(key="nome")],
+                [psg.Button("Confirmar", key="CONFIRMAR"), psg.Button("Cancelar", key="CANCELAR")]
+            ]
+
+            janela_nome = psg.Window("Cadastro de Personagem - Nome", layout_nome, modal=True)
+            evento, valores = janela_nome.read()
+            janela_nome.close()
+
+            if evento == "CANCELAR" or evento == psg.WINDOW_CLOSED:
+                return None  # Cancela o cadastro
+            nome = valores.get("nome", "").strip()
+            if nome:
+                break
+            else:
+                psg.popup_error("Nome inválido! Por favor, insira um nome válido.", title="Erro")
+
+        while True:
+            # Layout da segunda janela para a escolha de classe
+            layout_classe = [
+                [psg.Text("---------- ESCOLHA DE CLASSE ----------", font=("Helvetica", 16))],
+                [psg.Text("Escolha uma classe para o personagem:", font=("Helvetica", 12))],
+                [psg.Button("CLT (Bom no early game)", key="CLT")],
+                [psg.Button("Estagiário (Médio no early, bom no late)", key="Estagiario")],
+                [psg.Button("Trainee (Fraco no early, muito forte no late)", key="Trainee")],
+                [psg.Button("Cancelar", key="CANCELAR")]
+            ]
+
+            janela_classe = psg.Window("Cadastro de Personagem - Classe", layout_classe, modal=True)
+            evento, _ = janela_classe.read()
+            janela_classe.close()
+
+            if evento == "CANCELAR" or evento == psg.WINDOW_CLOSED:
+                return None  # Cancela o cadastro
+            if evento in ["CLT", "Estagiario", "Trainee"]:
+                classe = evento
+                break
+            else:
+                psg.popup_error("Opção inválida! Escolha entre as opções disponíveis.", title="Erro")
+
+        return {
+            "nome": nome,
+            "classe": classe,
+            "nivel": 1,
+            "experiencia_total": 0
+        }
+
+    def mostrar_personagens(self, dados_personagem):
+        string_todos_personagens = ""
+        for dado in dados_personagem:
+            string_todos_personagens = string_todos_personagens + "NOME: " + dado["nome"] + ' - '
+            string_todos_personagens = string_todos_personagens + "CLASSE: " + str(dado["telefone"]) + ' - '
+            string_todos_personagens = string_todos_personagens + "NÍVEL: " + str(dado["cpf"]) + '\n\n'
+
+        psg.Popup('-------- LISTA DE PERSONAGENS ----------', string_todos_personagens)
+
     def mostrar_status(self, dados_personagem):
         psg.ChangeLookAndFeel('DarkGreen4')
         layout = [
@@ -154,6 +214,8 @@ class PersonagemView():
                 janela.close()
                 break
 
+    
+
     def mostrar_mensagem(self, msg):
         layout = [
             [psg.Text("**************************************************", text_color="white", background_color="blue", font=("Helvetica", 12), justification="center")],
@@ -170,3 +232,5 @@ class PersonagemView():
                 break
 
         janela.close()
+
+    
