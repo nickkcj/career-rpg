@@ -1,6 +1,7 @@
 import time
 from personagemView import PersonagemView
 from personagem import Personagem
+from personagemDAO import PersonagemDAO
 from classePersonagemController import ClassePersonagemController
 from exceptions import CadastroInvalidoException, ItemIndisponivelException, OperacaoNaoPermitidaException, HpJahCheioException
 from batalhaView import BatalhaView
@@ -9,6 +10,8 @@ from batalhaView import BatalhaView
 class PersonagemController():
     def __init__(self):
         self.__personagens = []
+        self.__personagem_dao = PersonagemDAO()
+        self.__personagensDAO = self.__personagem_dao.get_all()
         self.__personagemView = PersonagemView()
         self.__batalhaView = BatalhaView()
         self.__classeController = ClassePersonagemController()
@@ -35,6 +38,10 @@ class PersonagemController():
     @property
     def personagens(self):
         return self.__personagens
+    
+    @property
+    def personagensDAO(self):
+        return self.__personagensDAO
 
     @property
     def habilidades_por_classe(self):
@@ -44,6 +51,116 @@ class PersonagemController():
     def niveis_para_evolucao(self):
         return self.__niveis_para_evolucao
     
+    def adicionar_personagem(self, personagem):
+        self.__personagem_dao.add(personagem)
+
+    def atualizar_personagem(self, personagem):
+        self.__personagem_dao.update(personagem)
+
+    def remover_personagem(self, nome_personagem):
+        self.__personagem_dao.remove(nome_personagem)
+
+    def pega_personagem_por_nome(self, nome: str):
+        personagem = next((p for p in self.__personagem_dao.get_all() if p.nome == nome), None)
+        if personagem is None:
+            raise CadastroInvalidoException(f"Personagem '{nome}' não encontrado.")
+        return personagem
+    
+    def incluir_personagem(self):
+        try:
+            dados_personagem = self.__personagemView.pega_dados_personagem()
+            if not dados_personagem['classe']:
+                raise CadastroInvalidoException(entidade="Personagem", campo="classe")
+
+            for personagem_existente in self.__personagens:
+                if personagem_existente.nome == dados_personagem["nome"]:
+                    raise CadastroInvalidoException(entidade="Personagem", campo="nome")
+
+            personagem = self.criar_personagem(
+                nome=dados_personagem["nome"],
+                nivel=dados_personagem.get("nivel", 1),
+                experiencia_total=dados_personagem.get("experiencia_total", 0),
+                pontos_disponiveis=dados_personagem.get("pontos_disponiveis", 10),
+                nome_classe=dados_personagem["classe"],
+                dungeons_conquistadas=dados_personagem.get("dungeons_conquistadas", []),
+                bosses_derrotados=dados_personagem.get("bosses_derrotados", []),
+                cursos_conquistados=dados_personagem.get("cursos_conquistados", 0)
+            )
+
+            personagem.habilidades = self.habilidades_por_classe.get(dados_personagem["classe"], [])
+            personagem.classes_historico = [dados_personagem["classe"]]
+
+            self.adicionar_personagem(personagem)
+            
+            self.__personagemView.mostrar_mensagem(
+                f"Personagem {personagem.nome} da classe {personagem.classe_personagem.nome_classe} criado com sucesso! "
+                f"Nível: {personagem.nivel}, Experiência: {personagem.experiencia_total}"
+            )
+        
+        except CadastroInvalidoException as e:
+            self.__personagemView.mostrar_mensagem(str(e))
+            time.sleep(2)
+        except Exception as e:
+            self.__personagemView.mostrar_mensagem(f"Erro inesperado: {str(e)}")
+
+    def criar_personagem(self, nome, nivel=1, experiencia_total=0, pontos_disponiveis=0, nome_classe=None, dungeons_conquistadas=None, bosses_derrotados=None, cursos_conquistados=0):
+        try:
+            if dungeons_conquistadas is None:
+                dungeons_conquistadas = []
+            if bosses_derrotados is None:
+                bosses_derrotados = []
+
+            if any(p.nome == nome for p in self.personagens):
+                raise CadastroInvalidoException(f"Um personagem com o nome '{nome}' já existe.")
+
+            personagem = Personagem(
+                nome=nome,
+                nivel=nivel,
+                experiencia_total=experiencia_total,
+                pontos_disponiveis=pontos_disponiveis,
+                nome_classe=nome_classe,
+                dungeons_conquistadas=dungeons_conquistadas,
+                bosses_derrotados=bosses_derrotados,
+                cursos_conquistados=cursos_conquistados
+            )
+            personagem.classes_historico = [nome_classe]
+            classe_inicial = personagem.classes_historico[0]
+            if classe_inicial in ["Estagiario", "CLT"]:
+                self.__classeController.definir_atributos_iniciais(personagem.classe_personagem)
+
+            return personagem
+
+        except AttributeError as e:
+            raise OperacaoNaoPermitidaException("Erro ao criar personagem") from e
+    
+    def selecionar_personagem(self):
+        # Exibir os personagens na tela
+        dados_personagens = [
+            f"NOME: {personagem.nome} - CLASSE: {personagem.classe_personagem.nome_classe} - NÍVEL: {personagem.nivel}"
+            for personagem in self.__personagensDAO
+        ]
+        
+        # Mostrar os personagens na View e aguardar a seleção
+        personagem_selecionado = self.__personagemView.mostrar_personagens(dados_personagens)
+
+        if personagem_selecionado is not None:
+            # Encontrar o personagem correspondente ao índice selecionado
+            idx_selecionado = dados_personagens.index(personagem_selecionado)
+            if isinstance(self.__personagensDAO, dict):
+                personagens_lista = list(self.__personagensDAO.values())
+            else:
+                personagens_lista = list(self.__personagensDAO)
+            return personagens_lista[idx_selecionado]
+
+    def mostrar_habilidades(self, personagem: Personagem):
+        try:
+            habilidades_por_classe = {
+                classe: [habilidade for habilidade in self.__habilidades_por_classe.get(classe, [])]
+                for classe in personagem.classes_historico
+            }
+            self.__personagemView.mostrar_habilidades(habilidades_por_classe)
+        except KeyError as e:
+            raise OperacaoNaoPermitidaException("Erro ao mostrar habilidades") from e
 
     def usar_habilidade(self, personagem, boss):
         classe = personagem.classe_personagem.nome_classe
@@ -83,60 +200,12 @@ class PersonagemController():
 
             else:
                 raise OperacaoNaoPermitidaException("Opção inválida, tente novamente")
-
-            self.__batalhaView.mostra_mensagem(mensagem)
             
+            self.__batalhaView.mostra_mensagem(mensagem)
+            self.atualizar_personagem(personagem)
 
         else:
             self.__batalhaView.mostra_mensagem("O personagem não possui estamina o suficiente para usar uma habilidade!")
-              
-
-
-    def pega_personagem_por_nome(self, nome: str):
-        personagem = next((p for p in self.__personagens if p.nome == nome), None)
-        if personagem is None:
-            raise CadastroInvalidoException(f"Personagem '{nome}' não encontrado.")
-        return personagem
-    
-    def criar_personagem(self, nome, nivel=1, experiencia_total=0, pontos_disponiveis=0, nome_classe=None, dungeons_conquistadas=None, bosses_derrotados=None, cursos_conquistados=0):
-        try:
-            if dungeons_conquistadas is None:
-                dungeons_conquistadas = []
-            if bosses_derrotados is None:
-                bosses_derrotados = []
-
-            if any(p.nome == nome for p in self.personagens):
-                raise CadastroInvalidoException(f"Um personagem com o nome '{nome}' já existe.")
-
-            personagem = Personagem(
-                nome=nome,
-                nivel=nivel,
-                experiencia_total=experiencia_total,
-                pontos_disponiveis=pontos_disponiveis,
-                nome_classe=nome_classe,
-                dungeons_conquistadas=dungeons_conquistadas,
-                bosses_derrotados=bosses_derrotados,
-                cursos_conquistados=cursos_conquistados
-            )
-            personagem.classes_historico = [nome_classe]
-            classe_inicial = personagem.classes_historico[0]
-            if classe_inicial in ["Estagiario", "CLT"]:
-                self.__classeController.definir_atributos_iniciais(personagem.classe_personagem)
-
-            return personagem
-
-        except AttributeError as e:
-            raise OperacaoNaoPermitidaException("Erro ao criar personagem") from e
-
-    def mostrar_habilidades(self, personagem: Personagem):
-        try:
-            habilidades_por_classe = {
-                classe: [habilidade for habilidade in self.__habilidades_por_classe.get(classe, [])]
-                for classe in personagem.classes_historico
-            }
-            self.__personagemView.mostrar_habilidades(habilidades_por_classe)
-        except KeyError as e:
-            raise OperacaoNaoPermitidaException("Erro ao mostrar habilidades") from e
 
     def calcular_nivel(self, experiencia_total):
         try:
@@ -203,18 +272,15 @@ class PersonagemController():
                 self.__personagemView.mostrar_mensagem(
                     f"{personagem.nome} upou para o nível {novo_nivel}! Pontos disponíveis: {personagem.pontos_disponiveis}"
                 )
-                time.sleep(1)
                 self.evoluir_classe(personagem)
 
             self.__personagemView.mostrar_mensagem(
                 f"{personagem.nome} ganhou {experiencia_ganha} XP! Experiência total: {personagem.experiencia_total}"
             )
-            time.sleep(1)
 
             self.__personagemView.mostrar_mensagem(
                 f"XP para próximo nível: {self.experiencia_para_proximo_nivel(personagem)}"
             )
-            time.sleep(1)
 
         except AttributeError as e:
             raise AttributeError("Erro ao acessar atributos do objeto Personagem.") from e
@@ -255,20 +321,16 @@ class PersonagemController():
                     personagem.classes_historico.append(nova_classe)
 
                     self.__personagemView.mostrar_mensagem(f"{personagem.nome} evoluiu para {nova_classe}!")
-                    time.sleep(1)
                     self.__personagemView.mostrar_mensagem(f"Novas habilidades adquiridas por {nova_classe}:")
 
                     for habilidade in novas_habilidades:
                         self.__personagemView.mostrar_mensagem(f" - {habilidade['nome']}: {habilidade['efeito']}")
-                        time.sleep(1)
                 else:
                     self.__personagemView.mostrar_mensagem(
                         f"{personagem.nome} precisa estar no nível {nivel_necessario} para evoluir para {nova_classe}."
                     )
-                    time.sleep(1)
             else:
                 self.__personagemView.mostrar_mensagem(f"{personagem.nome} já é CLT e não pode evoluir.")
-                time.sleep(1)
 
         except KeyError as e:
             raise KeyError("Erro ao acessar informações de evolução da classe.") from e

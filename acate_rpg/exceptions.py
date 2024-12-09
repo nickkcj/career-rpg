@@ -29,9 +29,10 @@ class OperacaoNaoPermitidaException(Exception):
 
 
 class CarregamentoDadosException(Exception):
-    def __init__(self, arquivo, solucao="Verifique o arquivo e tente novamente"):
-        mensagem = f"Erro ao carregar dados do arquivo '{arquivo}'."
-        super().__init__(mensagem, solucao)
+    def __init__(self, arquivo, mensagem):
+        self.arquivo = arquivo
+        self.mensagem = mensagem
+        super().__init__(f"Erro ao carregar dados do arquivo {arquivo}: {mensagem}")
         input("\nPressione Enter para voltar ao menu.")
 
 

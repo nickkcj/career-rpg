@@ -6,6 +6,90 @@ class PersonagemView():
     def limpar_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
 
+    def pega_dados_personagem(self):
+    # Layout para a janela de cadastro
+        layout = [
+            [psg.Text("---------- CADASTRO DE PERSONAGEM ----------", font=("Helvetica", 16), justification="center")],
+            [psg.Text("Digite o nome do personagem:", font=("Helvetica", 12))],
+            [psg.InputText(key="nome")],
+            [psg.Text("Escolha uma classe:", font=("Helvetica", 12))],
+            [psg.Radio("CLT (Bom no early game)", "classe", key="CLT")],
+            [psg.Radio("Estagiário (Médio no early, bom no late)", "classe", key="Estagiario")],
+            [psg.Radio("Trainee (Fraco no early, muito forte no late)", "classe", key="Trainee")],
+            [psg.Button("Confirmar", key="CONFIRMAR"), psg.Button("Cancelar", key="CANCELAR")]
+        ]
+
+        # Criação da janela
+        janela = psg.Window("Cadastro de Personagem", layout, modal=True)
+
+        while True:
+            evento, valores = janela.read()
+
+            if evento == psg.WINDOW_CLOSED or evento == "CANCELAR":
+                janela.close()
+                return None  # Cadastro cancelado
+
+            if evento == "CONFIRMAR":
+                nome = valores.get("nome", "").strip()
+                classe = None
+
+                # Determina qual classe foi escolhida
+                if valores.get("CLT"):
+                    classe = "CLT"
+                elif valores.get("Estagiario"):
+                    classe = "Estagiario"
+                elif valores.get("Trainee"):
+                    classe = "Trainee"
+
+                # Validações
+                if not nome:
+                    psg.popup_error("Nome inválido! Por favor, insira um nome válido.", title="Erro")
+                    continue
+                if not classe:
+                    psg.popup_error("Por favor, selecione uma classe para o personagem.", title="Erro")
+                    continue
+
+                # Dados validados
+                janela.close()
+                return {
+                    "nome": nome,
+                    "classe": classe,
+                    "nivel": 1,
+                    "experiencia_total": 0
+                }
+
+    def mostrar_personagens(self, dados_personagens):
+        # Layout para exibir os personagens
+        layout = [
+            [psg.Text("------- LISTA DE PERSONAGENS -------", font=("Arial", 14), justification='center')],
+            [psg.Text("Escolha um personagem para jogar:", font=("Arial", 12))],
+        ]
+
+        # Criando os botões em grupos de 3 por linha
+        botoes_por_linha = []
+        for i, personagem in enumerate(dados_personagens):
+            botoes_por_linha.append(psg.Button(personagem, key=str(i)))
+            if (i + 1) % 3 == 0 or i == len(dados_personagens) - 1:  # Quando completar 3 botões ou for o último
+                layout.append(botoes_por_linha)  # Adiciona os 3 botões como uma linha
+                botoes_por_linha = []  # Reseta a lista para o próximo grupo de botões
+
+        # Adicionando o botão de cancelar
+        layout.append([psg.Button("Cancelar")])
+
+        window = psg.Window("Lista de Personagens", layout, finalize=True)
+
+        while True:
+            event, _ = window.read()
+            
+            if event == psg.WIN_CLOSED or event == "Cancelar":
+                window.close()
+                return None  # Se o usuário cancelar ou fechar a janela
+
+            if event.isdigit():
+                # Retornar o nome do personagem selecionado
+                window.close()
+                return dados_personagens[int(event)]
+
     def mostrar_status(self, dados_personagem):
         psg.ChangeLookAndFeel('DarkGreen4')
         layout = [
@@ -108,53 +192,43 @@ class PersonagemView():
                     psg.popup_error("Por favor, insira um número válido.")
     
     def escolher_item(self, itens_personagem):
+        opcoes = []
+        if itens_personagem["pocoes_hp"] > 0:
+            opcoes.append([psg.Button("Poção de HP", key="HP")])
+        if itens_personagem["pocoes_est"] > 0:
+            opcoes.append([psg.Button("Poção de Estamina", key="EST")])
+        
         layout = [
             [psg.Text("--- Inventário ---", font=("Arial", 14, "bold"))],
-            [psg.Text(f"Poção HP (quantidade: {itens_personagem['pocoes_hp']})")],
-            [psg.Text(f"Poção Estamina (quantidade: {itens_personagem['pocoes_est']})")],
-            [psg.Button("Poção de HP", key="HP")],
-            [psg.Button("Poção de Estamina", key="EST")],
+            *opcoes,
             [psg.Button("Cancelar", key="CANCELAR")]
         ]
-
         janela = psg.Window("Usar Item", layout, modal=True)
 
         evento, _ = janela.read()
-
-        if evento in (psg.WINDOW_CLOSED, "CANCELAR"):
-            janela.close()
-            return None
-            
-        if evento == "HP":
-            janela.close()
-            return 1
-            
-        if evento == "EST":
-            janela.close()
-            return 2
+        janela.close()
+        return {"HP": 1, "EST": 2}.get(evento, None)
 
     def mostrar_habilidades(self, habilidades_por_classe):
-        self.limpar_terminal()
-
-        texto_habilidades = "--------- HABILIDADES DO PERSONAGEM ---------\n"
-        for classe, habilidades in habilidades_por_classe.items():
-            texto_habilidades += f"\n{classe}:\n"
-            for habilidade in habilidades:
-                texto_habilidades += f" - {habilidade['nome']} - {habilidade['efeito']} ({habilidade['tipo']})\n"
-
         layout = [
-            [psg.Text(texto_habilidades, font=("Arial", 12), size=(50, 20))],
-            [psg.Button("Voltar", key="VOLTAR")]
+            [psg.Text("--------- HABILIDADES DO PERSONAGEM ---------", font=("Arial", 14, "bold"))]
         ]
 
-        janela = psg.Window("Habilidades do Personagem", layout, modal=True)
+        for classe, habilidades in habilidades_por_classe.items():
+            layout.append([psg.Text(f"{classe}:", font=("Arial", 12, "bold"))])
+            for habilidade in habilidades:
+                layout.append([psg.Text(f" - {habilidade['nome']}: {habilidade['efeito']} ({habilidade['tipo']})")])
 
+        layout.append([psg.Button("Voltar", key="VOLTAR")])
+
+        janela = psg.Window("Habilidades do Personagem", layout, modal=True)
         while True:
             evento, _ = janela.read()
-
             if evento in (psg.WINDOW_CLOSED, "VOLTAR"):
-                janela.close()
                 break
+        janela.close()
+
+    
 
     def mostrar_mensagem(self, msg):
         layout = [
@@ -172,3 +246,5 @@ class PersonagemView():
                 break
 
         janela.close()
+
+    

@@ -1,9 +1,10 @@
 import os
 import time
-import PySimpleGUI as sg
+import PySimpleGUI as psg
 class SistemaView:
     def __init__(self):
         self.window = None
+        psg.theme("DarkBlue3")
 
     def limpar_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -56,7 +57,7 @@ class SistemaView:
         sg.theme("DarkGreen4")
 
         layout = [
-            [sg.Text("Bem-vindo ao RPG do Mercado de Trabalho!!", 
+            [psg.Text("Bem-vindo ao RPG do Mercado de Trabalho!!", 
                     justification='center', 
                     font=("Georgia", 36), 
                     expand_x=True)],
@@ -70,7 +71,7 @@ class SistemaView:
             ], justification='center', element_justification='center', pad=(0, 20))]
         ]
 
-        self.window = sg.Window("Menu Inicial", layout, size=(1000, 800), element_justification='center', finalize=True, resizable=True)
+        self.window = psg.Window("Menu Inicial", layout, size=(1000, 800), element_justification='center', finalize=True, resizable=True)
         self.window.maximize()
 
         while True:
@@ -156,16 +157,16 @@ class SistemaView:
 
     def menu_jogador(self):
         layout = [
-            [sg.Image("assets/images/personagem.jpg", size=(700, 450), pad=(0,30))],
-            [sg.Text("--------- MENU JOGADOR ---------", font=("Helvetica", 16), justification="center")],
-            [sg.Text("Olá Jogador, o que você quer fazer?", font=("Helvetica", 23), justification="center", pad=(0,10))],
-            [sg.Button("Cadastrar Personagem", key="1", size=(50, 2), font=("Helvetica", 15), pad=(0,4))],
-            [sg.Button("Selecionar Personagem", key="2", size=(50, 2), font=("Helvetica", 15), pad=(0,4))],
-            [sg.Button("Sair", key="0", size=(50, 2), font=("Helvetica", 15), pad=(0,4))]
+            [psg.Image("assets/images/personagem.jpg", size=(700, 450), pad=(0,30))],
+            [psg.Text("--------- MENU JOGADOR ---------", font=("Helvetica", 16), justification="center")],
+            [psg.Text("Olá Jogador, o que você quer fazer?", font=("Helvetica", 23), justification="center", pad=(0,10))],
+            [psg.Button("Cadastrar Personagem", key="1", size=(50, 2), font=("Helvetica", 15), pad=(0,4))],
+            [psg.Button("Selecionar Personagem", key="2", size=(50, 2), font=("Helvetica", 15), pad=(0,4))],
+            [psg.Button("Sair", key="0", size=(50, 2), font=("Helvetica", 15), pad=(0,4))]
         ]
 
         
-        self.window = sg.Window(
+        self.window = psg.Window(
             "Menu Jogador", layout, element_justification="center", size=(1000, 800), finalize=True
         )
         
@@ -270,26 +271,26 @@ class SistemaView:
 
     def mostrar_personagens(self, personagens):
         if not personagens:
-            sg.popup("Nenhum personagem cadastrado!", title="Aviso")
+            psg.popup("Nenhum personagem cadastrado!", title="Aviso")
             return
 
         banner_path = "assets/images/banner1.png"  
 
         layout = [
         [
-            sg.Column(
-                [[sg.Image(banner_path, size=(157, 800))]],  # Banner esquerdo
+            psg.Column(
+                [[psg.Image(banner_path, size=(157, 800))]],  # Banner esquerdo
                 pad=(0, 30),
                 element_justification="center",
                 vertical_alignment="center",
                 size=(157, 800),
             ),
-            sg.Column(
+            psg.Column(
                 [
-                    [sg.Text("--------- PERSONAGENS CADASTRADOS ---------", font=("Helvetica", 20), justification="center", pad=(0, 20))],
-                    [sg.Text("Selecione um personagem:", font=("Helvetica", 14), justification="left", pad=(0, 10))],
+                    [psg.Text("--------- PERSONAGENS CADASTRADOS ---------", font=("Helvetica", 20), justification="center", pad=(0, 20))],
+                    [psg.Text("Selecione um personagem:", font=("Helvetica", 14), justification="left", pad=(0, 10))],
                     [
-                        sg.Listbox(
+                        psg.Listbox(
                             values=[
                                 f"{idx} - {personagem.nome} - Nível: {personagem.nivel} - Classe: {personagem.classe_personagem.nome_classe}"
                                 for idx, personagem in enumerate(personagens, start=1)
@@ -298,20 +299,20 @@ class SistemaView:
                             key="personagem_selecionado",
                             font=("Helvetica", 14),
                             enable_events=True,
-                            select_mode=sg.LISTBOX_SELECT_MODE_SINGLE,
+                            select_mode=psg.LISTBOX_SELECT_MODE_SINGLE,
                         )
                     ],
                     [
-                        sg.Button("Confirmar", size=(15, 1), font=("Helvetica", 14)),
-                        sg.Button("Cancelar", size=(15, 1), font=("Helvetica", 14)),
+                        psg.Button("Confirmar", size=(15, 1), font=("Helvetica", 14)),
+                        psg.Button("Cancelar", size=(15, 1), font=("Helvetica", 14)),
                     ],
                 ],
                 element_justification="center",
                 vertical_alignment="center",
                 pad=(20, 0),
             ),
-            sg.Column(
-                [[sg.Image(banner_path, size=(157, 800))]],  # Banner direito
+            psg.Column(
+                [[psg.Image(banner_path, size=(157, 800))]],  # Banner direito
                 pad=(0, 30),
                 element_justification="center",
                 vertical_alignment="center",
@@ -335,8 +336,8 @@ class SistemaView:
         while True:
             event, values = self.window.read()
 
-            if event in (sg.WINDOW_CLOSED, "Cancelar"):
-                sg.popup("Operação cancelada!", title="Aviso")
+            if event in (psg.WINDOW_CLOSED, "Cancelar"):
+                psg.popup("Operação cancelada!", title="Aviso")
                 self.window.close()
                 return None
 
@@ -345,37 +346,29 @@ class SistemaView:
                 
 
                 if not personagem_selecionado:
-                    sg.popup("Por favor, selecione um personagem!", title="Erro")
+                    psg.popup("Por favor, selecione um personagem!", title="Erro")
                 else:
                     idx_selecionado = int(personagem_selecionado[0].split(" - ")[0]) - 1
                     self.window.close()
                     return personagens[idx_selecionado]
 
-
-
-    def pegar_personagem_selecionado(self):
-        return input("Digite o número do personagem que deseja selecionar: ").strip()
-    
-    def pegar_opcao(self):
-        return input("Escolha uma opção: ").strip()
-
     def pega_dados_personagem(self):
         layout = [
-            [sg.Text("---------- CADASTRO DE PERSONAGEM ---------", font=("Helvetica", 20), justification="center", pad=(0, 20))],
-            [sg.Text("Nome:", font=("Helvetica", 14), justification="left", pad=(0, 10))],
-            [sg.InputText(key="nome", size=(30, 1), font=("Helvetica", 14))],
-            [sg.Text("Escolha uma classe:", font=("Helvetica", 14), justification="left", pad=(0, 10))],
-            [sg.Combo(
+            [psg.Text("---------- CADASTRO DE PERSONAGEM ---------", font=("Helvetica", 20), justification="center", pad=(0, 20))],
+            [psg.Text("Nome:", font=("Helvetica", 14), justification="left", pad=(0, 10))],
+            [psg.InputText(key="nome", size=(30, 1), font=("Helvetica", 14))],
+            [psg.Text("Escolha uma classe:", font=("Helvetica", 14), justification="left", pad=(0, 10))],
+            [psg.Combo(
                 ["CLT (Bom no early game)", "Estagiário (Médio no early, bom no late)", "Trainee (Fraco no early, muito forte no late)"],
                 key="classe", 
                 readonly=True, 
                 size=(40, 1),
                 font=("Helvetica", 14)
             )],
-            [sg.Button("Confirmar", size=(15, 1), font=("Helvetica", 14)), sg.Button("Cancelar", size=(15, 1), font=("Helvetica", 14))]
+            [psg.Button("Confirmar", size=(15, 1), font=("Helvetica", 14)), psg.Button("Cancelar", size=(15, 1), font=("Helvetica", 14))]
         ]
 
-        self.window = sg.Window(
+        self.window = psg.Window(
             "Cadastro de Personagem", 
             layout, 
             element_justification="center", 
@@ -386,8 +379,8 @@ class SistemaView:
         while True:
             event, values = self.window.read()
 
-            if event in (sg.WINDOW_CLOSED, "Cancelar"):
-                sg.popup("Cadastro cancelado!")
+            if event in (psg.WINDOW_CLOSED, "Cancelar"):
+                psg.popup("Cadastro cancelado!")
                 self.window.close()
                 return None
 
@@ -396,12 +389,12 @@ class SistemaView:
                 classe = values["classe"]
 
                 if not nome:
-                    sg.popup("Por favor, insira um nome válido!", title="Erro")
+                    psg.popup("Por favor, insira um nome válido!", title="Erro")
                 elif not classe:
-                    sg.popup("Por favor, escolha uma classe!", title="Erro")
+                    psg.popup("Por favor, escolha uma classe!", title="Erro")
                 else:
                     classe_nome = classe.split(" ")[0]
-                    sg.popup("Personagem cadastrado com sucesso!")
+                    psg.popup("Personagem cadastrado com sucesso!")
                     self.window.close()
                     return {
                         "nome": nome,
@@ -471,9 +464,19 @@ class SistemaView:
         window.close()
 
     def mostrar_mensagem(self, msg):
-        self.limpar_terminal()
-        print("\n")
-        print("****************************************")
-        print(msg)
-        print("****************************************")
-        time.sleep(1)
+        layout = [
+            [psg.Text("**************************************************", text_color="white", background_color="blue", font=("Helvetica", 12), justification="center")],
+            [psg.Text(msg, text_color="yellow", background_color="blue", font=("Helvetica", 14, "bold"), justification="center")],
+            [psg.Text("**************************************************", text_color="white", background_color="blue", font=("Helvetica", 12), justification="center")],
+            [psg.Button("OK", key="OK", size=(10, 1), button_color=("white", "green"))]
+        ]
+
+        janela = psg.Window("Mensagem", layout, modal=True, background_color="blue", element_justification="center")
+
+        while True:
+            evento, _ = janela.read()
+            if evento in (psg.WINDOW_CLOSED, "OK"):
+                break
+
+        janela.close()
+

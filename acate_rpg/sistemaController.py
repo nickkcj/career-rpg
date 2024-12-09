@@ -127,7 +127,6 @@ class SistemaControllerr:
                 f"Personagem {personagem.nome} da classe {personagem.classe_personagem.nome_classe} criado com sucesso! "
                 f"Nível: {personagem.nivel}, Experiência: {personagem.experiencia_total}"
             )
-            time.sleep(2)
 
             self.menu_principal_personagem(personagem)
         
@@ -241,24 +240,6 @@ class SistemaControllerr:
                 time.sleep(2)
                 exit()
 
-    def selecionar_personagem(self):
-        try:
-            personagens = self.__personagemController.personagens
-            escolha = self.__sistemaView.mostrar_personagens(personagens)
-            if escolha is not None:
-                return escolha
-            else:
-                raise OperacaoNaoPermitidaException(operacao="Selecionar personagem")
-        except OperacaoNaoPermitidaException as e:
-            self.__sistemaView.mostrar_mensagem(str(e))
-            return None
-
-    def mostrar_status(self, personagem):
-        try:
-            self.__personagemController.mostrar_status(personagem)
-        except OperacaoNaoPermitidaException as e:
-            self.__sistemaView.mostrar_mensagem(str(e))
-
     def menu_usuario(self):
         while True:
             try:
@@ -289,13 +270,11 @@ class SistemaControllerr:
         while True:
             try:
                 evento = self.__sistemaView.menu_jogador()
-                time.sleep(1)
-                if evento == "1":
-                    dados = self.cadastrar_personagem()
-                    if dados is not None:
-                        self.__sistemaView.menu_principal_personagem(dados["nome"])
-                elif evento == "2":
-                    personagem = self.selecionar_personagem()
+
+                if evento == '1':
+                    self.__personagemController.incluir_personagem()
+                elif evento == '2':
+                    personagem = self.__personagemController.selecionar_personagem()
                     if personagem:
                         self.menu_principal_personagem(personagem)
                 elif evento == '0':
@@ -315,8 +294,9 @@ class SistemaControllerr:
     def menu_principal_personagem(self, personagem):
         while True:
             try:
+                self.limpar_terminal()
                 opcao = self.__sistemaView.menu_principal_personagem(personagem.nome)
-                time.sleep(1)
+
                 if opcao == '1':
                     self.opcoes_personagem(personagem)
                 elif opcao == '2':
@@ -369,8 +349,10 @@ class SistemaControllerr:
     def menu_log(self, personagem):
         while True:
             try:
+
+                self.limpar_terminal()
                 opcao = self.__sistemaView.menu_log()
-                time.sleep(1)
+
 
                 if opcao == '1':
                     self.limpar_terminal()
@@ -401,26 +383,22 @@ class SistemaControllerr:
         while True:
             try:
                 opcao = self.__sistemaView.mostrar_opcoes_personagem()
-                time.sleep(1)
-                if opcao is not None:
-                    if opcao == '1':
-                        self.mostrar_status(personagem)
-                    elif opcao == '2':
-                        self.__personagemController.upar_atributos(personagem)
-                    elif opcao == '3':
-                        self.__personagemController.usar_item(personagem)
-                    elif opcao == '4':
-                        self.__personagemController.mostrar_habilidades(personagem)
-                    elif opcao == '5':
-                        experiencia_ganha = int(input("Digite a quantidade de experiência a ganhar: "))
-                        self.__personagemController.ganhar_experiencia(personagem, experiencia_ganha)
-                    elif opcao == '6':
-                        self.menu_principal_personagem(personagem)
-                        break
-                    elif opcao == '0':
-                        self.menu_jogador()
-                        break
-                    
+
+                if opcao == '1':
+                    self.mostrar_status(personagem)
+                elif opcao == '2':
+                    self.__personagemController.upar_atributos(personagem)
+                elif opcao == '3':
+                    self.__personagemController.usar_item(personagem)
+                elif opcao == '4':
+                    self.__personagemController.mostrar_habilidades(personagem)
+                elif opcao == '5':
+                    experiencia_ganha = int(input("Digite a quantidade de experiência a ganhar: "))
+                    self.__personagemController.ganhar_experiencia(personagem, experiencia_ganha)
+                elif opcao == '6':
+                    self.menu_principal_personagem(personagem)
+                elif opcao == '0':
+                    self.menu_jogador()
                 else:
                     break
                 
@@ -432,6 +410,12 @@ class SistemaControllerr:
                 time.sleep(2)
             except ValueError:
                 self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
+
+    def mostrar_status(self, personagem):
+        try:
+            self.__personagemController.mostrar_status(personagem)
+        except OperacaoNaoPermitidaException as e:
+            self.__sistemaView.mostrar_mensagem(str(e))
 
     def selecionar_dungeon(self):
         try:
@@ -448,7 +432,7 @@ class SistemaControllerr:
         while True:
             try:
                 opcao = self.__sistemaView.menu_empresa()
-                time.sleep(0.2)
+
                 if opcao == "1":
                     while True:  
                         try:
@@ -515,7 +499,7 @@ class SistemaControllerr:
         while True:
             try:
                 opcao = self.__sistemaView.menu_ranking()
-                
+
                 if opcao == '1':
                     self.__rankingController.exibir_ranking_nivel()
                 elif opcao == '2':
@@ -531,3 +515,4 @@ class SistemaControllerr:
                 time.sleep(2)
             except ValueError:
                 self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
+

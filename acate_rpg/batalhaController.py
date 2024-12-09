@@ -50,6 +50,8 @@ class BatalhaController():
         else:
             raise OperacaoNaoPermitidaException("Opção inválida, tente novamente.")
 
+        self.__personagemController.atualizar_personagem(personagem)
+
     def usar_item(self, personagem):
         opcao = self.__personagemController.usar_itens_batalha(personagem)
         while True:
@@ -140,3 +142,4 @@ class BatalhaController():
                 personagem.hp_atual = (personagem.classe_personagem.atributos['hp']/2)
                 time.sleep(2)
 
+        self.__personagemController.atualizar_personagem(personagem)

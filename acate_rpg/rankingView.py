@@ -1,121 +1,133 @@
-import PySimpleGUI as sg
+import os
+import time
+import PySimpleGUI as psg
 
 class RankingView:
+    def __init__(self):
+        self.window = None
 
-    def pega_nome_personagem(self):
-        layout = [
-            [sg.Text("Você deseja ver o ranking de um personagem específico?")],
-            [sg.InputText("", key="opcao", size=(30, 1))],
-            [sg.Button("Confirmar", key="confirmar", font=("Helvetica", 14))]
-        ]
-
-        window = sg.Window("Ranking Específico", layout, finalize=True)
-
-        while True:
-            event, values = window.read()
-            if event == sg.WINDOW_CLOSED:
-                window.close()
-                break
-            elif event == "confirmar":
-                nome = values["opcao"].strip()
-                window.close()
-                return nome
-
-                
+    def limpar_tela(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
 
     def exibir_ranking_nivel(self, personagens_ordenados):
         layout = [
-            [sg.Text("-------- RANKING POR NÍVEL --------", font=("Helvetica", 20), justification="center")],
-            [sg.Listbox(
-                values=[f"{i + 1}. {personagem.nome} - Nível: {personagem.nivel}" for i, personagem in enumerate(personagens_ordenados)],
-                size=(50, len(personagens_ordenados)),
+            [psg.Text("-------- RANKING POR NÍVEL --------", font=("Helvetica", 20), justification="center")],
+            [psg.Listbox(
+                values=[f"{idx+1}. {personagem.nome} - Nível: {personagem.nivel}" for idx, personagem in enumerate(personagens_ordenados)],
+                size=(50, 10),
+                key="personagem_selecionado",
                 font=("Helvetica", 14),
-                key="LISTA"
+                enable_events=True,
+                select_mode=psg.LISTBOX_SELECT_MODE_SINGLE,
             )],
-            [sg.Button("Voltar", key="voltar", font=("Helvetica", 14))]
+            [psg.Button("Ver Status", key="ver_status", font=("Helvetica", 14)), psg.Button("Voltar", key="voltar", font=("Helvetica", 14))]
         ]
 
-        window = sg.Window("Ranking por Nível", layout, finalize=True)
+        window = psg.Window("Ranking de Nível", layout, size=(600, 400), finalize=True)
 
         while True:
-            event, _ = window.read()
-            if event in (sg.WINDOW_CLOSED, "voltar"):
+            event, values = window.read()
+
+            if event in ("voltar", psg.WINDOW_CLOSED):
                 window.close()
-                break
+                return
+
+            if event == "ver_status":
+                if values["personagem_selecionado"]:
+                    idx = int(values["personagem_selecionado"][0].split(".")[0]) - 1
+                    personagem = personagens_ordenados[idx]
+                    self.exibir_status_personagem(personagem)
 
     def exibir_ranking_dungeons(self, personagens_ordenados):
         layout = [
-            [sg.Text("-------- RANKING POR DUNGEONS CONQUISTADAS --------", font=("Helvetica", 20), justification="center")],
-            [sg.Listbox(
-                values=[f"{i + 1}. {personagem.nome} - Dungeons Conquistadas: {len(personagem.dungeons_conquistadas)}" for i, personagem in enumerate(personagens_ordenados)],
-                size=(50, len(personagens_ordenados)),
+            [psg.Text("-------- RANKING POR DUNGEONS CONQUISTADAS --------", font=("Helvetica", 20), justification="center")],
+            [psg.Listbox(
+                values=[f"{idx+1}. {personagem.nome} - Dungeons: {len(personagem.dungeons_conquistadas)}" for idx, personagem in enumerate(personagens_ordenados)],
+                size=(50, 10),
+                key="personagem_selecionado",
                 font=("Helvetica", 14),
-                key="LISTA"
+                enable_events=True,
+                select_mode=psg.LISTBOX_SELECT_MODE_SINGLE,
             )],
-            [sg.Button("Voltar", key="voltar", font=("Helvetica", 14))]
+            [psg.Button("Ver Status", key="ver_status", font=("Helvetica", 14)), psg.Button("Voltar", key="voltar", font=("Helvetica", 14))]
         ]
 
-        window = sg.Window("Ranking por Dungeons", layout, finalize=True)
+        window = psg.Window("Ranking de Dungeons", layout, size=(600, 400), finalize=True)
 
         while True:
-            event, _ = window.read()
-            if event in (sg.WINDOW_CLOSED, "voltar"):
+            event, values = window.read()
+
+            if event in ("voltar", psg.WINDOW_CLOSED):
                 window.close()
-                return None
+                return
+
+            if event == "ver_status":
+                if values["personagem_selecionado"]:
+                    idx = int(values["personagem_selecionado"][0].split(".")[0]) - 1
+                    personagem = personagens_ordenados[idx]
+                    self.exibir_status_personagem(personagem)
 
     def exibir_ranking_cursos(self, personagens_ordenados):
         layout = [
-            [sg.Text("-------- RANKING POR CURSOS CONQUISTADOS --------", font=("Helvetica", 20), justification="center")],
-            [sg.Listbox(
-                values=[f"{i + 1}. {personagem.nome} - Cursos Conquistados: {personagem.cursos_conquistados}" for i, personagem in enumerate(personagens_ordenados)],
-                size=(50, len(personagens_ordenados)),
+            [psg.Text("-------- RANKING POR CURSOS CONQUISTADOS --------", font=("Helvetica", 20), justification="center")],
+            [psg.Listbox(
+                values=[f"{idx+1}. {personagem.nome} - Cursos: {personagem.cursos_conquistados}" for idx, personagem in enumerate(personagens_ordenados)],
+                size=(50, 10),
+                key="personagem_selecionado",
                 font=("Helvetica", 14),
-                key="LISTA"
+                enable_events=True,
+                select_mode=psg.LISTBOX_SELECT_MODE_SINGLE,
             )],
-            [sg.Button("Voltar", key="voltar", font=("Helvetica", 14))]
+            [psg.Button("Ver Status", key="ver_status", font=("Helvetica", 14)), psg.Button("Voltar", key="voltar", font=("Helvetica", 14))]
         ]
 
-        window = sg.Window("Ranking por Cursos", layout, finalize=True)
+        window = psg.Window("Ranking de Cursos", layout, size=(600, 400), finalize=True)
 
         while True:
-            event, _ = window.read()
-            if event in (sg.WINDOW_CLOSED, "voltar"):
+            event, values = window.read()
+
+            if event in ("voltar", psg.WINDOW_CLOSED):
                 window.close()
-                break
+                return
 
-    def exibir_dungeons_personagem(self, personagem):
+            if event == "ver_status":
+                if values["personagem_selecionado"]:
+                    idx = int(values["personagem_selecionado"][0].split(".")[0]) - 1
+                    personagem = personagens_ordenados[idx]
+                    self.exibir_status_personagem(personagem)
+
+    def exibir_status_personagem(self, personagem):
         layout = [
-            [sg.Text(f"Dungeons conquistadas por {personagem.nome}:", font=("Helvetica", 16))] if personagem.dungeons_conquistadas else
-            [sg.Text(f"{personagem.nome} não conquistou nenhuma dungeon.", font=("Helvetica", 16))],
-            [sg.Listbox(
-                values=[dungeon['nome'] for dungeon in personagem.dungeons_conquistadas],
-                size=(50, len(personagem.dungeons_conquistadas)) if personagem.dungeons_conquistadas else (50, 1),
-                font=("Helvetica", 14),
-                key="LISTA"
-            )] if personagem.dungeons_conquistadas else [sg.Text("")],
-            [sg.Button("Voltar", key="voltar", font=("Helvetica", 14))]
+            [psg.Text(f"Status de {personagem.nome}", font=("Helvetica", 18), justification="center")],
+            [psg.Text(f"Nome: {personagem.nome}", font=("Helvetica", 14))],
+            [psg.Text(f"Nível: {personagem.nivel}", font=("Helvetica", 14))],
+            [psg.Text(f"Classe: {personagem.classe_personagem.nome_classe}", font=("Helvetica", 14))],
+            [psg.Text(f"Experiência: {personagem.experiencia_total}", font=("Helvetica", 14))],
+            [psg.Text(f"HP: {personagem.classe_personagem.atributos['hp']}", font=("Helvetica", 14))],
+            [psg.Text(f"Estamina: {personagem.classe_personagem.atributos['estamina']}", font=("Helvetica", 14))],
+            [psg.Text(f"Ataque: {personagem.classe_personagem.atributos['ataque']}", font=("Helvetica", 14))],
+            [psg.Text(f"Defesa: {personagem.classe_personagem.atributos['defesa']}", font=("Helvetica", 14))],
+            [psg.Text(f"Cursos Conquistados: {personagem.cursos_conquistados}", font=("Helvetica", 14))],
+            [psg.Text("Dungeons Conquistadas:", font=("Helvetica", 14))],
+            [psg.Listbox(
+                values=[f"{dungeon['nome']}" for dungeon in personagem.dungeons_conquistadas],
+                size=(30, 10),
+                font=("Helvetica", 12),
+                select_mode=psg.LISTBOX_SELECT_MODE_SINGLE,
+            )],
+            [psg.Button("Fechar", key="fechar", font=("Helvetica", 14))]
         ]
 
-        window = sg.Window("Dungeons do Personagem", layout, finalize=True)
+        window = psg.Window(f"Status de {personagem.nome}", layout, finalize=True)
 
         while True:
             event, _ = window.read()
-            if event in (sg.WINDOW_CLOSED, "voltar"):
+
+            if event in ("fechar", psg.WINDOW_CLOSED):
                 window.close()
                 break
 
     def mostrar_mensagem(self, mensagem):
-        layout = [
-            [sg.Text("***************************", font=("Helvetica", 16), justification="center")],
-            [sg.Text(mensagem, font=("Helvetica", 14), justification="center")],
-            [sg.Text("***************************", font=("Helvetica", 16), justification="center")],
-            [sg.Button("OK", key="ok", font=("Helvetica", 14))]
-        ]
+        psg.popup(mensagem, title="Mensagem")
 
-        window = sg.Window("Mensagem", layout, finalize=True)
-
-        while True:
-            event, _ = window.read()
-            if event in (sg.WINDOW_CLOSED, "ok"):
-                window.close()
-                break
+       
