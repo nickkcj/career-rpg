@@ -1,9 +1,8 @@
 import time
 import os
-import PySimpleGUI as psg
+import PySimpleGUI as sg
 class CursoView():
     def pega_dados_curso(self):
-        psg.ChangeLookAndFeel("DarkGreen4")
         
         janela_largura = 600
         janela_altura = 400
@@ -15,70 +14,68 @@ class CursoView():
 
         # Tamanho proporcional dos widgets
         campo_largura = int(janela_largura * 0.8)
-        campo_altura = 1
         tamanho_fonte = int(16 * proporcao_texto)
 
+        # Valores para os combos
+        niveis = list(range(1, 12))  # Níveis de 1 a 11
+        dificuldades = list(range(1, 12))  # Dificuldades de 1 a 11
+        xp_ganhos = list(range(100, 1101, 100))  # XP de 100 em 100 até 1000
+
         layout = [
-            [psg.Text("Digite os dados do curso", font=("Helvetica", tamanho_fonte), justification="center", size=(40, 1))],
-            [psg.Text("Nome do curso:", size=(int(20 * proporcao_largura), 1)), psg.InputText(key="nome", size=(campo_largura, campo_altura))],
-            [psg.Text("Nível requerido:", size=(int(20 * proporcao_largura), 1)), psg.InputText(key="nivel_requerido", size=(campo_largura, campo_altura))],
-            [psg.Text("XP ganho:", size=(int(20 * proporcao_largura), 1)), psg.InputText(key="xp_ganho", size=(campo_largura, campo_altura))],
-            [psg.Text("Setor:", size=(int(20 * proporcao_largura), 1)), psg.InputCombo(["RH", "T.I", "Vendas", "Financeiro", "Marketing"], key="setor", size=(campo_largura, campo_altura), readonly=True)],
-            [psg.Text("Dificuldade:", size=(int(20 * proporcao_largura), 1)), psg.InputText(key="dificuldade", size=(campo_largura, campo_altura))],
-            [psg.Button("Confirmar", size=(int(10 * proporcao_largura), 1)), psg.Button("Cancelar", size=(int(10 * proporcao_largura), 1))]
+            [sg.Text("Digite os dados do curso", font=("Helvetica", tamanho_fonte), justification="center", size=(40, 1))],
+            [sg.Text("Nome do curso:", size=(int(20 * proporcao_largura), 1)), sg.InputText(key="nome", size=(campo_largura, 1))],
+            [sg.Text("Nível requerido:", size=(int(20 * proporcao_largura), 1)), sg.Combo(niveis, key="nivel_requerido", size=(campo_largura, 1), readonly=True)],
+            [sg.Text("XP ganho:", size=(int(20 * proporcao_largura), 1)), sg.Combo(xp_ganhos, key="xp_ganho", size=(campo_largura, 1), readonly=True)],
+            [sg.Text("Setor:", size=(int(20 * proporcao_largura), 1)), sg.Combo(["RH", "T.I", "Vendas", "Financeiro", "Marketing"], key="setor", size=(campo_largura, 1), readonly=True)],
+            [sg.Text("Dificuldade:", size=(int(20 * proporcao_largura), 1)), sg.Combo(dificuldades, key="dificuldade", size=(campo_largura, 1), readonly=True)],
+            [sg.Button("Confirmar", size=(int(10 * proporcao_largura), 1)), sg.Button("Cancelar", size=(int(10 * proporcao_largura), 1))]
         ]
 
-        # Criação da janela com o tamanho desejado
-        window = psg.Window("Cadastro de Curso", layout, modal=True, size=(janela_largura, janela_altura), resizable=True)  
-
+        window = sg.Window("Cadastro de Curso", layout, modal=True, size=(janela_largura, janela_altura//2), resizable=True)
 
         dados = {}
         while True:
             event, values = window.read()
 
-        
-            if event in (psg.WINDOW_CLOSED, "Cancelar"):
+            if event in (sg.WINDOW_CLOSED, "Cancelar"):
                 break
 
             if event == "Confirmar":
                 try:
-                    
+                    # Validação dos campos obrigatórios
                     if not values["nome"]:
-                        psg.popup_error("O nome do curso é obrigatório!")
+                        sg.popup_error("O nome do curso é obrigatório!")
                         continue
 
-                    nivel_requerido = int(values["nivel_requerido"])
-                    if nivel_requerido < 1 or nivel_requerido > 10:
-                        psg.popup_error("O nível requerido deve ser entre 1 e 10!")
+                    if not values["nivel_requerido"]:
+                        sg.popup_error("Você deve selecionar um nível requerido!")
                         continue
 
-                    xp_ganho = int(values["xp_ganho"])
-                    if xp_ganho <= 0:
-                        psg.popup_error("O XP ganho deve ser maior que 0!")
+                    if not values["xp_ganho"]:
+                        sg.popup_error("Você deve selecionar o XP ganho!")
                         continue
 
                     if not values["setor"]:
-                        psg.popup_error("Você deve selecionar um setor!")
+                        sg.popup_error("Você deve selecionar um setor!")
                         continue
 
-                    dificuldade = int(values["dificuldade"])
-                    if dificuldade < 1 or dificuldade > 10:
-                        psg.popup_error("A dificuldade deve ser entre 1 e 10!")
+                    if not values["dificuldade"]:
+                        sg.popup_error("Você deve selecionar a dificuldade!")
                         continue
 
                     
                     dados = {
                         "nome": values["nome"],
-                        "nivel_requerido": nivel_requerido,
-                        "xp_ganho": xp_ganho,
+                        "nivel_requerido": int(values["nivel_requerido"]),
+                        "xp_ganho": int(values["xp_ganho"]),
                         "setor": values["setor"],
-                        "dificuldade": dificuldade,
+                        "dificuldade": int(values["dificuldade"]),
                         "realizado": False
                     }
                     break
 
                 except ValueError:
-                    psg.popup_error("Por favor, preencha todos os campos corretamente!")
+                    sg.popup_error("Por favor, preencha todos os campos corretamente!")
                     continue
 
         window.close()
@@ -86,29 +83,89 @@ class CursoView():
 
 
 
-    def mostra_mensagem(self,mensagem):
-        print("\n")
-        print("****************************************")
-        print(mensagem)
-        print("****************************************")
-        time.sleep(1)
 
+    def mostra_mensagem(self, mensagem):
+        layout = [
+            [sg.Text('****************************************')],
+            [sg.Text(mensagem)],
+            [sg.Text('****************************************')],
+            [sg.Button('OK')]
+        ]
+        window = sg.Window('Mensagem', layout)
+        event, values = window.read()
+        window.close()
 
-    def mostra_cursos(self, cursos_dicionario):
-        os.system('cls' if os.name == 'nt' else 'clear')
-        print("\n----LISTA DE CURSOS---- \n")
+    def mostra_cursos(self, cursos_dicionario, alteracao=None):
+        cursos_info = []
         for curso in cursos_dicionario:
-            print(
-                f"Nome: {curso['nome']}, Nível Requerido: {curso['nivel_requerido']}, "
-                f"XP Ganhado: {curso['xp_ganho']}, Setor: {curso['setor']}, "
-                f"Dificuldade: {curso['dificuldade']}, Realizado: {curso['realizado']}"
+            cursos_info.append(
+                f"Nome: {curso['nome']}\n"
+                f"Nível Requerido: {curso['nivel_requerido']}\n"
+                f"XP Ganhado: {curso['xp_ganho']}\n"
+                f"Setor: {curso['setor']}\n"
+                f"Dificuldade: {curso['dificuldade']}\n"
+                f"Realizado: {curso['realizado']}\n"
+                "-----------------------------\n"
             )
-            print("\n")
+
+        # Layout da esquerda com a lista de cursos
+        cursos_layout = [
+            [sg.Text('---- LISTA DE CURSOS ----', font=("Helvetica", 20), justification='center', expand_x=True, pad=(0,25))],
+            [sg.Multiline('\n'.join(cursos_info), size=(60, 20), key='-CURSOS-', disabled=True, font=("Helvetica", 16), pad=(10, 10))],
+            [sg.Button('Fechar', size=(15, 2), pad=(10, 20))]
+        ]
+
+        # Layout da direita com a imagem ajustada
+        imagem_layout = [
+            [sg.Image(filename="assets/images/cursos.jpg", size=(800, 600), pad=(10, 200))]
+        ]
+
+        # Layout principal com os elementos lado a lado e centralizados
+        layout = [
+            [sg.Push(),
+            sg.Column(cursos_layout, element_justification='center', vertical_alignment='center'),
+            sg.VSeparator(),
+            sg.Column(imagem_layout, element_justification='center', vertical_alignment='center'),
+            sg.Push()]
+        ]
+
+        # Janela principal centralizada
+        window = sg.Window(
+            'Cursos Disponíveis',
+            layout,
+            size=(1200, 800),  # Tamanho total da tela
+            element_justification='center',
+            resizable=True,
+            finalize=True
+        )
+        window.maximize()
+        time.sleep(0.5)  # Maximiza para garantir centralização
+        if alteracao == True:
+            return
+        
+        
+        else:
+            event, values = window.read()
+            window.close()
+
+
+
+
 
 
 
     def seleciona_curso(self):
-        print("\n")
-        nome = input("Qual o nome do curso que você quer selecionar?: ")
-        return nome
+        layout = [
+            [sg.Text('Digite o nome do curso:')],
+            [sg.InputText(key='-CURSO-', size=(30, 1))],
+            [sg.Button('Selecionar'), sg.Button('Cancelar')]
+        ]
+
+        window = sg.Window('Seleção de Curso', layout)
+        event, values = window.read()
+        window.close()
+
+        if event == 'Selecionar':
+            return values['-CURSO-']
+        return None
     

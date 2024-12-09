@@ -21,9 +21,9 @@ class RankingController:
         personagens_ordenados = sorted(personagens, key=lambda p: len(p.dungeons_conquistadas), reverse=True)
         self.__ranking_view.exibir_ranking_dungeons(personagens_ordenados)
         while True:
-            print("\n")
-            nome_personagem = input("Deseja ver as dungeons de algum dos personagens? (Digite o nome do personagem ou digite 'sair'): ")
-            print("\n")
+            
+            nome_personagem = self.__ranking_view.pega_nome_personagem()
+            
             if nome_personagem.lower() == 'sair':
                 break
 

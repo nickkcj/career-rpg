@@ -48,9 +48,11 @@ class PersonagemView():
         while True:
             evento, _ = janela.read()
             if evento in (psg.WINDOW_CLOSED, "FECHAR"):
-                break
+                janela.close()
+                return
+            
 
-        janela.close()
+        
 
     def escolher_atributo_e_quantidade(self):
         layout_atributos = [

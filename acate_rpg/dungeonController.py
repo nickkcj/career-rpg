@@ -38,66 +38,53 @@ class DungeonController:
 
     def cadastrar_dungeon(self):
         dados_dungeon = self.__dungeonView.pega_dados_dungeon()
+
+        if dados_dungeon:
         
-        
-        if any(dungeon.nome == dados_dungeon["nome"] for dungeon in self.__dungeons):
-            raise CriacaoDungeonException(f"A dungeon com o nome '{dados_dungeon['nome']}' já existe. Escolha um nome diferente.")
+            if any(dungeon.nome == dados_dungeon["nome"] for dungeon in self.__dungeons):
+                raise CriacaoDungeonException(f"A dungeon com o nome '{dados_dungeon['nome']}' já existe. Escolha um nome diferente.")
             
-        if not isinstance(dados_dungeon["nivel_requerido"], int) or not (1 <= int(dados_dungeon["nivel_requerido"]) <= 100):
-            raise NivelRequeridoInvalidoError("O nível requerido deve ser um número inteiro entre 1 e 100.")
+            setores = []
+            for i in range(dados_dungeon["n_setores"]):
+                nome_setor = self.__setorView.pega_nome_setor(i + 1)
 
-        if not isinstance(int(dados_dungeon["xp_ganho"]), int) or not (1 <= int(dados_dungeon["xp_ganho"])):
-            raise XpGanhoInvalidoError("XP ganho deve ser um número inteiro.")
-        
-        if not isinstance(dados_dungeon["n_setores"], int) or not (1 <= dados_dungeon["n_setores"] <= 10):
-            raise NumeroSetoresInvalidoError("O número de setores deve ser entre 1 e 10.")
-        
-        setores = []
-        setores_permitidos = ['RH', 'T.I', 'Vendas', 'Financeiro', 'Marketing']
-        
-        for i in range(dados_dungeon["n_setores"]):
-            print("\n")
-            nome_setor = self.__setorView.pega_nome_setor(i + 1)
+                dificuldade_setor = self.__setorView.pega_dificuldade_setor()
 
-            if nome_setor not in setores_permitidos:
-                raise CriacaoSetorException(f"O setor '{nome_setor}' não é válido. Os setores permitidos são: {', '.join(setores_permitidos)}.")
+                if not isinstance(dificuldade_setor, int) or not (1 <= dificuldade_setor <= 10):
+                    raise DificuldadeInvalidaError("A dificuldade do setor deve ser um número inteiro entre 1 e 10.")
+                
+                setor = self.__setorController.criar_setor_com_boss(
+                    nome_setor, dificuldade_setor, dados_dungeon["nivel_requerido"], dados_dungeon["nome"]
+                )
+                
+                if setor:
+                    setores.append(setor)
+                else:
+                    raise CriacaoSetorException("Erro ao criar setor com boss.")
 
-            dificuldade_setor = self.__setorView.pega_dificuldade_setor()
+            dificuldade_media = round(sum(setor.dificuldade for setor in setores) / len(setores), 1)
 
-            if not isinstance(dificuldade_setor, int) or not (1 <= dificuldade_setor <= 10):
-                raise DificuldadeInvalidaError("A dificuldade do setor deve ser um número inteiro entre 1 e 10.")
-            
-            setor = self.__setorController.criar_setor_com_boss(
-                nome_setor, dificuldade_setor, dados_dungeon["nivel_requerido"], dados_dungeon["nome"]
+            nome_boss_final = self.__dungeonView.pega_nome_boss_final()
+            boss_final = self.__bossController.criar_boss_final(
+                nome_boss_final, dificuldade_media, dados_dungeon["nivel_requerido"]
             )
-            
-            if setor:
-                setores.append(setor)
-            else:
-                raise CriacaoSetorException("Erro ao criar setor com boss.")
 
-        dificuldade_media = round(sum(setor.dificuldade for setor in setores) / len(setores), 1)
+            time.sleep(0.5)
 
-        nome_boss_final = self.__dungeonView.pega_nome_boss_final()
-        boss_final = self.__bossController.criar_boss_final(
-            nome_boss_final, dificuldade_media, dados_dungeon["nivel_requerido"]
-        )
+            dungeon = Dungeon(
+                dados_dungeon["nome"], dados_dungeon["nivel_requerido"], dados_dungeon["xp_ganho"],
+                dificuldade_media, setores, boss_final
+            )
 
-        time.sleep(2)
+            self.__dungeons.append(dungeon)
+            self.salvar_dungeons()
 
-        dungeon = Dungeon(
-            dados_dungeon["nome"], dados_dungeon["nivel_requerido"], dados_dungeon["xp_ganho"],
-            dificuldade_media, setores, boss_final
-        )
+        else:
+            return
+        
 
-        self.__dungeons.append(dungeon)
-        print(f"Dungeon: {dungeon.nome}")
-        print(f"Boss final: {self.__bossController.to_dict(boss_final)}")
-        self.salvar_dungeons()
-
-        self.__dungeonView.mostra_dungeon(dungeon)
-        time.sleep(2)
-        input("\nPressione Enter para voltar ao menu.")
+        
+        
 
 
 
@@ -198,11 +185,9 @@ class DungeonController:
         if not self.__dungeons:
             self.__dungeonView.mostra_mensagem("Nenhuma dungeon cadastrada.")
             return
-
-        self.__dungeonView.mostra_mensagem("Empresas cadastradas:")
-        for dungeon in self.__dungeons:
-            self.__dungeonView.mostra_dungeon(dungeon)
-            print("\n")
+        
+        self.__dungeonView.mostra_dungeon(self.dungeons)
+            
 
 
     def selecionar_dungeon_e_setor(self, personagem):
@@ -251,33 +236,32 @@ class DungeonController:
             if not self.__dungeons:
                 raise OperacaoNaoPermitidaException("Nenhuma dungeon cadastrada.")
 
-            self.__dungeonView.mostra_dungeons_enum(self.__dungeons)
-            dungeon_num = int(input("Escolha o número da dungeon que deseja alterar: ")) - 1
+            index = self.__dungeonView.mostra_dungeons_enum(self.__dungeons)
+            dungeon_num = index
             dungeon = self.__dungeons[dungeon_num]
-            self.__dungeonView.mostra_dungeon(dungeon)
 
             self.__dungeonView.mensagem_basica("\nAtributos alteráveis: nome, nivel, xp, dificuldade, setores e boss final")
-            atributo = input("\nDigite o nome do atributo a ser alterado ou 'todos' para alterar tudo(até dificuldade): ").lower()
-            if atributo == "todos":
-                novo_nome = input("Digite o novo nome da dungeon: ")
+            atributo = self.__dungeonView.capturar_entrada("Digite o atributo que você quer alterar ou Todos")
+            if atributo.lower() == "todos":
+                novo_nome = self.__dungeonView.capturar_entrada("Digite o novo nome:")
                 if novo_nome == "":
                     raise ValueError("O nome não pode ser vazio")
 
                 dungeon.nome = novo_nome
 
-                novo_nivel = int(input("Digite o novo nível requerido: "))
+                novo_nivel = int(self.__dungeonView.capturar_entrada("Digite o novo nível:"))
                 if not (1 <= novo_nivel <= 100):
                     raise NivelRequeridoInvalidoError("O nível requerido deve ser um número inteiro entre 1 e 100.")  
                     
                 dungeon.nivel_requerido = novo_nivel
                     
-                novo_xp = int(input("Digite o novo XP ganho: "))
+                novo_xp = int(self.__dungeonView.capturar_entrada("Digite o novo xp ganho:"))
                 if novo_xp <= 0:  
                     raise XpGanhoInvalidoError("O XP ganho deve ser um número positivo.") 
                     
                 dungeon.xp_ganho = novo_xp
                     
-                novo_dificuldade = float(input("Digite a nova dificuldade: "))
+                novo_dificuldade = float(self.__dungeonView.capturar_entrada("Digite a nova dificuldade:"))
                 if not (1 <= novo_dificuldade <= 10):
                     raise DificuldadeInvalidaError("O número de setores deve estar entre 1 e 10.")  
                     
@@ -286,7 +270,7 @@ class DungeonController:
             
             elif atributo == "xp":
                 try:
-                    novo_xp = int(input("Digite o novo XP ganho: "))
+                    novo_xp = int(self.__dungeonView.capturar_entrada("Digite o novo xp ganho:"))
                     if novo_xp <= 0:  
                         raise XpGanhoInvalidoError("O XP ganho deve ser um número positivo.") 
                     dungeon.xp_ganho = novo_xp
@@ -295,7 +279,7 @@ class DungeonController:
 
             elif atributo == "nivel":
                 try:
-                    novo_xp = int(input("Digite o novo XP ganho: "))
+                    novo_nivel = int(self.__dungeonView.capturar_entrada("Digite o novo nível:"))
                     if novo_xp <= 0:  
                         raise XpGanhoInvalidoError("O XP ganho deve ser um número positivo.") 
                     dungeon.xp_ganho = novo_xp
@@ -310,7 +294,7 @@ class DungeonController:
 
             elif atributo == 'dificuldade':
                 try:
-                    nova_dificuldade = float(input("Digite a nova dificuldade: "))
+                    nova_dificuldade = float(self.__dungeonView.capturar_entrada("Digite a nova dificuldade:"))
                     if nova_dificuldade < 0:
                         raise ValueError("A dificuldade deve ser um número não negativo.")
                     dungeon.dificuldade = nova_dificuldade
@@ -319,7 +303,7 @@ class DungeonController:
                     self.__dungeonView.mostra_mensagem(f"Erro ao alterar dificuldade da {dungeon.nome}: {str(e)}")
 
             elif hasattr(dungeon, atributo):
-                novo_valor = input(f"Digite o novo valor para {atributo}: ")
+                novo_valor = (self.__dungeonView.capturar_entrada("Digite a novo valor para o atributo:"))
                 setattr(dungeon, atributo, novo_valor)
                 self.__dungeonView.mostra_mensagem(f"Atributo {atributo} alterado com sucesso.")
                 
@@ -474,8 +458,7 @@ class DungeonController:
             self.__dungeonView.mostra_mensagem("Nenhuma dungeon cadastrada.")
             return
 
-        self.__dungeonView.mostra_dungeons_enum(self.__dungeons)
-        dungeon_opcao = int(input("Escolha o número da dungeon que deseja excluir: ")) - 1
+        dungeon_opcao = self.__dungeonView.mostra_dungeons_enum(self.__dungeons)
         try:
             dungeon = self.__dungeons[dungeon_opcao]
             if self.__dungeonView.confirma_exclusao(dungeon.nome):

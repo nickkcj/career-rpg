@@ -1,81 +1,94 @@
-import os
-class BatalhaView:
-    def tela_opcoes(self):
-        print("-------- BATALHA ----------")
-        print("Escolha a ação:")
-        print("1 - Atacar")
-        print("2 - Defender")
-        print("3 - Usar Item")
-        print("4 - Usar Habilidade")
+import PySimpleGUI as sg
 
-        opcao = int(input("Escolha a ação: "))
-        return opcao
+class BatalhaView:
+
+    def tela_opcoes(self):
+        layout = [
+            [sg.Text("-------- BATALHA ----------")],
+            [sg.Text("Escolha a ação:")],
+            [sg.Button("Atacar"), sg.Button("Defender"), sg.Button("Usar Item"), sg.Button("Usar Habilidade")],
+        ]
+        window = sg.Window("Escolha a Ação", layout, return_keyboard_events=True)
+
+        event, _ = window.read()
+        window.close()
+
+        if event == "Atacar":
+            return 1
+        elif event == "Defender":
+            return 2
+        elif event == "Usar Item":
+            return 3
+        elif event == "Usar Habilidade":
+            return 4
 
     def escolher_habilidade(self, classe):
         if classe == 'CLT':
-            print("\n")
-            print("------Escolha sua habilidade!------")
-            print("\n")
-            print("1 - Festa da Firma, efeito: Aumenta o Ataque do personagem, tipo: buff")
-            print("\n")
-            print("2 - Ataque Corporativo, efeito: Dano direto ao HP do boss, tipo: dano")
-            print("\n")
-            opcao = input("Digite o número da habilidade: ")
-
+            layout = [
+                [sg.Text("------Escolha sua habilidade!------")],
+                [sg.Button("Festa da Firma"), sg.Button("Ataque Corporativo")]
+            ]
         elif classe == 'Estagiario':
-            print("\n")
-            print("------Escolha sua habilidade!------")
-            print("\n")
-            print("1 - Cagada Remunerada, efeito: Aumenta o HP do personagem, tipo: buff")
-            print("\n")
-            print("2 - Desestabilizar Boss, efeito: Reduz a defesa do boss, tipo: debuff")
-            print("\n")
-            opcao = input("Digite o número da habilidade: ")
-
+            layout = [
+                [sg.Text("------Escolha sua habilidade!------")],
+                [sg.Button("Cagada Remunerada"), sg.Button("Desestabilizar Boss")]
+            ]
         elif classe == 'Trainee':
-            print("\n")
-            print("------Escolha sua habilidade!------")
-            print("\n")
-            print("1 - Hora Extra, efeito: Aumenta a estamina, tipo: buff")
-            print("\n")
-            print("2 - Desmotivar Boss, efeito: Reduz o ataque do boss, tipo: debuff")
-            print("\n")
-            opcao = input("Digite o número da habilidade: ")
+            layout = [
+                [sg.Text("------Escolha sua habilidade!------")],
+                [sg.Button("Hora Extra"), sg.Button("Desmotivar Boss")]
+            ]
 
-        return opcao
-        
+        window = sg.Window(f"Escolha a habilidade para {classe}", layout)
+        event, _ = window.read()
+        window.close()
+
+        if event == "Festa da Firma" or event == "Cagada Remunerada" or event == "Hora Extra":
+            return "buff"
+        elif event == "Ataque Corporativo" or event == "Desestabilizar Boss" or event == "Desmotivar Boss":
+            return "debuff"
 
     def mostra_resultado(self, mensagem):
-        print(mensagem)
+        layout = [
+            [sg.Text(mensagem)],
+            [sg.Button("OK")]
+        ]
+        window = sg.Window("Resultado", layout)
+        window.read()
+        window.close()
 
     def mostra_mensagem(self, msg):
-        print(msg)
-        print("\n")
-
+        layout = [
+            [sg.Text(msg)],
+            [sg.Button("OK")]
+        ]
+        window = sg.Window("Mensagem", layout)
+        window.read()
+        window.close()
 
     def exibir_tela_batalha(self, personagem, boss):
-        os.system('cls' if os.name == 'nt' else 'clear')
         largura_total = 60  
         margem_personagem = 7  
         margem_boss = 10  
         ajuste_direita = 5  
 
-        
         espacos_entre_nomes = largura_total - margem_personagem - margem_boss - len(personagem.nome) - len(boss.nome) - len(" VS ")
 
-        print("=" * largura_total)
-        print(f"{' ' * margem_personagem}{personagem.nome}{' ' * (espacos_entre_nomes // 2)}VS{' ' * (espacos_entre_nomes // 2)}{boss.nome}")
-        print("-" * largura_total)
-
+        layout = [
+            [sg.Text("=" * largura_total)],
+            [sg.Text(f"{' ' * margem_personagem}{personagem.nome}{' ' * (espacos_entre_nomes // 2)}VS{' ' * (espacos_entre_nomes // 2)}{boss.nome}")],
+            [sg.Text("-" * largura_total)],
+            [sg.Text(f"{' ' * margem_personagem}{'HP:':<10}{str(personagem.hp_atual) + ' / ' + str(personagem.classe_personagem.atributos['hp']):<10}{' ' * (espacos_entre_nomes - margem_personagem - 20)}{'HP:':<10}{boss.atributos['hp']}")],
+            [sg.Text(f"{' ' * margem_personagem}{'Ataque:':<10}{personagem.classe_personagem.atributos['ataque']:<10}{' ' * (espacos_entre_nomes - margem_personagem - 20)}{'Ataque:':<10}{boss.atributos['ataque']}")],
+            [sg.Text(f"{' ' * margem_personagem}{'Defesa:':<10}{personagem.classe_personagem.atributos['defesa']:<10}{' ' * (espacos_entre_nomes - margem_personagem - 20)}{'Defesa:':<10}{boss.atributos['defesa']}")],
+            [sg.Text(f"{' ' * margem_personagem}{'Estamina:':<10}{personagem.classe_personagem.atributos['estamina']:<10}{' ' * (espacos_entre_nomes - margem_personagem - 20)}{'Estamina:':<10}{boss.atributos['estamina']}")],
+            [sg.Text("=" * largura_total)]  
+        ]
         
-        espacos_boss = margem_personagem + len(personagem.nome) + (espacos_entre_nomes // 2) + len(" VS ") + ajuste_direita
+        window = sg.Window("Batalha", layout)
+        window.read()
+        window.close()
 
-        
-        print(f"{' ' * margem_personagem}{'HP:':<10}{str(personagem.hp_atual) + ' / ' + str(personagem.classe_personagem.atributos['hp']):<10}{' ' * (espacos_boss - margem_personagem - 20)}{'HP:':<10}{boss.atributos['hp']}")
-        print(f"{' ' * margem_personagem}{'Ataque:':<10}{personagem.classe_personagem.atributos['ataque']:<10}{' ' * (espacos_boss - margem_personagem - 20)}{'Ataque:':<10}{boss.atributos['ataque']}")
-        print(f"{' ' * margem_personagem}{'Defesa:':<10}{personagem.classe_personagem.atributos['defesa']:<10}{' ' * (espacos_boss - margem_personagem - 20)}{'Defesa:':<10}{boss.atributos['defesa']}")
-        print(f"{' ' * margem_personagem}{'Estamina:':<10}{personagem.classe_personagem.atributos['estamina']:<10}{' ' * (espacos_boss - margem_personagem - 20)}{'Estamina:':<10}{boss.atributos['estamina']}")
-        print("=" * largura_total)
 
 
 
