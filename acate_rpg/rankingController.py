@@ -8,7 +8,8 @@ class RankingController:
         self.__ranking_view = RankingView()
 
     def atualizar_personagens_ranking(self):
-        personagens = self.__personagem_controller.personagens
+        # Obtendo os personagens diretamente do controlador de personagens.
+        personagens = list(self.__personagem_controller.personagensDAO)  # Convertendo para lista
         return personagens
 
     def exibir_ranking_nivel(self):
@@ -20,21 +21,12 @@ class RankingController:
         personagens = self.atualizar_personagens_ranking()
         personagens_ordenados = sorted(personagens, key=lambda p: len(p.dungeons_conquistadas), reverse=True)
         self.__ranking_view.exibir_ranking_dungeons(personagens_ordenados)
-        while True:
-            print("\n")
-            nome_personagem = input("Deseja ver as dungeons de algum dos personagens? (Digite o nome do personagem ou digite 'sair'): ")
-            print("\n")
-            if nome_personagem.lower() == 'sair':
-                break
-
-            personagem_encontrado = next((p for p in personagens_ordenados if p.nome.lower() == nome_personagem.lower()), None)
-        
-            if personagem_encontrado:
-                self.__ranking_view.exibir_dungeons_personagem(personagem_encontrado)
-            else:
-                self.__ranking_view.mostrar_mensagem("Personagem não encontrado. Tente novamente.")
 
     def exibir_ranking_cursos(self):
         personagens = self.atualizar_personagens_ranking()
         personagens_ordenados = sorted(personagens, key=lambda p: p.cursos_conquistados, reverse=True)
         self.__ranking_view.exibir_ranking_cursos(personagens_ordenados)
+
+    def exibir_dungeons_personagem(self, personagem):
+        self.__ranking_view.exibir_dungeons_personagem(personagem)
+

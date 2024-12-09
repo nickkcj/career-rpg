@@ -11,6 +11,7 @@ class PersonagemController():
     def __init__(self):
         self.__personagens = []
         self.__personagem_dao = PersonagemDAO()
+        self.__personagensDAO = self.__personagem_dao.get_all()
         self.__personagemView = PersonagemView()
         self.__batalhaView = BatalhaView()
         self.__classeController = ClassePersonagemController()
@@ -37,6 +38,10 @@ class PersonagemController():
     @property
     def personagens(self):
         return self.__personagens
+    
+    @property
+    def personagensDAO(self):
+        return self.__personagensDAO
 
     @property
     def habilidades_por_classe(self):
@@ -46,53 +51,14 @@ class PersonagemController():
     def niveis_para_evolucao(self):
         return self.__niveis_para_evolucao
     
+    def adicionar_personagem(self, personagem):
+        self.__personagem_dao.add(personagem)
 
-    def usar_habilidade(self, personagem, boss):
-        classe = personagem.classe_personagem.nome_classe
-        opcao = self.__batalhaView.escolher_habilidade(classe)
-        
-        if personagem.classe_personagem.atributos['estamina'] >= 2:
-            
-            if classe == 'CLT' and opcao == '1':
-                personagem.classe_personagem.atributos['ataque'] += 5
-                personagem.classe_personagem.atributos['estamina'] -= 5
-                mensagem = f"O personagem {personagem.nome} usou a habilidade *Festa da Firma* e aumentou seu ataque em 5 pontos!"
+    def atualizar_personagem(self, personagem):
+        self.__personagem_dao.update(personagem)
 
-            elif classe == 'CLT' and opcao == '2':
-                boss.atributos['hp'] = max(boss.atributos['hp'] - 10, 0)
-                personagem.classe_personagem.atributos['estamina'] -= 5
-                mensagem = f"O personagem {personagem.nome} usou a habilidade *Ataque Corporativo* e diminuiu o HP do boss em 10 pontos!"
-
-            elif classe == 'Estagiario' and opcao == '1':
-                personagem.hp_atual += 10
-                personagem.classe_personagem.atributos['estamina'] -= 5
-                mensagem = f"O personagem {personagem.nome} usou a habilidade *Cagada Remunerada* e aumentou seu HP em 10 pontos!"
-
-            elif classe == 'Estagiario' and opcao == '2':
-                boss.atributos['defesa'] = max(boss.atributos['defesa'] - 5, 1)
-                personagem.classe_personagem.atributos['estamina'] -= 5
-                mensagem = f"O personagem {personagem.nome} usou a habilidade *Desestabilizar Boss* e diminuiu a defesa do boss em 5 pontos!"
-
-            elif classe == 'Trainee' and opcao == '1':
-                personagem.classe_personagem.atributos['estamina'] += 15
-                personagem.classe_personagem.atributos['estamina'] -= 5
-                mensagem = f"O personagem {personagem.nome} usou a habilidade *Hora Extra* e aumentou sua estamina em 10 pontos!"
-
-            elif classe == 'Trainee' and opcao == '2':
-                boss.atributos['ataque'] = max(boss.atributos['ataque'] - 7.5, 1)
-                personagem.classe_personagem.atributos['estamina'] -= 5
-                mensagem = f"O personagem {personagem.nome} usou a habilidade *Desmotivar Inimigo* e reduziu o ataque do boss em 7.5 pontos!"
-
-            else:
-                raise OperacaoNaoPermitidaException("Opção inválida, tente novamente")
-
-            self.__batalhaView.mostra_mensagem(mensagem)
-            
-
-        else:
-            self.__batalhaView.mostra_mensagem("O personagem não possui estamina o suficiente para usar uma habilidade!")
-              
-
+    def remover_personagem(self, nome_personagem):
+        self.__personagem_dao.remove(nome_personagem)
 
     def pega_personagem_por_nome(self, nome: str):
         personagem = next((p for p in self.__personagem_dao.get_all() if p.nome == nome), None)
@@ -124,7 +90,7 @@ class PersonagemController():
             personagem.habilidades = self.habilidades_por_classe.get(dados_personagem["classe"], [])
             personagem.classes_historico = [dados_personagem["classe"]]
 
-            self.__personagem_dao.add(personagem)
+            self.adicionar_personagem(personagem)
             
             self.__personagemView.mostrar_mensagem(
                 f"Personagem {personagem.nome} da classe {personagem.classe_personagem.nome_classe} criado com sucesso! "
@@ -166,12 +132,25 @@ class PersonagemController():
 
         except AttributeError as e:
             raise OperacaoNaoPermitidaException("Erro ao criar personagem") from e
+    
+    def selecionar_personagem(self):
+        # Exibir os personagens na tela
+        dados_personagens = [
+            f"NOME: {personagem.nome} - CLASSE: {personagem.classe_personagem.nome_classe} - NÍVEL: {personagem.nivel}"
+            for personagem in self.__personagensDAO
+        ]
+        
+        # Mostrar os personagens na View e aguardar a seleção
+        personagem_selecionado = self.__personagemView.mostrar_personagens(dados_personagens)
 
-    def lista_personagens(self):
-        dados_personagens = []
-        for personagem in self.__personagem_dao.get_all():
-            dados_personagens.append({"nome": personagem.nome, "classe": personagem.classe, "nivel": personagem.nivel})
-        self.__personagemView.mostrar_personagens(dados_personagens)
+        if personagem_selecionado is not None:
+            # Encontrar o personagem correspondente ao índice selecionado
+            idx_selecionado = dados_personagens.index(personagem_selecionado)
+            if isinstance(self.__personagensDAO, dict):
+                personagens_lista = list(self.__personagensDAO.values())
+            else:
+                personagens_lista = list(self.__personagensDAO)
+            return personagens_lista[idx_selecionado]
 
     def mostrar_habilidades(self, personagem: Personagem):
         try:
@@ -182,6 +161,51 @@ class PersonagemController():
             self.__personagemView.mostrar_habilidades(habilidades_por_classe)
         except KeyError as e:
             raise OperacaoNaoPermitidaException("Erro ao mostrar habilidades") from e
+
+    def usar_habilidade(self, personagem, boss):
+        classe = personagem.classe_personagem.nome_classe
+        opcao = self.__batalhaView.escolher_habilidade(classe)
+        
+        if personagem.classe_personagem.atributos['estamina'] >= 2:
+            
+            if classe == 'CLT' and opcao == '1':
+                personagem.classe_personagem.atributos['ataque'] += 5
+                personagem.classe_personagem.atributos['estamina'] -= 5
+                mensagem = f"O personagem {personagem.nome} usou a habilidade *Festa da Firma* e aumentou seu ataque em 5 pontos!"
+
+            elif classe == 'CLT' and opcao == '2':
+                boss.atributos['hp'] = max(boss.atributos['hp'] - 10, 0)
+                personagem.classe_personagem.atributos['estamina'] -= 5
+                mensagem = f"O personagem {personagem.nome} usou a habilidade *Ataque Corporativo* e diminuiu o HP do boss em 10 pontos!"
+
+            elif classe == 'Estagiario' and opcao == '1':
+                personagem.hp_atual += 10
+                personagem.classe_personagem.atributos['estamina'] -= 5
+                mensagem = f"O personagem {personagem.nome} usou a habilidade *Cagada Remunerada* e aumentou seu HP em 10 pontos!"
+
+            elif classe == 'Estagiario' and opcao == '2':
+                boss.atributos['defesa'] = max(boss.atributos['defesa'] - 5, 1)
+                personagem.classe_personagem.atributos['estamina'] -= 5
+                mensagem = f"O personagem {personagem.nome} usou a habilidade *Desestabilizar Boss* e diminuiu a defesa do boss em 5 pontos!"
+
+            elif classe == 'Trainee' and opcao == '1':
+                personagem.classe_personagem.atributos['estamina'] += 15
+                personagem.classe_personagem.atributos['estamina'] -= 5
+                mensagem = f"O personagem {personagem.nome} usou a habilidade *Hora Extra* e aumentou sua estamina em 10 pontos!"
+
+            elif classe == 'Trainee' and opcao == '2':
+                boss.atributos['ataque'] = max(boss.atributos['ataque'] - 7.5, 1)
+                personagem.classe_personagem.atributos['estamina'] -= 5
+                mensagem = f"O personagem {personagem.nome} usou a habilidade *Desmotivar Inimigo* e reduziu o ataque do boss em 7.5 pontos!"
+
+            else:
+                raise OperacaoNaoPermitidaException("Opção inválida, tente novamente")
+            
+            self.__batalhaView.mostra_mensagem(mensagem)
+            self.atualizar_personagem(personagem)
+
+        else:
+            self.__batalhaView.mostra_mensagem("O personagem não possui estamina o suficiente para usar uma habilidade!")
 
     def calcular_nivel(self, experiencia_total):
         try:
@@ -248,18 +272,15 @@ class PersonagemController():
                 self.__personagemView.mostrar_mensagem(
                     f"{personagem.nome} upou para o nível {novo_nivel}! Pontos disponíveis: {personagem.pontos_disponiveis}"
                 )
-                time.sleep(1)
                 self.evoluir_classe(personagem)
 
             self.__personagemView.mostrar_mensagem(
                 f"{personagem.nome} ganhou {experiencia_ganha} XP! Experiência total: {personagem.experiencia_total}"
             )
-            time.sleep(1)
 
             self.__personagemView.mostrar_mensagem(
                 f"XP para próximo nível: {self.experiencia_para_proximo_nivel(personagem)}"
             )
-            time.sleep(1)
 
         except AttributeError as e:
             raise AttributeError("Erro ao acessar atributos do objeto Personagem.") from e
@@ -300,20 +321,16 @@ class PersonagemController():
                     personagem.classes_historico.append(nova_classe)
 
                     self.__personagemView.mostrar_mensagem(f"{personagem.nome} evoluiu para {nova_classe}!")
-                    time.sleep(1)
                     self.__personagemView.mostrar_mensagem(f"Novas habilidades adquiridas por {nova_classe}:")
 
                     for habilidade in novas_habilidades:
                         self.__personagemView.mostrar_mensagem(f" - {habilidade['nome']}: {habilidade['efeito']}")
-                        time.sleep(1)
                 else:
                     self.__personagemView.mostrar_mensagem(
                         f"{personagem.nome} precisa estar no nível {nivel_necessario} para evoluir para {nova_classe}."
                     )
-                    time.sleep(1)
             else:
                 self.__personagemView.mostrar_mensagem(f"{personagem.nome} já é CLT e não pode evoluir.")
-                time.sleep(1)
 
         except KeyError as e:
             raise KeyError("Erro ao acessar informações de evolução da classe.") from e

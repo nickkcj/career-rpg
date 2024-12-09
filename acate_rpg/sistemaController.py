@@ -127,7 +127,6 @@ class SistemaControllerr:
                 f"Personagem {personagem.nome} da classe {personagem.classe_personagem.nome_classe} criado com sucesso! "
                 f"Nível: {personagem.nivel}, Experiência: {personagem.experiencia_total}"
             )
-            time.sleep(2)
 
             self.menu_principal_personagem(personagem)
         
@@ -241,32 +240,6 @@ class SistemaControllerr:
                 time.sleep(2)
                 exit()
 
-    def selecionar_personagem(self):
-        try:
-            personagens = self.__personagemController.personagens
-            dados_personagem = {
-                "nome": personagem.nome,
-                "classe": personagem.classe,
-                "nivel": personagem.nivel,
-            }
-            self.__sistemaView.mostrar_personagens(dados_personagem)
-
-            escolha = self.__sistemaView.pegar_personagem_selecionado()
-            if escolha.isdigit() and 1 <= int(escolha) <= len(personagens):
-                personagem = personagens[int(escolha) - 1]
-                return personagem
-            else:
-                raise OperacaoNaoPermitidaException(operacao="Selecionar personagem")
-        except OperacaoNaoPermitidaException as e:
-            self.__sistemaView.mostrar_mensagem(str(e))
-            return None
-
-    def mostrar_status(self, personagem):
-        try:
-            self.__personagemController.mostrar_status(personagem)
-        except OperacaoNaoPermitidaException as e:
-            self.__sistemaView.mostrar_mensagem(str(e))
-
     def menu_usuario(self):
         while True:
             try:
@@ -300,7 +273,7 @@ class SistemaControllerr:
                 if evento == '1':
                     self.__personagemController.incluir_personagem()
                 elif evento == '2':
-                    personagem = self.selecionar_personagem()
+                    personagem = self.__personagemController.selecionar_personagem()
                     if personagem:
                         self.mostrar_status(personagem)
                         self.menu_principal_personagem(personagem)
@@ -322,8 +295,7 @@ class SistemaControllerr:
         while True:
             try:
                 self.limpar_terminal()
-                self.__sistemaView.menu_principal_personagem(personagem.nome)
-                opcao = self.__sistemaView.pegar_opcao()
+                opcao = self.__sistemaView.menu_principal_personagem(personagem.nome)
 
                 if opcao == '1':
                     self.opcoes_personagem(personagem)
@@ -379,8 +351,8 @@ class SistemaControllerr:
             try:
 
                 self.limpar_terminal()
-                self.__sistemaView.menu_log()
-                opcao = self.__sistemaView.pegar_opcao()
+                opcao = self.__sistemaView.menu_log()
+
 
                 if opcao == '1':
                     self.limpar_terminal()
@@ -410,8 +382,7 @@ class SistemaControllerr:
     def opcoes_personagem(self, personagem):
         while True:
             try:
-                self.__sistemaView.mostrar_opcoes_personagem()
-                opcao = self.__sistemaView.pegar_opcao()
+                opcao = self.__sistemaView.mostrar_opcoes_personagem()
 
                 if opcao == '1':
                     self.mostrar_status(personagem)
@@ -436,6 +407,12 @@ class SistemaControllerr:
             except ValueError:
                 self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
 
+    def mostrar_status(self, personagem):
+        try:
+            self.__personagemController.mostrar_status(personagem)
+        except OperacaoNaoPermitidaException as e:
+            self.__sistemaView.mostrar_mensagem(str(e))
+
     def selecionar_dungeon(self):
         try:
             nome_dungeon = self.__sistemaView.pegar_opcao()
@@ -448,11 +425,9 @@ class SistemaControllerr:
             return None
 
     def menu_dungeons_empresa(self):
-        self.limpar_terminal()
         while True:
             try:
-                self.__sistemaView.menu_empresa()
-                opcao = self.__sistemaView.pegar_opcao()
+                opcao = self.__sistemaView.menu_empresa()
 
                 if opcao == "1":
                     while True:  
@@ -519,8 +494,7 @@ class SistemaControllerr:
     def menu_ranking(self):
         while True:
             try:
-                self.__sistemaView.menu_ranking()
-                opcao = self.__sistemaView.pegar_opcao()
+                opcao = self.__sistemaView.menu_ranking()
 
                 if opcao == '1':
                     self.__rankingController.exibir_ranking_nivel()
@@ -537,3 +511,4 @@ class SistemaControllerr:
                 time.sleep(2)
             except ValueError:
                 self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
+

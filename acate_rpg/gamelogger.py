@@ -26,3 +26,5 @@ class LogJogadas:
     @property
     def data(self):
         return self.__data
+    
+    
