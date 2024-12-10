@@ -59,36 +59,58 @@ class PersonagemView():
                 }
 
     def mostrar_personagens(self, dados_personagens):
-        # Layout para exibir os personagens
+        # Layout com banners e lista de personagens centralizada
         layout = [
-            [psg.Text("------- LISTA DE PERSONAGENS -------", font=("Arial", 14), justification='center')],
-            [psg.Text("Escolha um personagem para jogar:", font=("Arial", 12))],
+            [
+                psg.Image("assets/images/banner1.png", size=(200, 600), pad=(0, 0)),  # Banner esquerdo
+                psg.Column(
+                    [
+                        [psg.Text("------- LISTA DE PERSONAGENS -------", font=("Arial", 18), justification='center', expand_x=True)],
+                        [psg.Text("Escolha um personagem para jogar:", font=("Arial", 14), justification='center', expand_x=True)],
+                        [
+                            psg.Listbox(
+                                values=dados_personagens,
+                                size=(50, 12),  # Tamanho levemente aumentado
+                                key="personagem_lista",
+                                font=("Arial", 14),  # Fonte aumentada
+                                enable_events=True,
+                                select_mode=psg.LISTBOX_SELECT_MODE_SINGLE,
+                            )
+                        ],
+                        [psg.Button("Cancelar", size=(12, 1), pad=(5, 20))],  # Botão ajustado
+                    ],
+                    element_justification="center",  # Centralização horizontal do conteúdo da coluna
+                    pad=(0, 0),  # Sem espaçamento extra
+                ),
+                psg.Image("assets/images/banner1.png", size=(200, 600), pad=(0, 0)),  # Banner direito
+            ]
         ]
 
-        # Criando os botões em grupos de 3 por linha
-        botoes_por_linha = []
-        for i, personagem in enumerate(dados_personagens):
-            botoes_por_linha.append(psg.Button(personagem, key=str(i)))
-            if (i + 1) % 3 == 0 or i == len(dados_personagens) - 1:  # Quando completar 3 botões ou for o último
-                layout.append(botoes_por_linha)  # Adiciona os 3 botões como uma linha
-                botoes_por_linha = []  # Reseta a lista para o próximo grupo de botões
-
-        # Adicionando o botão de cancelar
-        layout.append([psg.Button("Cancelar")])
-
-        window = psg.Window("Lista de Personagens", layout, finalize=True)
+        # Criar a janela com centralização vertical e horizontal
+        window = psg.Window(
+            "Lista de Personagens",
+            layout,
+            finalize=True,
+            resizable=True,
+            element_justification="center",  # Centralização horizontal
+            size=(800, 600),  # Tamanho mínimo para evitar distorção
+        )
+        window.maximize()  # Maximizar a janela ao abrir
+        
 
         while True:
-            event, _ = window.read()
-            
+            event, values = window.read()
+
             if event == psg.WIN_CLOSED or event == "Cancelar":
                 window.close()
                 return None  # Se o usuário cancelar ou fechar a janela
 
-            if event.isdigit():
-                # Retornar o nome do personagem selecionado
-                window.close()
-                return dados_personagens[int(event)]
+            if event == "personagem_lista" and values["personagem_lista"]:
+                # Detectar duplo clique para selecionar
+                event, values = window.read()  # Verifica o segundo clique
+                if event == "personagem_lista" and values["personagem_lista"]:
+                    window.close()
+                    return values["personagem_lista"][0]  # Retornar o personagem selecionado
 
     def mostrar_status(self, dados_personagem):
         psg.ChangeLookAndFeel('DarkGreen4')

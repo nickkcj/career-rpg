@@ -136,7 +136,7 @@ class PersonagemController():
     def selecionar_personagem(self):
         # Exibir os personagens na tela
         dados_personagens = [
-            f"NOME: {personagem.nome} - CLASSE: {personagem.classe_personagem.nome_classe} - NÍVEL: {personagem.nivel}"
+            f"Nome: {personagem.nome} - Classe: {personagem.classe_personagem.nome_classe} - Nível: {personagem.nivel}"
             for personagem in self.__personagensDAO
         ]
         

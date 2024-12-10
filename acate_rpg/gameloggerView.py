@@ -4,7 +4,7 @@ class LogView:
     def listar_registros(self, registros):
         if not registros:
             self.mostrar_mensagem("Nenhum registro disponível!")
-            return
+            return None
 
         registros_formatados = [
             f"Registro {i + 1}: Personagem: {registro.personagem.nome} (Nível {registro.personagem.nivel}) | "

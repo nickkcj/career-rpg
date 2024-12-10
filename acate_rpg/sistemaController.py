@@ -294,7 +294,6 @@ class SistemaControllerr:
     def menu_principal_personagem(self, personagem):
         while True:
             try:
-                self.limpar_terminal()
                 opcao = self.__sistemaView.menu_principal_personagem(personagem.nome)
 
                 if opcao == '1':
@@ -328,8 +327,11 @@ class SistemaControllerr:
 
 
                 elif opcao == '3':
-                    resultado = self.__quizController.realizar_quiz(personagem, self.__cursoController.to_dict())
+                    resultado, nome = self.__quizController.realizar_quiz(personagem, self.__cursoController.to_dict())
                     if resultado == True:
+                        for cursos in self.__cursoController.cursos:
+                            if cursos.nome == nome:
+                                cursos.realizado = True
                         self.__personagemController.incrementar_curso(personagem)
 
                 elif opcao == '4':
@@ -349,25 +351,21 @@ class SistemaControllerr:
     def menu_log(self, personagem):
         while True:
             try:
-
-                self.limpar_terminal()
                 opcao = self.__sistemaView.menu_log()
 
 
                 if opcao == '1':
-                    self.limpar_terminal()
                     self.__log.listar_registros()
 
                 elif opcao == '2':
-                    self.limpar_terminal()
-                    self.__log.listar_registros()
-                    self.__log.alterar_registro(index)
+                    teste = self.__log.listar_registros()
+                    if teste is not None:
+                        self.__log.alterar_registro()
 
                 elif opcao == '3':
-                    self.limpar_terminal()
-                    self.__log.listar_registros()
-                    index = int(input("Digite o index que você quer excluir o registro: "))
-                    self.__log.excluir_registro(index)
+                    teste = self.__log.listar_registros()
+                    if teste is not None:
+                        self.__log.excluir_registro()
 
                 elif opcao == '4':
                     self.menu_principal_personagem(personagem)
