@@ -80,6 +80,7 @@ class DungeonView:
                 window.close()
                 return None
             if event == "Confirmar":
+                window.close()
                 return values["DUNGEON_NAME"]
 
     def pega_atributo_alteracao(self):

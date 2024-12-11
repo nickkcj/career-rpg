@@ -25,9 +25,9 @@ class ClassePersonagem(EntidadeJogavel):
 
 
     def atacar(self, alvo):
-        dano = self.ataque - alvo.defesa
+        dano = self.ataque - alvo.defesa * 2
         dano = max(dano, 1)
-        return dano
+        return round(dano)
     
     def defender(self):
         self.defesa += 5

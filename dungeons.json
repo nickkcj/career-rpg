@@ -355,9 +355,58 @@
             "nivel_requerido": 2,
             "atributos": {
                 "ataque": 8.0,
-                "defesa": 11.0,
-                "hp": 0,
+                "defesa": 6.0,
+                "hp": 40.0,
                 "estamina": 20.0
+            }
+        }
+    },
+    {
+        "nome": "teste de hipoteses",
+        "nivel_requerido": 5,
+        "xp_ganho": 601,
+        "dificuldade": 5.5,
+        "setores": [
+            {
+                "nome": "T.I",
+                "dificuldade": 7,
+                "boss": {
+                    "nome": "Diretor de T.I da teste de hipoteses",
+                    "dificuldade": 7,
+                    "nivel_requerido": 5,
+                    "atributos": {
+                        "ataque": 14,
+                        "defesa": 10.5,
+                        "hp": 70,
+                        "estamina": 35
+                    }
+                }
+            },
+            {
+                "nome": "RH",
+                "dificuldade": 4,
+                "boss": {
+                    "nome": "Diretor de RH da teste de hipoteses",
+                    "dificuldade": 4,
+                    "nivel_requerido": 5,
+                    "atributos": {
+                        "ataque": 8,
+                        "defesa": 6.0,
+                        "hp": 40,
+                        "estamina": 20
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "Borgatto",
+            "dificuldade": 5.5,
+            "nivel_requerido": 5,
+            "atributos": {
+                "ataque": 22.0,
+                "defesa": 16.5,
+                "hp": 110.0,
+                "estamina": 55.0
             }
         }
     }

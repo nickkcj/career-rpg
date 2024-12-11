@@ -16,36 +16,35 @@ class BatalhaController():
         self.__classepersonagemController = ClassePersonagemController()
         self.defesas = 0
 
-    def realizar_turno(self, acao_personagem, personagem, boss, dungeon, log):
-        if acao_personagem == 1: 
+    def realizar_turno(self, acao_personagem, personagem, boss, dungeon, log, window):
+        if acao_personagem == "Atacar": 
             dano = personagem.classe_personagem.atacar(boss)
             boss.atributos['hp'] = max(boss.atributos['hp'] - dano, 0)
+            imagem_ataque = "assets/images/ataque.jpg"
+            window["-IMG-"].update(filename=imagem_ataque, size=(800,600))
             self.__tela.mostra_mensagem(f"{personagem.nome} atacou {boss.nome} e causou {dano} de dano!")
             log.adicionar_registro(personagem, boss, dungeon, "ataque")
-            time.sleep(3)
+            self.atualizar_status(window, personagem, boss)
             self.verificar_vencedor()
-            self.turno_boss(personagem, boss)
-            time.sleep(3)
-
-        elif acao_personagem == 2:
+            self.turno_boss(personagem, boss, window)
+        
+        elif acao_personagem == "Defender":
             self.__classepersonagemController.defender(personagem)
+            personagem_defesa = "assets/images/personagem_defesa.jpg"
+            window["-IMG-"].update(filename=personagem_defesa, size=(800,600))            
             self.__tela.mostra_mensagem(f"{personagem.nome} aumentou a defesa em {personagem.classe_personagem.atributos['defesa']}!")
             log.adicionar_registro(personagem, boss, dungeon, "defesa")
             self.defesas += 1
-            time.sleep(3)
-            self.turno_boss(personagem, boss)
-            time.sleep(3)
-        elif acao_personagem == 3:
+            self.turno_boss(personagem, boss, window)
+        elif acao_personagem == "Usar Item":
             self.__personagemController.usar_item(personagem)
             log.adicionar_registro(personagem, boss, dungeon, "usar item")
-            self.turno_boss(personagem, boss)
-            time.sleep(3)
+            self.turno_boss(personagem, boss, window)
 
-        elif acao_personagem == 4:
+        elif acao_personagem == "Usar Habilidade":
             self.__personagemController.usar_habilidade(personagem, boss)
             log.adicionar_registro(personagem, boss, dungeon, "usar habilidade")
-            self.turno_boss(personagem, boss)
-            time.sleep(3)
+            self.turno_boss(personagem, boss, window)
 
         else:
             raise OperacaoNaoPermitidaException("Opção inválida, tente novamente.")
@@ -74,19 +73,28 @@ class BatalhaController():
             except HpJahCheioException as e:
                 self.__tela.mostra_mensagem(str(e))
 
-    def turno_boss(self, personagem, boss):
-        acao_boss = random.randint(1, 2)  
-        if acao_boss == 1:
+    def turno_boss(self, personagem, boss, window):
+        acao_boss = random.randint(1, 5)  
+        if acao_boss in (1, 2, 3, 4):
             dano = self.__bossController.atacar(boss, personagem)
             personagem.hp_atual -= dano
+            boss_ataque = "assets/images/boss_ataque.jpg"
+            window["-IMG-"].update(filename=boss_ataque, size=(800,600))
             self.__tela.mostra_mensagem(f"{boss.nome} atacou {personagem.nome} e causou {dano} de dano!")
-            time.sleep(1.5)
+            time.sleep(1)
+            self.atualizar_status(window,personagem,boss)
+            batalha = "assets/images/personagem_boss.jpg"
+            window["-IMG-"].update(filename=batalha, size=(800,600))
             
         else:      
             self.__bossController.defender(boss)
-            
+            boss_defesa = "assets/images/boss_defesa.jpg"
+            window["-IMG-"].update(filename=boss_defesa, size=(800,600))
             self.__tela.mostra_mensagem(f"{boss.nome} se defendeu! Defesa aumentada para {boss.atributos['defesa']}.")
-            time.sleep(1.5)
+            self.atualizar_status(window,personagem,boss)
+            time.sleep(1)
+            batalha = "assets/images/personagem_boss.jpg"
+            window["-IMG-"].update(filename=batalha, size=(800,600))
 
     def verificar_vencedor(self):
         if self.__batalha.boss.atributos['hp'] <= 0:
@@ -101,23 +109,18 @@ class BatalhaController():
         self.__batalha.personagem = personagem
         self.__batalha.boss = boss
         self.__batalha.finalizada = False
+        window = self.__tela.exibir_tela_batalha(personagem,boss)
         while not self.__batalha.finalizada:
-            self.__tela.exibir_tela_batalha(personagem, boss)
-            acao_personagem = self.__tela.tela_opcoes()
-            while True:
-                try:
-                    self.realizar_turno(acao_personagem, self.__batalha.personagem, boss, dungeon, log)
-                    break
-
-                except OperacaoNaoPermitidaException:
-                    self.__tela.mostra_mensagem("Opção inválida, tente novamente!")
-                    time.sleep(2)
-                    os.system('cls' if os.name == 'nt' else 'clear')
+            event, _ = window.read()
+            self.realizar_turno(event, self.__batalha.personagem, boss, dungeon, log, window)
 
             resultado = self.verificar_vencedor()
             if resultado == "vitória":
+                vitoria = "assets/images/vitoria.jpg"
+                window["-IMG-"].update(filename=vitoria, size=(800,600))
                 self.__tela.mostra_resultado("Você venceu!")
-                time.sleep(2)
+                window.close()
+                time.sleep(1)
                 personagem.bosses_derrotados.append(boss)
                 if boss.nome == dungeon.boss_final.nome:
                     dungeon.conquistada = True
@@ -135,11 +138,18 @@ class BatalhaController():
                     self.__personagemController.ganhar_experiencia(personagem, boss.dificuldade * 100)
                     personagem.classe_personagem.atributos['defesa'] -= (self.defesas * 7.5)
                     setor.conquistado = True
+                    break
 
             elif resultado == "derrota":
                 self.__tela.mostra_resultado("Você foi derrotado!")
                 personagem.classe_personagem.atributos['defesa'] -= (self.defesas * 7.5)
                 personagem.hp_atual = (personagem.classe_personagem.atributos['hp']/2)
-                time.sleep(2)
+                break
+                
 
         self.__personagemController.atualizar_personagem(personagem)
+        window.close()
+
+    def atualizar_status(self, window, personagem, boss):
+        window["-PERSONAGEM_HP-"].update(f"HP: {personagem.hp_atual}/{personagem.classe_personagem.atributos['hp']}")
+        window["-BOSS_HP-"].update(F"HP: {boss.atributos['hp']}")

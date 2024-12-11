@@ -724,49 +724,53 @@ class QuizController():
         self.__cursoView = CursoView()
         
     def realizar_quiz(self, personagem, cursos):
-        self.__cursoView.mostra_cursos(cursos)
-        nome_curso = self.__cursoView.seleciona_curso()
-        curso_encontrado = False
+        curso_selecionado = self.__cursoView.mostra_cursos(cursos)
 
-        for index, curso in enumerate(cursos):  # Adicionada a função enumerate para obter o índice
-            if curso["nome"] == nome_curso:
-                curso_encontrado = True
-                setor = curso["setor"]
-                dificuldade = curso["dificuldade"]
-                experiencia = curso["xp_ganho"]
-                nivel_requerido = curso["nivel_requerido"]
+        if curso_selecionado == None:
+            return None, None
 
-                if curso["realizado"]:
-                    self.__cursoView.mostra_mensagem("Você já tem o certificado desse curso, esqueceu?")
-                    time.sleep(2)
-                    return None, None
+        if curso_selecionado:
+            curso_encontrado = False
 
-                if nivel_requerido > personagem.nivel:
-                    self.__cursoView.mostra_mensagem("Você não tem nível suficiente para fazer esse curso, volte mais tarde!")
-                    time.sleep(2)
-                    return None, None
+            for index, curso in enumerate(cursos):  # Adicionada a função enumerate para obter o índice
+                if curso["nome"] == curso_selecionado:
+                    curso_encontrado = True
+                    setor = curso["setor"]
+                    dificuldade = curso["dificuldade"]
+                    experiencia = curso["xp_ganho"]
+                    nivel_requerido = curso["nivel_requerido"]
 
-                quiz = Quiz(setor, dificuldade)
+                    if curso["realizado"]:
+                        self.__cursoView.mostra_mensagem("Você já tem o certificado desse curso, esqueceu?")
+                        time.sleep(2)
+                        return None, None
 
-                perguntas = getattr(self, f"_QuizController__quiz{setor.lower()}", None)
-                if perguntas is None:
-                    self.__cursoView.mostra_mensagem(f"Setor {setor} não encontrado. Não há perguntas disponíveis para este curso.")
-                    time.sleep(2)
-                    return None, None
-                if perguntas:
-                    resultado = self.__quizView.comeca_quiz(dificuldade, setor, perguntas)
-                    quiz.gabaritou_miga = resultado  
+                    if nivel_requerido > personagem.nivel:
+                        self.__cursoView.mostra_mensagem("Você não tem nível suficiente para fazer esse curso, volte mais tarde!")
+                        time.sleep(2)
+                        return None, None
 
-                    if resultado:
-                        self.__personagemController.ganhar_experiencia(personagem, experiencia)
-        
-                    else:
-                        cursos[index]["realizado"] = False  # Alterado para atualizar o dicionário
+                    quiz = Quiz(setor, dificuldade)
 
-                return resultado, curso["nome"]
+                    perguntas = getattr(self, f"_QuizController__quiz{setor.lower()}", None)
+                    if perguntas is None:
+                        self.__cursoView.mostra_mensagem(f"Setor {setor} não encontrado. Não há perguntas disponíveis para este curso.")
+                        time.sleep(2)
+                        return None, None
+                    if perguntas:
+                        resultado = self.__quizView.comeca_quiz(dificuldade, setor, perguntas)
+                        quiz.gabaritou_miga = resultado  
 
-        if not curso_encontrado:
-            self.__cursoView.mostra_mensagem("O curso selecionado não existe, tente novamente!")
+                        if resultado:
+                            self.__personagemController.ganhar_experiencia(personagem, experiencia)
+            
+                        else:
+                            cursos[index]["realizado"] = False  # Alterado para atualizar o dicionário
+
+                    return resultado, curso["nome"]
+
+            if not curso_encontrado:
+                self.__cursoView.mostra_mensagem("O curso selecionado não existe, tente novamente!")
 
 
 

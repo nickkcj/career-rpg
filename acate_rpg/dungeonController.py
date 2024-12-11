@@ -197,7 +197,9 @@ class DungeonController:
 
         self.listar_dungeons()
         dungeon_nome = self.__dungeonView.pega_nome_dungeon()
-        os.system('cls' if os.name == 'nt' else 'clear')
+        
+        if dungeon_nome == None:
+            return None, None
 
         dungeon_selecionada = next((dungeon for dungeon in self.__dungeons if dungeon.nome == dungeon_nome), None)
         if not dungeon_selecionada:

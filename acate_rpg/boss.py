@@ -47,7 +47,7 @@ class Boss(EntidadeJogavel):
 
     
     def atacar(self, alvo):
-        dano = self.__atributos["ataque"] * 1.5 - alvo.classe_personagem.defesa
+        dano = self.__atributos["ataque"] * 2.5 - alvo.classe_personagem.defesa
         dano = max(dano, 1)
         return dano
     

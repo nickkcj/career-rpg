@@ -96,22 +96,20 @@ class CursoView():
         window.close()
 
     def mostra_cursos(self, cursos_dicionario, alteracao=None):
+        # Transformar os cursos em um formato adequado para exibição
         cursos_info = []
         for curso in cursos_dicionario:
             cursos_info.append(
-                f"Nome: {curso['nome']}\n"
+                f"{curso['nome']}\n"
                 f"Nível Requerido: {curso['nivel_requerido']}\n"
-                f"XP Ganhado: {curso['xp_ganho']}\n"
-                f"Setor: {curso['setor']}\n"
                 f"Dificuldade: {curso['dificuldade']}\n"
-                f"Realizado: {curso['realizado']}\n"
                 "-----------------------------\n"
             )
 
         # Layout da esquerda com a lista de cursos
         cursos_layout = [
-            [sg.Text('---- LISTA DE CURSOS ----', font=("Helvetica", 20), justification='center', expand_x=True, pad=(0,25))],
-            [sg.Multiline('\n'.join(cursos_info), size=(60, 20), key='-CURSOS-', disabled=True, font=("Helvetica", 16), pad=(10, 10))],
+            [sg.Text('---- LISTA DE CURSOS ----', font=("Helvetica", 20), justification='center', expand_x=True, pad=(0, 25))],
+            [sg.Listbox(values=cursos_info, size=(60, 20), key='-CURSOS-', font=("Helvetica", 16), pad=(10, 10), enable_events=True)],
             [sg.Button('Fechar', size=(15, 2), pad=(10, 20))]
         ]
 
@@ -140,32 +138,33 @@ class CursoView():
         )
         window.maximize()
         time.sleep(0.5)  # Maximiza para garantir centralização
-        if alteracao == True:
+
+        if alteracao:
             return
-        
-        
+
         else:
-            event, values = window.read()
-            window.close()
+            while True:
+                event, values = window.read()
+                if event in (sg.WINDOW_CLOSED, 'Fechar'):
+                    window.close()
+                    break
+                elif event == '-CURSOS-' and values['-CURSOS-']:
+                    curso_selecionado = values['-CURSOS-'][0].split('\n')[0]
+                    window.close()
+                    return curso_selecionado
 
 
 
 
+            
 
 
 
-    def seleciona_curso(self):
-        layout = [
-            [sg.Text('Digite o nome do curso:')],
-            [sg.InputText(key='-CURSO-', size=(30, 1))],
-            [sg.Button('Selecionar'), sg.Button('Cancelar')]
-        ]
 
-        window = sg.Window('Seleção de Curso', layout)
-        event, values = window.read()
-        window.close()
+        
 
-        if event == 'Selecionar':
-            return values['-CURSO-']
-        return None
+
+            
+
+            
     
