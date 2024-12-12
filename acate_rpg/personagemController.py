@@ -69,29 +69,41 @@ class PersonagemController():
     def incluir_personagem(self):
         try:
             dados_personagem = self.__personagemView.pega_dados_personagem()
+            
+            # Validações iniciais
             if not dados_personagem['classe']:
                 raise CadastroInvalidoException(entidade="Personagem", campo="classe")
-
-            for personagem_existente in self.__personagens:
-                if personagem_existente.nome == dados_personagem["nome"]:
-                    raise CadastroInvalidoException(entidade="Personagem", campo="nome")
-
-            personagem = self.criar_personagem(
+            
+            if any(p.nome == dados_personagem["nome"] for p in self.__personagem_dao.get_all()):
+                raise CadastroInvalidoException(f"Um personagem com o nome '{dados_personagem['nome']}' já existe.")
+            
+            # Criação do personagem
+            dungeons_conquistadas = dados_personagem.get("dungeons_conquistadas", [])
+            bosses_derrotados = dados_personagem.get("bosses_derrotados", [])
+            
+            personagem = Personagem(
                 nome=dados_personagem["nome"],
                 nivel=dados_personagem.get("nivel", 1),
                 experiencia_total=dados_personagem.get("experiencia_total", 0),
                 pontos_disponiveis=dados_personagem.get("pontos_disponiveis", 10),
                 nome_classe=dados_personagem["classe"],
-                dungeons_conquistadas=dados_personagem.get("dungeons_conquistadas", []),
-                bosses_derrotados=dados_personagem.get("bosses_derrotados", []),
+                dungeons_conquistadas=dungeons_conquistadas,
+                bosses_derrotados=bosses_derrotados,
                 cursos_conquistados=dados_personagem.get("cursos_conquistados", 0)
             )
-
+            
             personagem.habilidades = self.habilidades_por_classe.get(dados_personagem["classe"], [])
             personagem.classes_historico = [dados_personagem["classe"]]
-
+            
+            # Definir atributos iniciais para classes específicas
+            classe_inicial = personagem.classes_historico[0]
+            if classe_inicial in ["Estagiario", "CLT"]:
+                self.__classeController.definir_atributos_iniciais(personagem.classe_personagem)
+            
+            # Adicionar personagem ao DAO
             self.adicionar_personagem(personagem)
             
+            # Mensagem de sucesso
             self.__personagemView.mostrar_mensagem(
                 f"Personagem {personagem.nome} da classe {personagem.classe_personagem.nome_classe} criado com sucesso! "
                 f"Nível: {personagem.nivel}, Experiência: {personagem.experiencia_total}"

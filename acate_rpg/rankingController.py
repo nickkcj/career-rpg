@@ -3,7 +3,7 @@ from rankingView import RankingView
 from personagemController import PersonagemController
 
 class RankingController:
-    def __init__(self, personagem_controller):
+    def __init__(self, personagem_controller: PersonagemController):
         self.__personagem_controller = personagem_controller
         self.__ranking_view = RankingView()
 
@@ -27,6 +27,4 @@ class RankingController:
         personagens_ordenados = sorted(personagens, key=lambda p: p.cursos_conquistados, reverse=True)
         self.__ranking_view.exibir_ranking_cursos(personagens_ordenados)
 
-    def exibir_dungeons_personagem(self, personagem):
-        self.__ranking_view.exibir_dungeons_personagem(personagem)
 

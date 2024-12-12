@@ -409,5 +409,122 @@
                 "estamina": 55.0
             }
         }
+    },
+    {
+        "nome": "The Assembler",
+        "nivel_requerido": 10,
+        "xp_ganho": 901,
+        "dificuldade": 10.0,
+        "setores": [
+            {
+                "nome": "T.I",
+                "dificuldade": 10,
+                "boss": {
+                    "nome": "Diretor de T.I da The Assembler",
+                    "dificuldade": 10,
+                    "nivel_requerido": 10,
+                    "atributos": {
+                        "ataque": 20,
+                        "defesa": 15.0,
+                        "hp": 100,
+                        "estamina": 50
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "Koliver",
+            "dificuldade": 10.0,
+            "nivel_requerido": 10,
+            "atributos": {
+                "ataque": 40.0,
+                "defesa": 30.0,
+                "hp": 200.0,
+                "estamina": 100.0
+            }
+        }
+    },
+    {
+        "nome": "Rick's Pickle",
+        "nivel_requerido": 8,
+        "xp_ganho": 901,
+        "dificuldade": 3.5,
+        "setores": [
+            {
+                "nome": "Vendas",
+                "dificuldade": 1,
+                "boss": {
+                    "nome": "Diretor de Vendas da Rick's Pickle",
+                    "dificuldade": 1,
+                    "nivel_requerido": 8,
+                    "atributos": {
+                        "ataque": 2,
+                        "defesa": 1.5,
+                        "hp": 10,
+                        "estamina": 5
+                    }
+                }
+            },
+            {
+                "nome": "Marketing",
+                "dificuldade": 6,
+                "boss": {
+                    "nome": "Diretor de Marketing da Rick's Pickle",
+                    "dificuldade": 6,
+                    "nivel_requerido": 8,
+                    "atributos": {
+                        "ataque": 12,
+                        "defesa": 9.0,
+                        "hp": 60,
+                        "estamina": 30
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "Rick",
+            "dificuldade": 3.5,
+            "nivel_requerido": 8,
+            "atributos": {
+                "ataque": 14.0,
+                "defesa": 10.5,
+                "hp": 70.0,
+                "estamina": 35.0
+            }
+        }
+    },
+    {
+        "nome": "test",
+        "nivel_requerido": 1,
+        "xp_ganho": 1,
+        "dificuldade": 1.0,
+        "setores": [
+            {
+                "nome": "T.I",
+                "dificuldade": 1,
+                "boss": {
+                    "nome": "Diretor de T.I da test",
+                    "dificuldade": 1,
+                    "nivel_requerido": 1,
+                    "atributos": {
+                        "ataque": 2,
+                        "defesa": 1.5,
+                        "hp": 10,
+                        "estamina": 5
+                    }
+                }
+            }
+        ],
+        "boss_final": {
+            "nome": "tets",
+            "dificuldade": 1.0,
+            "nivel_requerido": 1,
+            "atributos": {
+                "ataque": 4.0,
+                "defesa": 3.0,
+                "hp": 20.0,
+                "estamina": 10.0
+            }
+        }
     }
 ]

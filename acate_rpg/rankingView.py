@@ -108,10 +108,13 @@ class RankingView:
             [psg.Text(f"Ataque: {personagem.classe_personagem.atributos['ataque']}", font=("Helvetica", 14))],
             [psg.Text(f"Defesa: {personagem.classe_personagem.atributos['defesa']}", font=("Helvetica", 14))],
             [psg.Text(f"Cursos Conquistados: {personagem.cursos_conquistados}", font=("Helvetica", 14))],
-            [psg.Text("Dungeons Conquistadas:", font=("Helvetica", 14))],
+            [psg.Text("Empresas Conquistadas:", font=("Helvetica", 14))],
             [psg.Listbox(
-                values=[f"{dungeon['nome']}" for dungeon in personagem.dungeons_conquistadas],
-                size=(30, 10),
+                values=[
+                    f"{dungeon.nome} (Nível Requerido: {dungeon.nivel_requerido})"
+                    for dungeon in personagem.dungeons_conquistadas
+                ] if personagem.dungeons_conquistadas else ["Nenhuma empresa conquistada"],
+                size=(40, 10),
                 font=("Helvetica", 12),
                 select_mode=psg.LISTBOX_SELECT_MODE_SINGLE,
             )],

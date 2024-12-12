@@ -2,6 +2,7 @@ import time
 import json
 from dungeonView import DungeonView
 from dungeon import Dungeon
+from dungeonDAO import DungeonDAO
 from setorController import SetorController
 from bossController import BossController
 from exceptions import (
@@ -21,6 +22,8 @@ from setorView import SetorView
 class DungeonController:
     def __init__(self):
         self.__dungeons = []
+        self.__dungeon_dao = DungeonDAO()
+        self.__dungeonsDAO = self.__dungeon_dao.get_all()
         self.__dungeonView = DungeonView()
         self.__setorController = SetorController()
         self.__bossController = BossController()
@@ -35,6 +38,18 @@ class DungeonController:
     def dungeons(self, dungeons):
         self._dungeons = dungeons
 
+    @property
+    def dungeonsDAO(self):
+        return self.__dungeonsDAO
+    
+    def adicionar_dungeon(self, dungeon):
+        self.__dungeon_dao.add(dungeon)
+
+    def atualizar_dungeon(self, dungeon):
+        self.__dungeon_dao.update(dungeon)
+
+    def remover_dungeon(self, nome_dungeon):
+        self.__dungeon_dao.remove(nome_dungeon)
 
     def cadastrar_dungeon(self):
         dados_dungeon = self.__dungeonView.pega_dados_dungeon()
@@ -76,6 +91,7 @@ class DungeonController:
                 dificuldade_media, setores, boss_final
             )
 
+            self.adicionar_dungeon(dungeon)
             self.__dungeons.append(dungeon)
             self.salvar_dungeons()
 
@@ -119,6 +135,7 @@ class DungeonController:
                         "setores": setores_data,
                         "boss_final": boss_final_data
                     }
+                    self.adicionar_dungeon(dungeon_data)
                     dungeons_data.append(dungeon_data)
                 except Exception as e:
                     self.__dungeonView.mostra_mensagem(f"Erro ao criar dicionário da dungeon: {str(e)}")
@@ -170,13 +187,13 @@ class DungeonController:
                             setores,
                             boss_final
                         )
+                        self.adicionar_dungeon(dungeon)
                         self.__dungeons.append(dungeon)
 
                     except Exception as e:
                         print(f"Erro ao processar a dungeon {d['nome']}: {str(e)}")
                         continue
-
-            self.__dungeonView.mostra_mensagem(f"{len(data)} empresas carregadas com sucesso!")
+            return len(data)
         except Exception as e:
             self.__dungeonView.mostra_mensagem(f"Erro ao carregar empresas: {str(e)}")
             input("\nPressione Enter para Voltar")
@@ -451,6 +468,7 @@ class DungeonController:
         confirmacao = input(f"Tem certeza que deseja excluir a dungeon '{dungeon.nome}'? (s/n): ")
         if confirmacao.lower() == 's':
             self.dungeons.remove(dungeon)
+            self.remover_dungeon(dungeon)
             self.__dungeonView.mostra_mensagem("Dungeon excluída com sucesso.")
         else:
             self.__dungeonView.mostra_mensagem("Exclusão cancelada.")
@@ -465,6 +483,7 @@ class DungeonController:
             dungeon = self.__dungeons[dungeon_opcao]
             if self.__dungeonView.confirma_exclusao(dungeon.nome):
                 del self.__dungeons[dungeon_opcao]
+                self.remover_dungeon(dungeon)
                 self.__dungeonView.mostra_mensagem("Dungeon excluída com sucesso.")
             else:
                 self.__dungeonView.mostra_mensagem("Exclusão cancelada.")
