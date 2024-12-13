@@ -13,6 +13,7 @@ class CursoDAO(DAO):
     def update(self, curso: Curso):
         if((curso is not None) and isinstance(curso, Curso) and isinstance(curso.nome, str)):
             super().update(curso.nome, curso)
+            print(f"[DEBUG] Curso '{curso.nome}' atualizado no DAO.")
 
     def get(self, key:str):
         if isinstance(key, str):

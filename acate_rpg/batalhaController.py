@@ -2,9 +2,10 @@ from batalha import Batalha
 from batalhaView import BatalhaView
 from personagemController import PersonagemController
 from classePersonagemController import ClassePersonagemController
+from gameloggerController import LogController
 import time
 import random
-from exceptions import OperacaoNaoPermitidaException, HpJahCheioException
+from exceptions import OperacaoNaoPermitidaException
 from bossController import BossController
 import os
 class BatalhaController():
@@ -14,6 +15,7 @@ class BatalhaController():
         self.__personagemController = PersonagemController()
         self.__bossController = BossController()
         self.__classepersonagemController = ClassePersonagemController()
+        self.__log = LogController()
         self.defesas = 0
 
     def realizar_turno(self, acao_personagem, personagem, boss, dungeon, log, window):
@@ -23,27 +25,28 @@ class BatalhaController():
             imagem_ataque = "assets/images/ataque.jpg"
             window["-IMG-"].update(filename=imagem_ataque, size=(800,600))
             self.__tela.mostra_mensagem(f"{personagem.nome} atacou {boss.nome} e causou {dano} de dano!")
-            log.adicionar_registro(personagem, boss, dungeon, "ataque")
+            self.__log.adicionar_registro(personagem, boss, dungeon, acao_personagem)
             self.atualizar_status(window, personagem, boss)
-            self.verificar_vencedor()
-            self.turno_boss(personagem, boss, window)
+            status = self.verificar_vencedor()
+            if status != "vitoria":
+                self.turno_boss(personagem, boss, window)
         
         elif acao_personagem == "Defender":
             self.__classepersonagemController.defender(personagem)
             personagem_defesa = "assets/images/personagem_defesa.jpg"
             window["-IMG-"].update(filename=personagem_defesa, size=(800,600))            
             self.__tela.mostra_mensagem(f"{personagem.nome} aumentou a defesa em {personagem.classe_personagem.atributos['defesa']}!")
-            log.adicionar_registro(personagem, boss, dungeon, "defesa")
             self.defesas += 1
+            self.__log.adicionar_registro(personagem, boss, dungeon, acao_personagem)
             self.turno_boss(personagem, boss, window)
         elif acao_personagem == "Usar Item":
             self.__personagemController.usar_item(personagem)
-            log.adicionar_registro(personagem, boss, dungeon, "usar item")
+            self.__log.adicionar_registro(personagem, boss, dungeon, acao_personagem)
             self.turno_boss(personagem, boss, window)
 
         elif acao_personagem == "Usar Habilidade":
             self.__personagemController.usar_habilidade(personagem, boss)
-            log.adicionar_registro(personagem, boss, dungeon, "usar habilidade")
+            self.__log.adicionar_registro(personagem, boss, dungeon, acao_personagem)
             self.turno_boss(personagem, boss, window)
 
         else:
@@ -63,7 +66,7 @@ class BatalhaController():
             self.atualizar_status(window,personagem,boss)
             batalha = "assets/images/personagem_boss.jpg"
             window["-IMG-"].update(filename=batalha, size=(800,600))
-            
+
         else:      
             self.__bossController.defender(boss)
             boss_defesa = "assets/images/boss_defesa.jpg"
@@ -139,8 +142,10 @@ class BatalhaController():
                 personagem.classe_personagem.atributos['defesa'] -= (self.defesas * 7.5)
                 personagem.hp_atual = (personagem.classe_personagem.atributos['hp']/2)
                 break
-                
 
+            self.__log.adicionar_registro(personagem, boss, dungeon, resultado)
+
+        self.__log.listar_registros(personagem.nome)
         self.__personagemController.atualizar_personagem(personagem)
         window.close()
 

@@ -1,17 +1,17 @@
 class Quiz:
     def __init__(self, setor, dificuldade):
-        self._setor = setor
-        self._dificuldade = dificuldade
-        self._gabaritou_miga = False
+        self.__setor = setor
+        self.__dificuldade = dificuldade
+        self.__gabaritou_miga = False
 
 
     @property
     def setor(self):
-        return self._setor
+        return self.__setor
 
     @setor.setter
     def setor(self, setor):
-        self._setor = setor
+        self.__setor = setor
 
     @property
     def dificuldade(self):
@@ -23,11 +23,11 @@ class Quiz:
 
     @property
     def gabaritou_miga(self):
-        return self._gabaritou_miga
+        return self.__gabaritou_miga
 
     @gabaritou_miga.setter
     def gabaritou_miga(self, gabaritou_miga):
-        self._gabaritou_miga = gabaritou_miga
+        self.__gabaritou_miga = gabaritou_miga
 
 
     

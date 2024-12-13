@@ -3,12 +3,12 @@ import time
 class DungeonView:
     def pega_dados_dungeon(self):
         layout = [
-            [sg.Text("------DADOS DA EMPRESA------", font=("Helvetica", 20))],
+            [sg.Text("------ DADOS DA EMPRESA ------", font=("Helvetica", 20))],
             [sg.Text("Digite o nome da empresa:"), sg.InputText(key="NOME")],
             [sg.Text("Digite o nível requerido da empresa:"),
             sg.Combo([str(i) for i in range(1, 11)], key="NIVEL_REQUERIDO", default_value="1")],
             [sg.Text("Quanto de XP essa empresa vale?"),
-            sg.Combo([str(i) for i in range(1, 1000, 100)], key="XP_GANHO", default_value="1")],
+            sg.Combo([str(i) for i in range(100, 1000, 100)], key="XP_GANHO", default_value="100")],
             [sg.Text("Digite o número de setores desta empresa:"),
             sg.Combo([str(i) for i in range(1, 11)], key="N_SETOR", default_value="1")],
             [sg.Button("Confirmar", size=(10, 2)), sg.Button("Cancelar", size=(10, 2))]
@@ -19,24 +19,26 @@ class DungeonView:
             event, values = window.read()
             if event in (sg.WINDOW_CLOSED, "Cancelar"):
                 window.close()
-                return 
+                return None
             if event == "Confirmar":
                 try:
-                    nivel_requerido_str = values["NIVEL_REQUERIDO"]
-                    xp_ganho_str = values["XP_GANHO"]
-                    n_setores_str = values["N_SETOR"]
+                    nome = values["NOME"].strip()
+                    nivel_requerido = int(values["NIVEL_REQUERIDO"])
+                    xp_ganho = int(values["XP_GANHO"])
+                    n_setores = int(values["N_SETOR"])
 
-                    if not nivel_requerido_str.isdigit() or not xp_ganho_str.isdigit() or not n_setores_str.isdigit():
+                    if not nome:
+                        raise ValueError("O nome da empresa não pode estar vazio.")
+                    if n_setores <= 0:
+                        raise ValueError("O número de setores deve ser maior que 0.")
+
+                    if not isinstance(nivel_requerido, int) or not isinstance(xp_ganho, int) or not isinstance(n_setores, int):
                         sg.popup_error("Por favor, insira apenas números inteiros válidos nos campos.")
                         continue
-
-                    nivel_requerido = int(nivel_requerido_str)
-                    xp_ganho = int(xp_ganho_str)
-                    n_setores = int(n_setores_str)
   
                     window.close()
                     return {
-                        "nome": values["NOME"],
+                        "nome": nome,
                         "nivel_requerido": nivel_requerido,
                         "xp_ganho": xp_ganho,
                         "n_setores": n_setores,
@@ -61,9 +63,12 @@ class DungeonView:
                 window.close()
                 return None
             if event == "Confirmar":
-                sg.popup("Dungeon cadastrada com sucesso!")
-                window.close()
-                return values["BOSS_FINAL"]
+                nome_boss = values["BOSS_FINAL"].strip()
+                if nome_boss:
+                    window.close()
+                    return nome_boss
+                else:
+                    sg.popup_error("O nome do Boss Final não pode estar vazio.")
             
 
     def pega_nome_dungeon(self):

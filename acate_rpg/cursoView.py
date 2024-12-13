@@ -80,7 +80,34 @@ class CursoView():
         window.close()
         return dados
 
+    def seleciona_curso(self, cursos):
+        layout = [
+            [sg.Text("Selecione um curso:", font=("Helvetica", 16))],
+            [
+                sg.Listbox(
+                    values=[curso.nome for curso in cursos],
+                    size=(40, 10),
+                    key="curso_selecionado",
+                    select_mode=sg.LISTBOX_SELECT_MODE_SINGLE,
+                )
+            ],
+            [sg.Button("Confirmar"), sg.Button("Cancelar")],
+        ]
 
+        window = sg.Window("Selecionar Curso", layout, modal=True)
+        while True:
+            event, values = window.read()
+
+            if event in (sg.WINDOW_CLOSED, "Cancelar"):
+                window.close()
+                return None
+
+            if event == "Confirmar":
+                if values["curso_selecionado"]:
+                    window.close()
+                    return values["curso_selecionado"][0]
+                else:
+                    sg.popup_error("Por favor, selecione um curso.")
 
 
     def mostra_mensagem(self, mensagem):
@@ -100,9 +127,9 @@ class CursoView():
         for curso in cursos_dicionario:
             cursos_info.append(
                 f"{curso['nome']}\n"
-                f"Nível Requerido: {curso['nivel_requerido']}\n"
-                f"Dificuldade: {curso['dificuldade']}\n"
-                "-----------------------------\n"
+                f" Nível Requerido: {curso['nivel_requerido']}\n"
+                f" Dificuldade: {curso['dificuldade']}\n"
+                "\n"
             )
 
        

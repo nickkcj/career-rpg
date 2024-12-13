@@ -4,17 +4,16 @@ import os
 from curso import Curso
 from cursoView import CursoView
 from cursoDAO import CursoDAO
-from exceptions import NivelRequeridoInvalidoError, SetorInvalidoError, DificuldadeInvalidaError, XpGanhoInvalidoError
+from exceptions import CarregamentoDadosException, NivelRequeridoInvalidoError, SetorInvalidoError, DificuldadeInvalidaError, XpGanhoInvalidoError
 class CursoController():
     def __init__(self):
-        self.cursos = []
-        self.__cursoView = CursoView()
         self.__curso_dao = CursoDAO()
-        self.__cursosDAO = self.__curso_dao.get_all()
+        self.__cursoView = CursoView()
+        self.__cursos = list(self.__curso_dao.get_all())
 
     @property
-    def cursosDAO(self):
-        return self.__cursosDAO
+    def cursos(self):
+        return self.__cursos
     
     def adicionar_curso(self, curso):
         self.__curso_dao.add(curso)
@@ -26,27 +25,11 @@ class CursoController():
         self.__curso_dao.remove(nome_curso)
 
     def carregar_cursos(self, caminho_arquivo = "cursos.json"):
-            try:
-                with open(caminho_arquivo, "r") as arquivo:
-                    dados_curso = json.load(arquivo)
-
-                    for dados in dados_curso:
-                        curso = Curso(
-                            nome=dados["nome"],
-                            nivel_requerido=dados["nivel_requerido"],
-                            xp_ganho=dados["xp_ganho"],
-                            setor=dados["setor"],
-                            dificuldade=dados["dificuldade"],
-                            realizado=dados["realizado"]
-                        )
-                        self.adicionar_curso(curso)
-                        self.cursos.append(curso)
-                return len(dados_curso)
-
-            except Exception as e:
-                print(e)
-
-            
+        try:
+            cursos_carregadas = self.__cursos
+            return len(cursos_carregadas)
+        except Exception as e:
+            raise CarregamentoDadosException(arquivo="cursos.pkl", mensagem=str(e))
 
     def cadastrar_curso(self):
         while True:  
@@ -62,33 +45,25 @@ class CursoController():
                         dados_curso["realizado"]
                     )
                 self.adicionar_curso(curso)
-                self.cursos.append(curso)
+                self.__cursos = list(self.__curso_dao.get_all())
                 self.__cursoView.mostra_mensagem(f"O curso {dados_curso['nome']} foi cadastrado com sucesso \n")
                 break  
 
             else:
                 return
 
-  
-
     def alterar_curso(self):
-        nome = self.__cursoView.seleciona_curso()
-        curso = None
-        for c in self.cursos:
-            if c.nome == nome:
-                curso = c
-                break
+        nome = self.__cursoView.seleciona_curso(self.__cursos)
+        curso = next((c for c in self.__cursos if c.nome == nome), None)
 
-        if curso is None:
-            self.__cursoView.mostra_mensagem(f"Curso com o nome {nome} não foi encontrado \n")
-            
-            
-
-            
-
-        elif curso is not None:
-            novos_dados = self.__cursoView.pega_dados_curso()
-
+        if not curso:
+            self.__cursoView.mostra_mensagem(
+                f"Curso com o nome '{nome}' não foi encontrado."
+            )
+            return
+        
+        novos_dados = self.__cursoView.pega_dados_curso()
+        if novos_dados:
             curso.nome = novos_dados["nome"]
             curso.nivel_requerido = novos_dados["nivel_requerido"]
             curso.xp_ganho = novos_dados["xp_ganho"]
@@ -96,29 +71,29 @@ class CursoController():
             curso.dificuldade = novos_dados["dificuldade"]
             curso.realizado = novos_dados["realizado"]
 
+            self.atualizar_curso(curso.nome)
+            self.__cursos = list(self.__curso_dao.get_all())
             self.__cursoView.mostra_mensagem(f"O curso foi alterado com sucesso \n")
-            time.sleep(0.2)
-
-
 
     def excluir_curso(self):
-        nome = self.__cursoView.seleciona_curso()
-        for c in self.cursos:
-            if c.nome == nome:
-                self.cursos.remove(c)
-                self.remover_curso(c)
-                self.__cursoView.mostra_mensagem(f"O curso {c.nome} foi removido com sucesso \n")
-        time.sleep(0.2)
+        nome = self.__cursoView.seleciona_curso(self.__cursos)
+        curso = next((c for c in self.__cursos if c.nome == nome), None)
 
-
+        if curso:
+            self.remover_curso(curso.nome)
+            self.__cursos = list(self.__curso_dao.get_all())
+            self.__cursoView.mostra_mensagem(f"O curso '{curso.nome}' foi removido com sucesso.")
+        else:
+            self.__cursoView.mostra_mensagem(
+                f"Curso com o nome '{nome}' não foi encontrado."
+            )
 
     def mostrar_cursos(self):
         cursos_dicionarios = self.to_dict()   
         self.__cursoView.mostra_cursos(cursos_dicionarios)
 
-
-
     def to_dict(self):
+        self.__cursos = list(self.__curso_dao.get_all())
         return [
             {
                 "nome": curso.nome,
@@ -128,7 +103,7 @@ class CursoController():
                 "dificuldade": curso.dificuldade,
                 "realizado": curso.realizado,
             }
-            for curso in self.cursos
+            for curso in self.__cursos
         ]
 
 
