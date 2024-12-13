@@ -7,12 +7,14 @@ class LogView:
             return None
 
         registros_formatados = [
-            f"Registro {i + 1}: Personagem: {registro.personagem.nome} (Nível {registro.personagem.nivel}) | "
-            f"Boss: {registro.boss.nome} (Dificuldade {registro.boss.dificuldade}) | "
-            f"Dungeon: {registro.dungeon.nome} | Movimento: {registro.acao} | Data: {registro.data}"
+            f"Registro {i + 1}: Personagem: {registro.personagem.nome} | "
+            f"Boss: {registro.boss.nome} | "
+            f"Dungeon: {registro.dungeon.nome} | "
+            f"Ação: {registro.acao} | "
+            f"Data: {registro.data}"
             for i, registro in enumerate(registros)
         ]
-
+        
         layout = [
             [psg.Text("Lista de Registros", font=("Helvetica", 20), justification="center")],
             [psg.Listbox(

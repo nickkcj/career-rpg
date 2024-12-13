@@ -1,5 +1,6 @@
 from quizView import QuizView
 from cursoView import CursoView
+from cursoDAO import CursoDAO
 from personagemController import PersonagemController
 from quiz import Quiz
 import time
@@ -722,6 +723,7 @@ class QuizController():
         self.__personagemController = PersonagemController()
         self.__quizView = QuizView()
         self.__cursoView = CursoView()
+        self.__cursoDAO = CursoDAO()
         
     def realizar_quiz(self, personagem, cursos):
         curso_selecionado = self.__cursoView.mostra_cursos(cursos)
@@ -732,7 +734,7 @@ class QuizController():
         if curso_selecionado:
             curso_encontrado = False
 
-            for index, curso in enumerate(cursos):  # Adicionada a função enumerate para obter o índice
+            for index, curso in enumerate(cursos):
                 if curso["nome"] == curso_selecionado:
                     curso_encontrado = True
                     setor = curso["setor"]
@@ -763,9 +765,11 @@ class QuizController():
 
                         if resultado:
                             self.__personagemController.ganhar_experiencia(personagem, experiencia)
-            
+                            self.__cursoDAO.update(curso)
+                            self.__cursoView.mostra_mensagem(f"Parabéns! Você completou o curso {curso.nome}!")
+
                         else:
-                            cursos[index]["realizado"] = False  # Alterado para atualizar o dicionário
+                            cursos[index]["realizado"] = False
 
                     return resultado, curso["nome"]
 

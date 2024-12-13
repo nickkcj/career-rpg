@@ -104,7 +104,7 @@ class SistemaControllerr:
                 self.menu_usuario()
             except Exception as e:
                 self.__sistemaView.mostrar_mensagem(f"Erro inesperado: {str(e)}")
-                self.__personagemController.personagens
+                self.salvar_dados()
                 self.__sistemaView.mostrar_mensagem("Saindo do sistema...")
                 exit()
 
@@ -113,15 +113,14 @@ class SistemaControllerr:
             try:
                 evento = self.__sistemaView.menu_inicial()
 
-                if evento == '1':  # Ir para o menu do jogador
+                if evento == '1':
                     self.menu_jogador()
-                elif evento == '2':  # Ir para o menu de dungeons/empresas
+                elif evento == '2':
                     self.menu_dungeons_empresa()
-                elif evento == '3':  # Ir para o menu de ranking
+                elif evento == '3':
                     self.menu_ranking()
-                elif evento == '0' or evento == sg.WINDOW_CLOSED:  # Sair do programa
-                    self.__personagemController.personagens
-                    self.__dungeonController.salvar_dungeons()
+                elif evento == '0' or evento == sg.WINDOW_CLOSED:
+                    self.salvar_dados()
                     self.__sistemaView.mostrar_mensagem("Saindo do sistema...")
                     exit()
                 else:
@@ -137,20 +136,21 @@ class SistemaControllerr:
             try:
                 evento = self.__sistemaView.menu_jogador()
 
-                if evento == '1':  # Cadastrar personagem
+                if evento == '1':
                     self.__personagemController.incluir_personagem()
-                elif evento == '2':  # Selecionar personagem
+                elif evento == '2':
                     personagem = self.__personagemController.selecionar_personagem()
                     if personagem:
                         self.menu_principal_personagem(personagem)
-                elif evento == '3':  # Alterar dados do personagem
+                elif evento == '3':
                     personagem = self.__personagemController.selecionar_personagem()
                     if personagem:
                         self.__personagemController.alterar_dados_personagem(personagem)
-                elif evento == '4':  # Excluir personagem
+                elif evento == '4':
                     self.__personagemController.excluir_personagem()
-                elif evento == '0':  # Voltar ao menu inicial
-                    return  # Sai do loop e retorna ao `menu_usuario`
+                elif evento == '0':
+                    self.salvar_dados()
+                    return
                 else:
                     raise OperacaoNaoPermitidaException(operacao="Escolha de opção no menu jogador")
             except OperacaoNaoPermitidaException as e:
@@ -178,10 +178,12 @@ class SistemaControllerr:
                                     if setor is not None and not setor.conquistado:
                                         boss = setor.boss
                                         self.__batalhaController.iniciar_batalha(personagem, boss, dungeon_selecionada, setor, self.__log)
+                                        self.salvar_dados()
                                         break
                                     else:
                                         boss_final = dungeon_selecionada.boss_final
                                         self.__batalhaController.iniciar_batalha(personagem, boss_final, dungeon_selecionada, setor, self.__log)
+                                        self.salvar_dados()
                                         break
                             else:
                                 self.__sistemaView.mostrar_mensagem("Nenhuma dungeon selecionada. Tente novamente.")
@@ -201,12 +203,13 @@ class SistemaControllerr:
 
                 elif opcao == '4':
                     self.menu_log(personagem)
+                    self.salvar_dados()
 
                 elif opcao == '0':
-                    return
+                    self.menu_jogador()
 
                 elif opcao == '-EXIT-':
-                    self.__personagemController.personagens
+                    self.salvar_dados()
                     exit()
                 else:
                     raise OperacaoNaoPermitidaException(operacao="Escolha de opção no menu principal do personagem")
@@ -222,19 +225,16 @@ class SistemaControllerr:
 
 
                 if opcao == '1':
-                    self.__log.listar_registros()
+                    self.__log.listar_registros(personagem.nome)
 
                 elif opcao == '2':
-                    teste = self.__log.listar_registros()
-                    if teste is not None:
-                        self.__log.alterar_registro()
+                    self.__log.alterar_registro()
 
                 elif opcao == '3':
-                    teste = self.__log.listar_registros()
-                    if teste is not None:
-                        self.__log.excluir_registro()
+                    self.__log.excluir_registro()
 
                 elif opcao == '4':
+                    self.salvar_dados()
                     self.menu_principal_personagem(personagem)
 
                 else:
@@ -381,3 +381,9 @@ class SistemaControllerr:
             except ValueError:
                 self.__sistemaView.mostrar_mensagem("Por favor, insira um número válido.")
 
+    def salvar_dados(self):
+        print("[INFO] Salvando todas as alterações antes de sair...")
+        self.__personagemController.personagens
+        self.__dungeonController.dungeons
+        self.__cursoController.cursos
+        self.__log.registros
