@@ -20,6 +20,7 @@ class LogController():
         self.__registros = list(self.__registro_dao.get_all())
     
     def listar_registros(self):
+        self._registros = list(self._registro_dao.get_all())
         registros_formatados = [
             {
                 "personagem": {"nome": registro.personagem.nome, "nivel": registro.personagem.nivel},
@@ -34,6 +35,7 @@ class LogController():
 
         
     def excluir_registro(self):
+        self._registros = list(self._registro_dao.get_all())
         registro_selecionado = self.__logView.excluir_registro(self.__registros)
         if registro_selecionado is not None:
             self.__registro_dao.remove(registro_selecionado)
