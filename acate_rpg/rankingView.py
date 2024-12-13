@@ -110,7 +110,7 @@ class RankingView:
             [psg.Text(f"Cursos Conquistados: {personagem.cursos_conquistados}", font=("Helvetica", 14))],
             [psg.Text("Dungeons Conquistadas:", font=("Helvetica", 14))],
             [psg.Listbox(
-                values=[f"{dungeon['nome']}" for dungeon in personagem.dungeons_conquistadas],
+                values=[f"{dungeon.nome}" for dungeon in personagem.dungeons_conquistadas],
                 size=(30, 10),
                 font=("Helvetica", 12),
                 select_mode=psg.LISTBOX_SELECT_MODE_SINGLE,
