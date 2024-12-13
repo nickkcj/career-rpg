@@ -3,15 +3,14 @@ from personagemView import PersonagemView
 from personagem import Personagem
 from personagemDAO import PersonagemDAO
 from classePersonagemController import ClassePersonagemController
-from exceptions import CadastroInvalidoException, ItemIndisponivelException, OperacaoNaoPermitidaException, HpJahCheioException
+from exceptions import CadastroInvalidoException, CarregamentoDadosException, ItemIndisponivelException, OperacaoNaoPermitidaException, HpJahCheioException
 from batalhaView import BatalhaView
 
 
 class PersonagemController():
     def __init__(self):
-        self.__personagens = []
         self.__personagem_dao = PersonagemDAO()
-        self.__personagensDAO = self.__personagem_dao.get_all()
+        self.__personagens = list(self.__personagem_dao.get_all())
         self.__personagemView = PersonagemView()
         self.__batalhaView = BatalhaView()
         self.__classeController = ClassePersonagemController()
@@ -37,11 +36,7 @@ class PersonagemController():
 
     @property
     def personagens(self):
-        return self.__personagens
-    
-    @property
-    def personagensDAO(self):
-        return self.__personagensDAO
+        return list(self.__personagem_dao.get_all())
 
     @property
     def habilidades_por_classe(self):
@@ -66,18 +61,24 @@ class PersonagemController():
             raise CadastroInvalidoException(f"Personagem '{nome}' não encontrado.")
         return personagem
     
+    def carregar_personagens(self):
+        try:
+            personagens_carregados = self.__personagens
+            return len(personagens_carregados)
+        except Exception as e:
+            raise CarregamentoDadosException(arquivo="personagens.pkl", mensagem=str(e))
+
+
     def incluir_personagem(self):
         try:
             dados_personagem = self.__personagemView.pega_dados_personagem()
             
-            # Validações iniciais
             if not dados_personagem['classe']:
                 raise CadastroInvalidoException(entidade="Personagem", campo="classe")
             
             if any(p.nome == dados_personagem["nome"] for p in self.__personagem_dao.get_all()):
                 raise CadastroInvalidoException(f"Um personagem com o nome '{dados_personagem['nome']}' já existe.")
             
-            # Criação do personagem
             dungeons_conquistadas = dados_personagem.get("dungeons_conquistadas", [])
             bosses_derrotados = dados_personagem.get("bosses_derrotados", [])
             
@@ -95,15 +96,12 @@ class PersonagemController():
             personagem.habilidades = self.habilidades_por_classe.get(dados_personagem["classe"], [])
             personagem.classes_historico = [dados_personagem["classe"]]
             
-            # Definir atributos iniciais para classes específicas
             classe_inicial = personagem.classes_historico[0]
             if classe_inicial in ["Estagiario", "CLT"]:
                 self.__classeController.definir_atributos_iniciais(personagem.classe_personagem)
             
-            # Adicionar personagem ao DAO
             self.adicionar_personagem(personagem)
             
-            # Mensagem de sucesso
             self.__personagemView.mostrar_mensagem(
                 f"Personagem {personagem.nome} da classe {personagem.classe_personagem.nome_classe} criado com sucesso! "
                 f"Nível: {personagem.nivel}, Experiência: {personagem.experiencia_total}"
@@ -111,45 +109,101 @@ class PersonagemController():
         
         except CadastroInvalidoException as e:
             self.__personagemView.mostrar_mensagem(str(e))
-            time.sleep(2)
         except Exception as e:
-            self.__personagemView.mostrar_mensagem(f"Erro inesperado: {str(e)}")
-
-    def criar_personagem(self, nome, nivel=1, experiencia_total=0, pontos_disponiveis=0, nome_classe=None, dungeons_conquistadas=None, bosses_derrotados=None, cursos_conquistados=0):
-        try:
-            if dungeons_conquistadas is None:
-                dungeons_conquistadas = []
-            if bosses_derrotados is None:
-                bosses_derrotados = []
-
-            if any(p.nome == nome for p in self.personagens):
-                raise CadastroInvalidoException(f"Um personagem com o nome '{nome}' já existe.")
-
-            personagem = Personagem(
-                nome=nome,
-                nivel=nivel,
-                experiencia_total=experiencia_total,
-                pontos_disponiveis=pontos_disponiveis,
-                nome_classe=nome_classe,
-                dungeons_conquistadas=dungeons_conquistadas,
-                bosses_derrotados=bosses_derrotados,
-                cursos_conquistados=cursos_conquistados
-            )
-            personagem.classes_historico = [nome_classe]
-            classe_inicial = personagem.classes_historico[0]
-            if classe_inicial in ["Estagiario", "CLT"]:
-                self.__classeController.definir_atributos_iniciais(personagem.classe_personagem)
-
-            return personagem
-
-        except AttributeError as e:
-            raise OperacaoNaoPermitidaException("Erro ao criar personagem") from e
+            self.__personagemView.mostrar_mensagem(f"Erro inesperado no cadastro do Personagem: {str(e)}")
     
+    def alterar_dados_personagem(self, personagem: Personagem):
+        try:
+            novos_dados = self.__personagemView.pega_novos_dados_personagem(personagem)
+
+            if novos_dados is None:
+                self.__personagemView.mostrar_mensagem("Ação cancelada.")
+                return
+
+            personagem.nome = novos_dados.get("nome", personagem.nome)
+            personagem.nivel = novos_dados.get("nivel", personagem.nivel)
+            personagem.experiencia_total = novos_dados.get("experiencia_total", personagem.experiencia_total)
+            personagem.pontos_disponiveis = novos_dados.get("pontos_disponiveis", personagem.pontos_disponiveis)
+            personagem.cursos_conquistados = novos_dados.get("cursos_conquistados", personagem.cursos_conquistados)
+
+            if novos_dados.get("classe") != personagem.classe_personagem.nome_classe:
+                self.alterar_classe(personagem, novos_dados["classe"])
+
+            self.atualizar_personagem(personagem)
+            self.__personagemView.mostrar_mensagem(f"Dados do personagem '{personagem.nome}' atualizados com sucesso!")
+        except Exception as e:
+            self.__personagemView.mostrar_mensagem(f"Erro ao alterar dados do personagem: {str(e)}")
+
+    def alterar_classe(self, personagem: Personagem, nova_classe_nome: str):
+        try:
+            # Criar a nova classe usando o ClassePersonagemController
+            nova_classe = self.__classeController.criar_classe(nova_classe_nome)
+
+            # Verificar se a nova classe já está no histórico
+            if nova_classe_nome in personagem.classes_historico:
+                self.__personagemView.mostrar_mensagem(
+                    f"{personagem.nome} já teve a classe {nova_classe_nome}. Atualizando classe atual..."
+                )
+            else:
+                # Adicionar nova classe ao histórico (como nome da classe)
+                personagem.classes_historico.append(nova_classe_nome)
+
+                # Adicionar habilidades da nova classe
+                novas_habilidades = self.__habilidades_por_classe.get(nova_classe_nome, [])
+                personagem.habilidades.extend(novas_habilidades)
+
+                self.__personagemView.mostrar_mensagem(
+                    f"{personagem.nome} mudou para a classe {nova_classe_nome} e ganhou novas habilidades."
+                )
+
+            # Atualizar a classe do personagem com o objeto de classe
+            personagem.classe_personagem = nova_classe
+            self.atualizar_personagem(personagem)
+
+        except ValueError as e:
+            self.__personagemView.mostrar_mensagem(f"Erro: {e}")
+        except Exception as e:
+            self.__personagemView.mostrar_mensagem(f"Erro ao alterar classe: {e}")
+
+    def excluir_personagem(self):
+        try:
+            personagens = self.__personagens
+            if not personagens:
+                self.__personagemView.mostrar_mensagem("Nenhum personagem cadastrado para excluir.")
+                return
+
+            # Selecionar personagem para excluir
+            personagem_selecionado = self.__personagemView.selecionar_personagem_para_excluir(personagens)
+
+            if personagem_selecionado is None:
+                self.__personagemView.mostrar_mensagem("Ação de exclusão cancelada.")
+                return
+
+            # Solicitar confirmação ao jogador na View
+            confirmacao = self.__personagemView.confirmar_exclusao(personagem_selecionado.nome)
+            if not confirmacao:
+                self.__personagemView.mostrar_mensagem("Exclusão cancelada pelo jogador.")
+                return
+
+            # Remover personagem do DAO
+            self.remover_personagem(personagem_selecionado.nome)
+
+            # Atualizar lista de personagens em memória
+            self.__personagens = [
+                personagem for personagem in self.__personagens if personagem.nome != personagem_selecionado.nome
+            ]
+
+            self.__personagemView.mostrar_mensagem(f"Personagem '{personagem_selecionado.nome}' excluído com sucesso!")
+
+        except Exception as e:
+            self.__personagemView.mostrar_mensagem(f"Erro ao excluir personagem: {str(e)}")
+
     def selecionar_personagem(self):
         # Exibir os personagens na tela
+        personagens = self.__personagens
         dados_personagens = [
             f"Nome: {personagem.nome} - Classe: {personagem.classe_personagem.nome_classe} - Nível: {personagem.nivel}"
-            for personagem in self.__personagensDAO
+            for personagem in personagens
         ]
         
         # Mostrar os personagens na View e aguardar a seleção
@@ -158,10 +212,10 @@ class PersonagemController():
         if personagem_selecionado is not None:
             # Encontrar o personagem correspondente ao índice selecionado
             idx_selecionado = dados_personagens.index(personagem_selecionado)
-            if isinstance(self.__personagensDAO, dict):
-                personagens_lista = list(self.__personagensDAO.values())
+            if isinstance(self.__personagens, dict):
+                personagens_lista = list(self.__personagens.values())
             else:
-                personagens_lista = list(self.__personagensDAO)
+                personagens_lista = list(self.__personagens)
             return personagens_lista[idx_selecionado]
 
     def mostrar_habilidades(self, personagem: Personagem):
@@ -430,13 +484,5 @@ class PersonagemController():
                 raise ItemIndisponivelException(item="Poção")
         except (ItemIndisponivelException, HpJahCheioException) as e:
             self.__personagemView.mostrar_mensagem(str(e))
-
-    def usar_itens_batalha(self, personagem):
-        self.__personagemView.mostrar_mensagem(f"---Inventário---: Poção HP (quantidade: {personagem.pocao_hp.quant}), Poção Estamina (quantidade: {personagem.pocao_est.quant}")
-        print("1 - Usar poção HP")
-        print("2 - Usar poção Estamina")
-        opcao = input("Digite o item que você quer usar: ")
-        return opcao
-
 
     

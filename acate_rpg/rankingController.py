@@ -9,7 +9,7 @@ class RankingController:
 
     def atualizar_personagens_ranking(self):
         # Obtendo os personagens diretamente do controlador de personagens.
-        personagens = list(self.__personagem_controller.personagensDAO)  # Convertendo para lista
+        personagens = list(self.__personagem_controller.personagens)  # Convertendo para lista
         return personagens
 
     def exibir_ranking_nivel(self):

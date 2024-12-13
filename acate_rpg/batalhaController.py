@@ -51,28 +51,6 @@ class BatalhaController():
 
         self.__personagemController.atualizar_personagem(personagem)
 
-    def usar_item(self, personagem):
-        opcao = self.__personagemController.usar_itens_batalha(personagem)
-        while True:
-            try:
-                if opcao == '1':
-                    if personagem.hp_atual < personagem.classe_personagem.atributos['hp']:
-                        personagem.hp_atual += 10
-                        personagem.pocao_hp.quant -= 1
-                        self.__tela.mostra_mensagem(f"O personagem {personagem.nome} se curou em 10 de vida")
-                        time.sleep(2)
-                        break
-                    else:
-                        raise HpJahCheioException("Não é possível usar a Poção de HP, o seu HP já está Cheio!")
-
-                else:
-                    personagem.classe_personagem.atributos['estamina'] += 10
-                    self.__tela.mostra_mensagem(f"O personagem {personagem.nome} restaurou 10 de estamina")
-                    time.sleep(2)
-                    break
-            except HpJahCheioException as e:
-                self.__tela.mostra_mensagem(str(e))
-
     def turno_boss(self, personagem, boss, window):
         acao_boss = random.randint(1, 5)  
         if acao_boss in (1, 2, 3, 4):
