@@ -163,6 +163,7 @@ class SistemaControllerr:
 
                 if opcao == '1':
                     self.opcoes_personagem(personagem)
+
                 elif opcao == '2':
                     while True:
                         try:

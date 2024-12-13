@@ -6,27 +6,24 @@ class BatalhaView:
         if classe == 'CLT':
             layout = [
                 [sg.Text("------Escolha sua habilidade!------")],
-                [sg.Button("Festa da Firma"), sg.Button("Ataque Corporativo")]
+                [sg.Button("Festa da Firma", key='1'), sg.Button("Ataque Corporativo", key='2')]
             ]
         elif classe == 'Estagiario':
             layout = [
                 [sg.Text("------Escolha sua habilidade!------")],
-                [sg.Button("Cagada Remunerada"), sg.Button("Desestabilizar Boss")]
+                [sg.Button("Cagada Remunerada", key='1'), sg.Button("Desestabilizar Boss", key='2')]
             ]
         elif classe == 'Trainee':
             layout = [
                 [sg.Text("------Escolha sua habilidade!------")],
-                [sg.Button("Hora Extra"), sg.Button("Desmotivar Boss")]
+                [sg.Button("Hora Extra", key='1'), sg.Button("Desmotivar Boss", key='2')]
             ]
 
         window = sg.Window(f"Escolha a habilidade para {classe}", layout)
         event, _ = window.read()
         window.close()
 
-        if event == "Festa da Firma" or event == "Cagada Remunerada" or event == "Hora Extra":
-            return "buff"
-        elif event == "Ataque Corporativo" or event == "Desestabilizar Boss" or event == "Desmotivar Boss":
-            return "debuff"
+        return event
 
     def mostra_resultado(self, mensagem):
         layout = [

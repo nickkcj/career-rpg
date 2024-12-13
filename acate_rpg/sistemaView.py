@@ -58,7 +58,7 @@ class SistemaView:
             event, _ = self.window.read()
             if event in ('0', sg.WINDOW_CLOSED):
                 self.window.close()
-                break
+                exit()
             self.window.close()
             return event
 
@@ -269,7 +269,7 @@ class SistemaView:
             event, _ = window.read()
             if event in ('-EXIT-', sg.WINDOW_CLOSED):
                 window.close()
-                return None
+                exit()
                 
             else:
                 window.close()
