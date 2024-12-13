@@ -7,6 +7,18 @@ class ClassePersonagemController():
             "CLT": {"ataque": 40, "defesa": 40, "hp": 100, "estamina": 40}
         }
 
+    def criar_classe(self, nome_classe: str) -> ClassePersonagem:
+        try:
+            # Verificar se o nome da classe é válido
+            if nome_classe not in ["Trainee", "Estagiario", "CLT"]:
+                raise ValueError(f"Classe '{nome_classe}' não é válida.")
+
+            # Criar e retornar o objeto ClassePersonagem
+            return ClassePersonagem(nome_classe=nome_classe)
+
+        except ValueError as e:
+            raise ValueError(f"Erro ao criar classe: {e}")
+
     def definir_atributos_iniciais(self, classe_personagem: ClassePersonagem):
         modificador = self.modificadores_classe.get(classe_personagem.nome_classe)
 

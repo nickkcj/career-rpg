@@ -3,11 +3,27 @@ import time
 import os
 from curso import Curso
 from cursoView import CursoView
+from cursoDAO import CursoDAO
 from exceptions import NivelRequeridoInvalidoError, SetorInvalidoError, DificuldadeInvalidaError, XpGanhoInvalidoError
 class CursoController():
     def __init__(self):
         self.cursos = []
         self.__cursoView = CursoView()
+        self.__curso_dao = CursoDAO()
+        self.__cursosDAO = self.__curso_dao.get_all()
+
+    @property
+    def cursosDAO(self):
+        return self.__cursosDAO
+    
+    def adicionar_curso(self, curso):
+        self.__curso_dao.add(curso)
+
+    def atualizar_curso(self, curso):
+        self.__curso_dao.update(curso)
+
+    def remover_curso(self, nome_curso):
+        self.__curso_dao.remove(nome_curso)
 
     def carregar_cursos(self, caminho_arquivo = "cursos.json"):
             try:
@@ -23,9 +39,9 @@ class CursoController():
                             dificuldade=dados["dificuldade"],
                             realizado=dados["realizado"]
                         )
+                        self.adicionar_curso(curso)
                         self.cursos.append(curso)
-
-                self.__cursoView.mostra_mensagem(f"{len(dados_curso)} cursos carregados com sucesso!")
+                return len(dados_curso)
 
             except Exception as e:
                 print(e)
@@ -45,6 +61,7 @@ class CursoController():
                         dados_curso["dificuldade"], 
                         dados_curso["realizado"]
                     )
+                self.adicionar_curso(curso)
                 self.cursos.append(curso)
                 self.__cursoView.mostra_mensagem(f"O curso {dados_curso['nome']} foi cadastrado com sucesso \n")
                 break  
@@ -89,6 +106,7 @@ class CursoController():
         for c in self.cursos:
             if c.nome == nome:
                 self.cursos.remove(c)
+                self.remover_curso(c)
                 self.__cursoView.mostra_mensagem(f"O curso {c.nome} foi removido com sucesso \n")
         time.sleep(0.2)
 

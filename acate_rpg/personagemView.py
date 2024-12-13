@@ -157,8 +157,72 @@ class PersonagemView():
                 janela.close()
                 return
             
+    def pega_novos_dados_personagem(self, personagem):
+        layout = [
+            [psg.Text(f"Alterar Dados de {personagem.nome}", font=("Helvetica", 16))],
+            [psg.Text("Nome:", size=(15, 1)), psg.InputText(default_text=personagem.nome, key="nome")],
+            [psg.Text("Nível:", size=(15, 1)), psg.InputText(default_text=personagem.nivel, key="nivel")],
+            [psg.Text("Experiência Total:", size=(15, 1)), psg.InputText(default_text=personagem.experiencia_total, key="experiencia_total")],
+            [psg.Text("Pontos Disponíveis:", size=(15, 1)), psg.InputText(default_text=personagem.pontos_disponiveis, key="pontos_disponiveis")],
+            [psg.Text("Classe:", size=(15, 1)), psg.Combo(
+            ["Trainee","Estagiario", "CLT"], default_value=personagem.classe_personagem.nome_classe, key="classe")],
+            [psg.Text("Cursos Conquistados:", size=(15, 1)), psg.InputText(default_text=personagem.cursos_conquistados, key="cursos_conquistados")],
+            [psg.Button("Salvar"), psg.Button("Cancelar")]
+        ]
 
+        window = psg.Window("Alterar Dados do Personagem", layout)
+        event, values = window.read()
+        window.close()
+
+        if event == "Salvar":
+
+            return {
+                "nome": values["nome"],
+                "nivel": int(values["nivel"]),
+                "experiencia_total": int(values["experiencia_total"]),
+                "pontos_disponiveis": int(values["pontos_disponiveis"]),
+                "classe": values["classe"],
+                "cursos_conquistados": int(values["cursos_conquistados"]),
+            }
+        return None
         
+    def selecionar_personagem_para_excluir(self, personagens):
+        layout = [
+            [psg.Text("Selecione o personagem que deseja excluir:", font=("Helvetica", 16))],
+            [psg.Listbox(
+                values=[f"{p.nome} - Nível: {p.nivel} - Classe: {p.classe_personagem.nome_classe}" for p in personagens],
+                size=(50, 10),
+                key="personagem_selecionado",
+                enable_events=True
+            )],
+            [psg.Button("Excluir"), psg.Button("Cancelar")]
+        ]
+
+        window = psg.Window("Excluir Personagem", layout)
+
+        personagem_selecionado = None  # Variável para armazenar a seleção do personagem
+        while True:
+            event, values = window.read()
+
+            if event == psg.WINDOW_CLOSED or event == "Cancelar":
+                break  # Fecha a janela ou cancela a ação
+
+            if event == "Excluir":
+                if values["personagem_selecionado"]:  # Verifica se um item foi selecionado na lista
+                    # Obtém o personagem selecionado
+                    idx = personagens.index(next(p for p in personagens if f"{p.nome}" in values["personagem_selecionado"][0]))
+                    personagem_selecionado = personagens[idx]
+                    break  # Sai do loop após a seleção
+
+        window.close()
+        return personagem_selecionado
+
+    def confirmar_exclusao(self, nome_personagem):
+        confirmacao = psg.popup_yes_no(
+            f"Você realmente deseja excluir o personagem '{nome_personagem}'?",
+            title="Confirmação de Exclusão",
+        )
+        return confirmacao == "Yes"
 
     def escolher_atributo_e_quantidade(self):
         layout_atributos = [
