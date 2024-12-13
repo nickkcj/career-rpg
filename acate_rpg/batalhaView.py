@@ -44,30 +44,38 @@ class BatalhaView:
         window.close()
 
 
-    def exibir_tela_batalha(self, personagem, boss):
-        # Caminhos das imagens
-        img_personagem_boss_path = "assets/images/personagem_boss.jpg"  # Imagem compartilhada para personagem e boss
+    def exibir_tela_batalha(self, dados_batalha):
         
+        img_personagem_boss_path = "assets/images/personagem_boss.jpg"  
 
-        # Layout inicial com ajuste de tamanhos
+        
+        personagem_nome = dados_batalha["personagem"]["nome"]
+        personagem_hp_atual = dados_batalha["personagem"]["hp_atual"]
+        personagem_hp_total = dados_batalha["personagem"]["hp_total"]
+
+        boss_nome = dados_batalha["boss"]["nome"]
+        boss_hp = dados_batalha["boss"]["hp"]
+
+        
         layout = [
             [sg.Text("BATALHA", justification="center", font=("Arial", 25), size=(30, 1))],
             [sg.Image(filename=img_personagem_boss_path, key="-IMG-", size=(800, 600))],
             [sg.Column([
-                [sg.Text(f"{personagem.nome}", justification="center", font=("Arial", 20), size=(20, 1))],
-                [sg.Text(f"HP: {personagem.hp_atual}/{personagem.classe_personagem.atributos['hp']}", justification="center",font=("Arial", 20), key="-PERSONAGEM_HP-")],
+                [sg.Text(f"{personagem_nome}", justification="center", font=("Arial", 20), size=(20, 1))],
+                [sg.Text(f"HP: {personagem_hp_atual}/{personagem_hp_total}", justification="center", font=("Arial", 20), key="-PERSONAGEM_HP-")],
             ], element_justification="center"),
             sg.Column([
-                [sg.Text(f"{boss.nome}", justification="center", font=("Arial", 20), size=(20, 1))],
-                [sg.Text(f"HP: {boss.atributos['hp']}", justification="center", font=("Arial", 20), key="-BOSS_HP-")],
+                [sg.Text(f"{boss_nome}", justification="center", font=("Arial", 20), size=(20, 1))],
+                [sg.Text(f"HP: {boss_hp}", justification="center", font=("Arial", 20), key="-BOSS_HP-")],
             ], element_justification="center")],
-            [sg.Button("Atacar", size=(20,2)), sg.Button("Defender", size=(20,2)), sg.Button("Usar Item", size=(20,2)), sg.Button("Usar Habilidade", size=(20,2))],
+            [sg.Button("Atacar", size=(20, 2)), sg.Button("Defender", size=(20, 2)), sg.Button("Usar Item", size=(20, 2)), sg.Button("Usar Habilidade", size=(20, 2))],
         ]
 
-        # Criação da janela
+       
         window = sg.Window("Batalha", layout, finalize=True, element_justification='center')
         window.maximize()
         return window
+
 
 
 

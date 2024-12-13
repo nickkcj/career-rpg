@@ -17,7 +17,18 @@ class LogController():
         self.__registros.append(registro)
     
     def listar_registros(self):
-        self.__logView.listar_registros(self.__registros)
+        registros_formatados = [
+            {
+                "personagem": {"nome": registro.personagem.nome, "nivel": registro.personagem.nivel},
+                "boss": {"nome": registro.boss.nome, "dificuldade": registro.boss.dificuldade},
+                "dungeon": registro.dungeon.nome,
+                "acao": registro.acao,
+                "data": registro.data.strftime("%d/%m/%Y %H:%M:%S")
+            }
+            for registro in self.__registros
+        ]
+        self.__logView.listar_registros(registros_formatados)
+
         
     def excluir_registro(self):
         self.__logView.excluir_registro(self.__registros)

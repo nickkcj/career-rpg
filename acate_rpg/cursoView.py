@@ -7,19 +7,18 @@ class CursoView():
         janela_largura = 600
         janela_altura = 400
 
-        # Definir a proporção para o aumento dos elementos
+        
         proporcao_largura = janela_largura / 800
-        proporcao_altura = janela_altura / 600
         proporcao_texto = proporcao_largura
 
-        # Tamanho proporcional dos widgets
+        
         campo_largura = int(janela_largura * 0.8)
         tamanho_fonte = int(16 * proporcao_texto)
 
-        # Valores para os combos
-        niveis = list(range(1, 12))  # Níveis de 1 a 11
-        dificuldades = list(range(1, 12))  # Dificuldades de 1 a 11
-        xp_ganhos = list(range(100, 1101, 100))  # XP de 100 em 100 até 1000
+        
+        niveis = list(range(1, 12))  
+        dificuldades = list(range(1, 12))  
+        xp_ganhos = list(range(100, 1101, 100))  
 
         layout = [
             [sg.Text("Digite os dados do curso", font=("Helvetica", tamanho_fonte), justification="center", size=(40, 1))],
@@ -42,7 +41,7 @@ class CursoView():
 
             if event == "Confirmar":
                 try:
-                    # Validação dos campos obrigatórios
+                    
                     if not values["nome"]:
                         sg.popup_error("O nome do curso é obrigatório!")
                         continue
@@ -96,7 +95,7 @@ class CursoView():
         window.close()
 
     def mostra_cursos(self, cursos_dicionario, alteracao=None):
-        # Transformar os cursos em um formato adequado para exibição
+        
         cursos_info = []
         for curso in cursos_dicionario:
             cursos_info.append(
@@ -106,19 +105,19 @@ class CursoView():
                 "-----------------------------\n"
             )
 
-        # Layout da esquerda com a lista de cursos
+       
         cursos_layout = [
             [sg.Text('---- LISTA DE CURSOS ----', font=("Helvetica", 20), justification='center', expand_x=True, pad=(0, 25))],
             [sg.Listbox(values=cursos_info, size=(60, 20), key='-CURSOS-', font=("Helvetica", 16), pad=(10, 10), enable_events=True)],
             [sg.Button('Fechar', size=(15, 2), pad=(10, 20))]
         ]
 
-        # Layout da direita com a imagem ajustada
+        
         imagem_layout = [
             [sg.Image(filename="assets/images/cursos.jpg", size=(800, 600), pad=(10, 200))]
         ]
 
-        # Layout principal com os elementos lado a lado e centralizados
+        
         layout = [
             [sg.Push(),
             sg.Column(cursos_layout, element_justification='center', vertical_alignment='center'),
@@ -127,17 +126,17 @@ class CursoView():
             sg.Push()]
         ]
 
-        # Janela principal centralizada
+        
         window = sg.Window(
             'Cursos Disponíveis',
             layout,
-            size=(1200, 800),  # Tamanho total da tela
+            size=(1200, 800),  
             element_justification='center',
             resizable=True,
             finalize=True
         )
         window.maximize()
-        time.sleep(0.5)  # Maximiza para garantir centralização
+        time.sleep(0.5)  
 
         if alteracao:
             return

@@ -9,11 +9,11 @@ class ClassePersonagemController():
 
     def criar_classe(self, nome_classe: str) -> ClassePersonagem:
         try:
-            # Verificar se o nome da classe é válido
+            
             if nome_classe not in ["Trainee", "Estagiario", "CLT"]:
                 raise ValueError(f"Classe '{nome_classe}' não é válida.")
 
-            # Criar e retornar o objeto ClassePersonagem
+            
             return ClassePersonagem(nome_classe=nome_classe)
 
         except ValueError as e:

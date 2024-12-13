@@ -121,66 +121,79 @@ class DungeonView:
         sg.popup(msg, title="Aviso")
 
     def mostra_dungeons_enum(self, dungeons):
+        
+        dungeons_formatadas = [
+            f"{idx + 1}. Nome: {dungeon['nome']}, Nível Requerido: {dungeon['nivel_requerido']}"
+            for idx, dungeon in enumerate(dungeons)
+        ]
+
+        
         layout = [
             [sg.Text("Selecione uma Dungeon:")],
             [
                 sg.Listbox(
-                    values=[f"{idx + 1}. Nome: {dungeon.nome}, Nível Requerido: {dungeon.nivel_requerido}" for idx, dungeon in enumerate(dungeons)],
+                    values=dungeons_formatadas,
                     size=(40, 10),
                     key="DUNGEONS_LIST",
                     select_mode=sg.LISTBOX_SELECT_MODE_SINGLE
                 )
             ],
-            [sg.Button("Confirmar", size=(10, 2)), sg.Button("Cancelar", size=(10, 2))]
+            [sg.Button("Confirmar", key="confirmar", size=(10, 2)), sg.Button("Cancelar", key="cancelar", size=(10, 2))]
         ]
 
-        window = sg.Window("Dungeons Disponíveis", layout, modal=True)
+        
+        window = sg.Window("Lista de Dungeons", layout, modal=True, finalize=True)
+
         while True:
             event, values = window.read()
-            if event in (sg.WINDOW_CLOSED, "Cancelar"):
+
+            if event in ("cancelar", sg.WINDOW_CLOSED):
                 window.close()
                 return None
-            if event == "Confirmar":
-                try:
-                    selected_index = int(values["DUNGEONS_LIST"][0].split(".")[0]) - 1
+
+            if event == "confirmar":
+                
+                if values["DUNGEONS_LIST"]:
+                    opcao_selecionada = int(values["DUNGEONS_LIST"][0].split(".")[0]) - 1
                     window.close()
-                    return selected_index
-                except IndexError:
-                    sg.popup_error("Selecione uma dungeon.")
+                    return opcao_selecionada
+                else:
+                    sg.popup("Por favor, selecione uma dungeon.")
+
         
     def mostra_dungeon(self, dungeons):
-        
         layout = [
             [sg.Text("--- TODAS AS DUNGEONS ---", font=("Helvetica", 20))],
         ]
 
         for dungeon in dungeons:
             dungeon_layout = [
-                [sg.Text(f"--- EMPRESA: {dungeon.nome} ---", font=("Helvetica", 16))],
-                [sg.Text(f"Nível Requerido: {dungeon.nivel_requerido}")],
-                [sg.Text(f"XP Ganho: {dungeon.xp_ganho}")],
-                [sg.Text(f"Dificuldade: {dungeon.dificuldade}")],
+                [sg.Text(f"--- DUNGEON: {dungeon['nome']} ---", font=("Helvetica", 16))],
+                [sg.Text(f"Nível Requerido: {dungeon['nivel_requerido']}")],
+                [sg.Text(f"XP Ganho: {dungeon['xp_ganho']}")],
+                [sg.Text(f"Dificuldade: {dungeon['dificuldade']}")],
                 [sg.Text("Setores:")],
             ]
 
-           
-            for setor in dungeon.setores:
+            
+            for setor in dungeon["setores"]:
                 dungeon_layout.append([
-                    sg.Text(f" - Setor: {setor.nome} (Dificuldade: {setor.dificuldade})\n"
-                            f"   Diretor: {setor.boss.nome} - Dificuldade: {setor.boss.dificuldade} - Nível: {setor.boss.nivel_requerido}")
+                    sg.Text(f" - Setor: {setor['nome']} (Dificuldade: {setor['dificuldade']})\n"
+                            f"   Diretor: {setor['boss']['nome']} - Dificuldade: {setor['boss']['dificuldade']} - "
+                            f"Nível: {setor['boss']['nivel_requerido']}")
                 ])
 
             
             dungeon_layout.append([
-                sg.Text(f"Diretor Geral: {dungeon.boss_final.nome} - Dificuldade: {dungeon.boss_final.dificuldade} - Nível: {dungeon.boss_final.nivel_requerido}")
+                sg.Text(f"Diretor Geral: {dungeon['boss_final']['nome']} - Dificuldade: {dungeon['boss_final']['dificuldade']} - "
+                        f"Nível: {dungeon['boss_final']['nivel_requerido']}")
             ])
-            dungeon_layout.append([sg.HorizontalSeparator()])  
+            dungeon_layout.append([sg.HorizontalSeparator()])
             layout.extend(dungeon_layout)
 
-        
         layout.append([sg.Button("Voltar", size=(10, 2))])
 
-        
+       
         window = sg.Window(
             "Lista de Dungeons",
             [[sg.Column(layout, scrollable=True, vertical_scroll_only=True, size=(800, 500))]],
@@ -188,13 +201,12 @@ class DungeonView:
             finalize=True
         )
 
-        
-
         while True:
             event, _ = window.read()
             if event in (sg.WINDOW_CLOSED, "Voltar"):
                 window.close()
                 break
+
 
     
     def capturar_entrada(self, tipo):

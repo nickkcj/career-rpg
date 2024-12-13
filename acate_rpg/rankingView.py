@@ -9,11 +9,11 @@ class RankingView:
     def limpar_tela(self):
         os.system('cls' if os.name == 'nt' else 'clear')
 
-    def exibir_ranking_nivel(self, personagens_ordenados):
+    def exibir_ranking_nivel(self, dados_ranking):
         layout = [
             [psg.Text("-------- RANKING POR NÍVEL --------", font=("Helvetica", 20), justification="center")],
             [psg.Listbox(
-                values=[f"{idx+1}. {personagem.nome} - Nível: {personagem.nivel}" for idx, personagem in enumerate(personagens_ordenados)],
+                values=[f"{idx + 1}. {personagem['nome']} - Nível: {personagem['nivel']}" for idx, personagem in enumerate(dados_ranking)],
                 size=(50, 10),
                 key="personagem_selecionado",
                 font=("Helvetica", 14),
@@ -35,8 +35,10 @@ class RankingView:
             if event == "ver_status":
                 if values["personagem_selecionado"]:
                     idx = int(values["personagem_selecionado"][0].split(".")[0]) - 1
-                    personagem = personagens_ordenados[idx]
+                    personagem = dados_ranking[idx]
                     self.exibir_status_personagem(personagem)
+
+
 
     def exibir_ranking_dungeons(self, personagens_ordenados):
         layout = [
@@ -98,22 +100,22 @@ class RankingView:
 
     def exibir_status_personagem(self, personagem):
         layout = [
-            [psg.Text(f"Status de {personagem.nome}", font=("Helvetica", 18), justification="center")],
-            [psg.Text(f"Nome: {personagem.nome}", font=("Helvetica", 14))],
-            [psg.Text(f"Nível: {personagem.nivel}", font=("Helvetica", 14))],
-            [psg.Text(f"Classe: {personagem.classe_personagem.nome_classe}", font=("Helvetica", 14))],
-            [psg.Text(f"Experiência: {personagem.experiencia_total}", font=("Helvetica", 14))],
-            [psg.Text(f"HP: {personagem.classe_personagem.atributos['hp']}", font=("Helvetica", 14))],
-            [psg.Text(f"Estamina: {personagem.classe_personagem.atributos['estamina']}", font=("Helvetica", 14))],
-            [psg.Text(f"Ataque: {personagem.classe_personagem.atributos['ataque']}", font=("Helvetica", 14))],
-            [psg.Text(f"Defesa: {personagem.classe_personagem.atributos['defesa']}", font=("Helvetica", 14))],
-            [psg.Text(f"Cursos Conquistados: {personagem.cursos_conquistados}", font=("Helvetica", 14))],
+            [psg.Text(f"Status de {personagem['nome']}", font=("Helvetica", 18), justification="center")],
+            [psg.Text(f"Nome: {personagem['nome']}", font=("Helvetica", 14))],
+            [psg.Text(f"Nível: {personagem['nivel']}", font=("Helvetica", 14))],
+            [psg.Text(f"Classe: {personagem['classe_personagem']['nome_classe']}", font=("Helvetica", 14))],
+            [psg.Text(f"Experiência: {personagem['experiencia_total']}", font=("Helvetica", 14))],
+            [psg.Text(f"HP: {personagem['classe_personagem']['atributos']['hp']}", font=("Helvetica", 14))],
+            [psg.Text(f"Estamina: {personagem['classe_personagem']['atributos']['estamina']}", font=("Helvetica", 14))],
+            [psg.Text(f"Ataque: {personagem['classe_personagem']['atributos']['ataque']}", font=("Helvetica", 14))],
+            [psg.Text(f"Defesa: {personagem['classe_personagem']['atributos']['defesa']}", font=("Helvetica", 14))],
+            [psg.Text(f"Cursos Conquistados: {personagem['cursos_conquistados']}", font=("Helvetica", 14))],
             [psg.Text("Empresas Conquistadas:", font=("Helvetica", 14))],
             [psg.Listbox(
                 values=[
-                    f"{dungeon.nome} (Nível Requerido: {dungeon.nivel_requerido})"
-                    for dungeon in personagem.dungeons_conquistadas
-                ] if personagem.dungeons_conquistadas else ["Nenhuma empresa conquistada"],
+                    f"{dungeon['nome']} (Nível Requerido: {dungeon['nivel_requerido']})"
+                    for dungeon in personagem['dungeons_conquistadas']
+                ] if personagem['dungeons_conquistadas'] else ["Nenhuma empresa conquistada"],
                 size=(40, 10),
                 font=("Helvetica", 12),
                 select_mode=psg.LISTBOX_SELECT_MODE_SINGLE,
@@ -121,7 +123,7 @@ class RankingView:
             [psg.Button("Fechar", key="fechar", font=("Helvetica", 14))]
         ]
 
-        window = psg.Window(f"Status de {personagem.nome}", layout, finalize=True)
+        window = psg.Window(f"Status de {personagem['nome']}", layout, finalize=True)
 
         while True:
             event, _ = window.read()
@@ -129,6 +131,7 @@ class RankingView:
             if event in ("fechar", psg.WINDOW_CLOSED):
                 window.close()
                 break
+
 
     def mostrar_mensagem(self, mensagem):
         psg.popup(mensagem, title="Mensagem")

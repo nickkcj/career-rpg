@@ -6,13 +6,15 @@ class LogView:
             self.mostrar_mensagem("Nenhum registro disponível!")
             return None
 
+        # Criação da lista de strings formatadas
         registros_formatados = [
-            f"Registro {i + 1}: Personagem: {registro.personagem.nome} (Nível {registro.personagem.nivel}) | "
-            f"Boss: {registro.boss.nome} (Dificuldade {registro.boss.dificuldade}) | "
-            f"Dungeon: {registro.dungeon.nome} | Movimento: {registro.acao} | Data: {registro.data}"
+            f"Registro {i + 1}: Personagem: {registro['personagem']['nome']} (Nível {registro['personagem']['nivel']}) | "
+            f"Boss: {registro['boss']['nome']} (Dificuldade {registro['boss']['dificuldade']}) | "
+            f"Dungeon: {registro['dungeon']} | Movimento: {registro['acao']} | Data: {registro['data']}"
             for i, registro in enumerate(registros)
         ]
 
+        # Layout da janela
         layout = [
             [psg.Text("Lista de Registros", font=("Helvetica", 20), justification="center")],
             [psg.Listbox(
@@ -25,12 +27,15 @@ class LogView:
             [psg.Button("Voltar", key="voltar", size=(15, 1), font=("Helvetica", 12))]
         ]
 
+        # Exibição da janela
         window = psg.Window("Lista de Registros", layout, modal=True, finalize=True)
         while True:
             event, _ = window.read()
             if event in (psg.WINDOW_CLOSED, "voltar"):
                 window.close()
                 return
+
+
 
     def excluir_registro(self, registros):
         if not registros:
@@ -78,11 +83,15 @@ class LogView:
             self.mostrar_mensagem("Nenhum registro disponível para alteração!")
             return None, None
 
+        # Criar a lista formatada para exibição
         registros_formatados = [
-            f"Registro {i + 1}: Personagem: {registro.personagem.nome} | Boss: {registro.boss.nome} | Dungeon: {registro.dungeon.nome} | Movimento: {registro.acao}"
+            f"Registro {i + 1}: Personagem: {registro['personagem']['nome']} (Nível {registro['personagem']['nivel']}) | "
+            f"Boss: {registro['boss']['nome']} (Dificuldade {registro['boss']['dificuldade']}) | "
+            f"Dungeon: {registro['dungeon']} | Movimento: {registro['acao']} | Data: {registro['data']}"
             for i, registro in enumerate(registros)
         ]
 
+        # Layout da interface
         layout = [
             [psg.Text("Alterar Registro", font=("Helvetica", 20), justification="center")],
             [psg.Text("Selecione um registro para alterar:", font=("Helvetica", 14))],
@@ -98,9 +107,10 @@ class LogView:
             [psg.Text("Nova Dungeon:", font=("Helvetica", 12)), psg.InputText(key="dungeon")],
             [psg.Text("Novo Movimento:", font=("Helvetica", 12)), psg.InputText(key="movimento")],
             [psg.Button("Salvar", key="salvar", size=(15, 1), font=("Helvetica", 12)),
-             psg.Button("Cancelar", key="cancelar", size=(15, 1), font=("Helvetica", 12))]
+            psg.Button("Cancelar", key="cancelar", size=(15, 1), font=("Helvetica", 12))]
         ]
 
+        # Janela da interface
         window = psg.Window("Alterar Registro", layout, modal=True, finalize=True)
         while True:
             event, values = window.read()
@@ -112,16 +122,21 @@ class LogView:
                 if not selected_index:
                     self.mostrar_mensagem("Por favor, selecione um registro para alterar!")
                 else:
+                    # Determinar o índice do registro selecionado
                     index = registros_formatados.index(selected_index[0])
+
+                    # Capturar os novos valores
                     dados = {
                         "personagem": values["personagem"],
                         "boss": values["boss"],
                         "dungeon": values["dungeon"],
                         "movimento": values["movimento"]
                     }
+
                     self.mostrar_mensagem("Registro alterado com sucesso!")
                     window.close()
                     return dados, index
+
 
     def mostrar_mensagem(self, msg):
         layout = [

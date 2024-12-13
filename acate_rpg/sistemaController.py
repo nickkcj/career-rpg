@@ -204,10 +204,9 @@ class SistemaControllerr:
                     self.menu_log(personagem)
 
                 elif opcao == '0':
-                    return
+                    self.menu_jogador()
 
                 elif opcao == '-EXIT-':
-                    self.__personagemController.personagens
                     exit()
                 else:
                     raise OperacaoNaoPermitidaException(operacao="Escolha de opção no menu principal do personagem")
@@ -282,17 +281,6 @@ class SistemaControllerr:
             self.__personagemController.mostrar_status(personagem)
         except OperacaoNaoPermitidaException as e:
             self.__sistemaView.mostrar_mensagem(str(e))
-
-    def selecionar_dungeon(self):
-        try:
-            nome_dungeon = self.__sistemaView.pegar_opcao()
-            for dungeon in self.__dungeonController.dungeons:
-                if dungeon.nome == nome_dungeon and not dungeon.conquistada:
-                    return dungeon
-            raise OperacaoNaoPermitidaException(operacao="Selecionar Dungeon")
-        except OperacaoNaoPermitidaException as e:
-            self.__sistemaView.mostrar_mensagem(str(e))
-            return None
 
     def menu_dungeons_empresa(self):
         while True:

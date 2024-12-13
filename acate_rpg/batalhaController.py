@@ -87,7 +87,23 @@ class BatalhaController():
         self.__batalha.personagem = personagem
         self.__batalha.boss = boss
         self.__batalha.finalizada = False
-        window = self.__tela.exibir_tela_batalha(personagem,boss)
+
+       
+        dados_batalha = {
+            "personagem": {
+                "nome": personagem.nome,
+                "hp_atual": personagem.hp_atual,
+                "hp_total": personagem.classe_personagem.atributos["hp"]
+            },
+            "boss": {
+                "nome": boss.nome,
+                "hp": boss.atributos["hp"]
+            }
+        }
+
+        
+        window = self.__tela.exibir_tela_batalha(dados_batalha)
+
         while not self.__batalha.finalizada:
             event, _ = window.read()
             self.realizar_turno(event, self.__batalha.personagem, boss, dungeon, log, window)

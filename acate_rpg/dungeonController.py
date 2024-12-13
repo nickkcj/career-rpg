@@ -202,8 +202,37 @@ class DungeonController:
         if not self.__dungeons:
             self.__dungeonView.mostra_mensagem("Nenhuma dungeon cadastrada.")
             return
-        
-        self.__dungeonView.mostra_dungeon(self.dungeons)
+
+        # Converte as dungeons para dicionários
+        dungeons_formatadas = [
+            {
+                "nome": dungeon.nome,
+                "nivel_requerido": dungeon.nivel_requerido,
+                "xp_ganho": dungeon.xp_ganho,
+                "dificuldade": dungeon.dificuldade,
+                "setores": [
+                    {
+                        "nome": setor.nome,
+                        "dificuldade": setor.dificuldade,
+                        "boss": {
+                            "nome": setor.boss.nome,
+                            "dificuldade": setor.boss.dificuldade,
+                            "nivel_requerido": setor.boss.nivel_requerido
+                        }
+                    }
+                    for setor in dungeon.setores
+                ],
+                "boss_final": {
+                    "nome": dungeon.boss_final.nome,
+                    "dificuldade": dungeon.boss_final.dificuldade,
+                    "nivel_requerido": dungeon.boss_final.nivel_requerido
+                }
+            }
+            for dungeon in self.__dungeons
+        ]
+
+        self.__dungeonView.mostra_dungeon(dungeons_formatadas)
+
             
 
 
@@ -254,8 +283,37 @@ class DungeonController:
         try:
             if not self.__dungeons:
                 raise OperacaoNaoPermitidaException("Nenhuma dungeon cadastrada.")
+            dungeons_formatadas = [
+            {
+                "nome": dungeon.nome,
+                "nivel_requerido": dungeon.nivel_requerido,
+                "xp_ganho": dungeon.xp_ganho,
+                "dificuldade": dungeon.dificuldade,
+                "setores": [
+                    {
+                        "nome": setor.nome,
+                        "dificuldade": setor.dificuldade,
+                        "boss": {
+                            "nome": setor.boss.nome,
+                            "dificuldade": setor.boss.dificuldade,
+                            "nivel_requerido": setor.boss.nivel_requerido
+                        }
+                    }
+                    for setor in dungeon.setores
+                ],
+                "boss_final": {
+                    "nome": dungeon.boss_final.nome,
+                    "dificuldade": dungeon.boss_final.dificuldade,
+                    "nivel_requerido": dungeon.boss_final.nivel_requerido
+                }
+            }
+            for dungeon in self.__dungeons
+        ]
 
-            index = self.__dungeonView.mostra_dungeons_enum(self.__dungeons)
+            index = self.__dungeonView.mostra_dungeons_enum(dungeons_formatadas)
+            if index is None:
+                return
+            
             dungeon_num = index
             dungeon = self.__dungeons[dungeon_num]
 
@@ -464,22 +522,27 @@ class DungeonController:
         except Exception as e:
             self.__dungeonView.mostra_mensagem(f"Erro inesperado ao alterar boss: {str(e)}")
 
-    def excluir_dungeon_sem_setores(self, dungeon):
-        confirmacao = input(f"Tem certeza que deseja excluir a dungeon '{dungeon.nome}'? (s/n): ")
-        if confirmacao.lower() == 's':
-            self.dungeons.remove(dungeon)
-            self.remover_dungeon(dungeon)
-            self.__dungeonView.mostra_mensagem("Dungeon excluída com sucesso.")
-        else:
-            self.__dungeonView.mostra_mensagem("Exclusão cancelada.")
 
     def excluir_dungeon(self):
         if not self.__dungeons:
             self.__dungeonView.mostra_mensagem("Nenhuma dungeon cadastrada.")
             return
 
-        dungeon_opcao = self.__dungeonView.mostra_dungeons_enum(self.__dungeons)
+        # Prepara os dados como dicionários
+        dungeons_formatadas = [
+            {"nome": dungeon.nome, "nivel_requerido": dungeon.nivel_requerido}
+            for dungeon in self.__dungeons
+        ]
+
+        # Exibe a lista e retorna a seleção
+        dungeon_opcao = self.__dungeonView.mostra_dungeons_enum(dungeons_formatadas)
+
+        if dungeon_opcao is None:
+            self.__dungeonView.mostra_mensagem("Operação cancelada.")
+            return
+
         try:
+            # Exclui a dungeon com base no índice selecionado
             dungeon = self.__dungeons[dungeon_opcao]
             if self.__dungeonView.confirma_exclusao(dungeon.nome):
                 del self.__dungeons[dungeon_opcao]
@@ -491,6 +554,7 @@ class DungeonController:
             self.__dungeonView.mostra_mensagem("Número de dungeon inválido.")
         except Exception as e:
             self.__dungeonView.mostra_mensagem(f"Erro inesperado ao excluir dungeon: {str(e)}")
+
 
     def calcular_dificuldade(self, dungeon):
         return sum(setor.dificuldade for setor in dungeon.setores) / len(dungeon.setores)

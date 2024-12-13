@@ -6,8 +6,7 @@ class BossController():
         defesa = dificuldade * 1.5
         hp = dificuldade * 10
         estamina = dificuldade * 5
-        #print(f"Criando boss: {nome}, Dificuldade: {dificuldade}, Nível Requerido: {nivel_requerido}")
-        #time.sleep(1)
+        
         return Boss(nome=nome, dificuldade=dificuldade, nivel_requerido=nivel_requerido, ataque=ataque, defesa=defesa, hp=hp, estamina=estamina)
 
     def criar_boss_final(self, nome, dificuldade, nivel_requerido):
@@ -15,8 +14,7 @@ class BossController():
         defesa = dificuldade * 3
         hp = dificuldade * 20 
         estamina = dificuldade * 10
-        #print(f"Criando boss final: {nome}, Dificuldade: {dificuldade}, Nível Requerido: {nivel_requerido}")
-        #time.sleep(1)
+        
         return Boss(nome=nome, dificuldade=dificuldade, nivel_requerido=nivel_requerido, ataque=ataque, defesa=defesa, hp=hp, estamina=estamina)
     
     def to_dict(self, boss):

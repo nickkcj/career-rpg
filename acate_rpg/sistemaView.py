@@ -117,16 +117,16 @@ class SistemaView:
     def menu_jogador(self):
         screen_width, screen_height = sg.Window.get_screen_size()
         layout = [
-            [sg.Image("assets/images/personagem.jpg", size=(screen_width // 2, screen_height // 3), pad=(0, 10))],
-            [sg.Text("--------- MENU JOGADOR ---------", font=("Helvetica", 16), justification="center", pad=(0, 10))],
+            [sg.Image("assets/images/personagem.jpg", size=(500, 320), pad=(0, 23))],
+            [sg.Text("--------- MENU JOGADOR ---------", font=("Helvetica", 16), justification="center", pad=(0, 5))],
             [sg.Text("Olá Jogador, o que você quer fazer?", font=("Helvetica", 23), justification="center", pad=(0, 20))],
             [sg.Column(
                 [
-                    [sg.Button("Cadastrar Personagem", key="1", size=(50, 2), font=("Helvetica", 15), pad=(0, 10))],
-                    [sg.Button("Selecionar Personagem", key="2", size=(50, 2), font=("Helvetica", 15), pad=(0, 10))],
-                    [sg.Button("Alterar Dados de Personagem", key="3", size=(50, 2), font=("Helvetica", 15), pad=(0, 10))],
-                    [sg.Button("Excluir Personagem", key="4", size=(50, 2), font=("Helvetica", 15), pad=(0, 10))],
-                    [sg.Button("Voltar", key="0", size=(50, 2), font=("Helvetica", 15), pad=(0, 10))]
+                    [sg.Button("Cadastrar Personagem", key="1", size=(40, 1), font=("Helvetica", 15), pad=(0, 10))],
+                    [sg.Button("Selecionar Personagem", key="2", size=(40, 1), font=("Helvetica", 15), pad=(0, 10))],
+                    [sg.Button("Alterar Dados de Personagem", key="3", size=(40, 1), font=("Helvetica", 15), pad=(0, 10))],
+                    [sg.Button("Excluir Personagem", key="4", size=(40, 1), font=("Helvetica", 15), pad=(0, 10))],
+                    [sg.Button("Voltar", key="0", size=(40, 1), font=("Helvetica", 15), pad=(0, 10))]
                 ],
                 element_justification="center",
                 vertical_alignment="center",
@@ -164,6 +164,7 @@ class SistemaView:
         ]
 
         self.window = sg.Window("Menu Principal", layout, size=(1000, 850), element_justification='center', finalize=True, resizable=True)
+        self.window.maximize()
         evento, _ = self.window.read()
         self.window.close()
         return evento
