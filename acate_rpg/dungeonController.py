@@ -216,7 +216,7 @@ class DungeonController:
             dungeon_num = index
             dungeon = self.__dungeons[dungeon_num]
 
-            self.__dungeonView.mensagem_basica("\nAtributos alteráveis: nome, nivel, xp, dificuldade, setores e boss final")
+            self.__dungeonView.mensagem_basica("\nAtributos alteráveis: nivel, xp, dificuldade, setores e boss final")
             atributo = self.__dungeonView.capturar_entrada("Digite o atributo que você quer alterar ou Todos")
             if atributo.lower() == "todos":
                 novo_nome = self.__dungeonView.capturar_entrada("Digite o novo nome:")
@@ -282,11 +282,7 @@ class DungeonController:
                 except ValueError as e:
                     self.__dungeonView.mostra_mensagem(f"Erro ao alterar dificuldade da {dungeon.nome}: {str(e)}")
 
-            elif hasattr(dungeon, atributo):
-                novo_valor = self.__dungeonView.capturar_entrada(f"Digite o novo valor para o atributo {atributo}:")
-                setattr(dungeon, atributo, novo_valor)
-                self.atualizar_dungeon(dungeon)
-                self.__dungeonView.mostra_mensagem(f"Atributo {atributo} alterado com sucesso.")
+            
             else:
                 raise OperacaoNaoPermitidaException("Atributo inválido.")
 

@@ -765,13 +765,14 @@ class QuizController():
 
                         if resultado:
                             self.__personagemController.ganhar_experiencia(personagem, experiencia)
+                            self.__personagemController.atualizar_personagem(personagem)
                             self.__cursoDAO.update(curso)
-                            self.__cursoView.mostra_mensagem(f"Parabéns! Você completou o curso {curso.nome}!")
+                            self.__cursoView.mostra_mensagem(f"Parabéns! Você completou o curso {curso['nome']}!")
 
                         else:
                             cursos[index]["realizado"] = False
 
-                    return resultado, curso["nome"]
+                    return resultado
 
             if not curso_encontrado:
                 self.__cursoView.mostra_mensagem("O curso selecionado não existe, tente novamente!")

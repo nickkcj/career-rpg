@@ -299,6 +299,8 @@ class PersonagemController():
                 raise TypeError("Objeto fornecido não é uma instância de Personagem.")
             
             personagem.cursos_conquistados += 1
+            self.atualizar_personagem(personagem)
+            self.__personagens = list(self.__personagem_dao.get_all())
 
         except AttributeError as e:
             raise AttributeError("Atributo 'cursos_conquistados' não encontrado no objeto Personagem.") from e
@@ -327,6 +329,7 @@ class PersonagemController():
             
             nivel_anterior = self.calcular_nivel(personagem.experiencia_total)
             personagem.experiencia_total += experiencia_ganha
+            self.__personagens = list(self.__personagem_dao.get_all())
             novo_nivel = self.calcular_nivel(personagem.experiencia_total)
 
             if novo_nivel > nivel_anterior:

@@ -24,3 +24,7 @@ class GameloggerDAO(DAO):
         if(isinstance(key, str)):
             return super().remove(key)
         
+    def update_key(self, key:str, registro):
+        if key and isinstance(key, str):
+            super().update(key, registro)
+        

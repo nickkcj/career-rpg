@@ -10,18 +10,35 @@ class LogJogadas:
     @property
     def personagem(self):
         return self.__personagem
+    
+    @personagem.setter
+    def personagem(self, personagem):
+        self.__personagem = personagem
+
 
     @property
     def boss(self):
         return self.__boss
     
+    @boss.setter
+    def boss(self, boss):
+        self.__boss = boss
+    
     @property
     def dungeon(self):
         return self.__dungeon
     
+    @dungeon.setter
+    def dungeon(self, dungeon):
+        self.__dungeon = dungeon
+    
     @property
     def acao(self):
         return self.__acao
+    
+    @acao.setter
+    def acao(self, acao):
+        self.__acao = acao
     
     @property
     def data(self):

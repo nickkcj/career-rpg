@@ -195,12 +195,10 @@ class SistemaControllerr:
 
 
                 elif opcao == '3':
-                    resultado, nome = self.__quizController.realizar_quiz(personagem, self.__cursoController.to_dict())
-                    if resultado:
-                        for cursos in self.__cursoController.cursos:
-                            if cursos.nome == nome:
-                                cursos.realizado = True
+                    resultado = self.__quizController.realizar_quiz(personagem, self.__cursoController.to_dict())
+                    if resultado:      
                         self.__personagemController.incrementar_curso(personagem)
+                        self.salvar_dados()
 
                 elif opcao == '4':
                     self.menu_log(personagem)
@@ -229,10 +227,10 @@ class SistemaControllerr:
                     self.__log.listar_registros(personagem.nome)
 
                 elif opcao == '2':
-                    self.__log.alterar_registro()
+                    self.__log.alterar_registro(personagem.nome)
 
                 elif opcao == '3':
-                    self.__log.excluir_registro()
+                    self.__log.excluir_registro(personagem.nome)
 
                 elif opcao == '4':
                     self.salvar_dados()
@@ -376,4 +374,4 @@ class SistemaControllerr:
         self.__personagemController.personagens
         self.__dungeonController.dungeons
         self.__cursoController.cursos
-        self.__log.registros
+        self.__log.registros 

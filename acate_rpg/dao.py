@@ -47,4 +47,7 @@ class DAO(ABC):
 
     def get_all(self):
         return self.__cache.values()
+    
+    def get_all2(self):
+        return self.__cache.keys()
 

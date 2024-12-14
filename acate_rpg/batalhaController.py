@@ -122,6 +122,7 @@ class BatalhaController():
                 if boss.nome == dungeon.boss_final.nome:
                     dungeon.conquistada = True
                     personagem.dungeons_conquistadas.append(dungeon)
+                    self.__personagemController.atualizar_personagem(personagem)
                     self.__tela.mostra_mensagem(f"Voce conquistou a {dungeon.nome}!")
                     time.sleep(1)
                     self.__personagemController.ganhar_experiencia(personagem, dungeon.boss_final.dificuldade * 100)
@@ -129,6 +130,7 @@ class BatalhaController():
                 elif boss.nome == setor.boss.nome:
                     setor.conquistado = True
                     personagem.bosses_derrotados.append(boss)
+                    self.__personagemController.atualizar_personagem(personagem)
                     self.__tela.mostra_mensagem(f"Voce conquistou o setor {setor.nome} da {dungeon.nome}!")
                     personagem.hp_atual = min(personagem.hp_atual + 20, personagem.classe_personagem.atributos["hp"])
                     time.sleep(1)
@@ -143,9 +145,7 @@ class BatalhaController():
                 personagem.hp_atual = (personagem.classe_personagem.atributos['hp']/2)
                 break
 
-            self.__log.adicionar_registro(personagem, boss, dungeon, resultado)
-
-        self.__log.listar_registros(personagem.nome)
+        
         self.__personagemController.atualizar_personagem(personagem)
         window.close()
 
