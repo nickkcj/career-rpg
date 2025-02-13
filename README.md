@@ -1,6 +1,6 @@
 # RPG Project in Python ⚔️  
 
-This is a simple RPG project developed in Python 🐍, using the `pickle` library for data persistence 💾 and following the MVC (Model-View-Controller) architecture 🏗️.  
+This is a RPG project developed in Python 🐍, using the `pickle` library for data persistence 💾 and following the MVC (Model-View-Controller) architecture 🏗️.  
 
 ---
 
