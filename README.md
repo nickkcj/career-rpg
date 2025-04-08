@@ -58,18 +58,17 @@ The project is structured using the MVC architecture, which separates responsibi
 
 The project is organized into the following directories:
 
-acate-rpg/
+```text
+career-rpg/
 ├── controllers/       # Handles game logic and interactions
 ├── models/            # Defines data structures and core game logic
 ├── views/             # Manages the user interface and user output
 ├── dao/               # Data Access Objects for saving/loading data
 ├── assets/            # Static assets (images, icons, etc.)
 ├── exceptions/        # Custom exception classes for better error handling
-main.py            # Entry point of the application
-README.md          # Project documentation
-*.pkl              # Serialized data files for persistence
-
-
+├── main.py            # Entry point of the application
+├── README.md          # Project documentation
+└── *.pkl              # Serialized data files for persistence
 
 ---
 
