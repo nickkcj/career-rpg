@@ -1,4 +1,4 @@
-from gamelogger import LogJogadas
+from models.gamelogger import LogJogadas
 import json
 import time
 import PySimpleGUI as sg
@@ -13,7 +13,7 @@ from dungeonController import DungeonController
 from batalhaController import BatalhaController
 from setorController import SetorController
 from rankingController import RankingController
-from exceptions import (
+from acate_rpg.exceptions.exceptions import (
     BaseSistemaException,
     CadastroInvalidoException,
     ItemIndisponivelException,

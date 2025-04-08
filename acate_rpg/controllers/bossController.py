@@ -1,4 +1,4 @@
-from boss import Boss
+from models.boss import Boss
 
 class BossController():
     def criar_boss(self, nome, dificuldade, nivel_requerido, ataque, defesa, hp, estamina):

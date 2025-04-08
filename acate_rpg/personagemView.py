@@ -1,5 +1,4 @@
 import os
-import time
 import PySimpleGUI as psg
 class PersonagemView():
 

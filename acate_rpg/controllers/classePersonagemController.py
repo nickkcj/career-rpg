@@ -1,4 +1,4 @@
-from classePersonagem import ClassePersonagem
+from acate_rpg.models.classePersonagem import ClassePersonagem
 
 class ClassePersonagemController():
     def __init__(self):

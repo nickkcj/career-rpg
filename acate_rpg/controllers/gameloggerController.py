@@ -1,6 +1,6 @@
-from gamelogger import LogJogadas
+from models.gamelogger import LogJogadas
 from gameloggerView import LogView
-from gameloggerDAO import GameloggerDAO
+from dao.gameloggerDAO import GameloggerDAO
 import time
 
 class LogController():

@@ -1,4 +1,4 @@
-from classePersonagem import ClassePersonagem
+from acate_rpg.models.classePersonagem import ClassePersonagem
 from pocao_hp import PocaoHP
 from pocao_est import PocaoEstamina
 

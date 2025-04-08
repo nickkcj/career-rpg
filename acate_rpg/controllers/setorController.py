@@ -1,6 +1,6 @@
-from setor import Setor
+from models.setor import Setor
 from bossController import BossController
-from exceptions import CriacaoSetorException
+from acate_rpg.exceptions.exceptions import CriacaoSetorException
 from setorView import SetorView
 
 class SetorController:

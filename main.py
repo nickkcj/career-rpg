@@ -1,4 +1,4 @@
-from sistemaController import SistemaControllerr
+from acate_rpg.controllers.sistemaController import SistemaControllerr
 
 def main():
     sistema = SistemaControllerr()

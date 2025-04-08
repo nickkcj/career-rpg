@@ -1,4 +1,4 @@
-from ranking import Ranking
+from models.ranking import Ranking
 from rankingView import RankingView
 from personagemController import PersonagemController
 

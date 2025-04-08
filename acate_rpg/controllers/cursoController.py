@@ -1,10 +1,10 @@
 import json
 import time
 import os
-from curso import Curso
+from models.curso import Curso
 from cursoView import CursoView
-from cursoDAO import CursoDAO
-from exceptions import CarregamentoDadosException, NivelRequeridoInvalidoError, SetorInvalidoError, DificuldadeInvalidaError, XpGanhoInvalidoError
+from dao.cursoDAO import CursoDAO
+from acate_rpg.exceptions.exceptions import CarregamentoDadosException, NivelRequeridoInvalidoError, SetorInvalidoError, DificuldadeInvalidaError, XpGanhoInvalidoError
 class CursoController():
     def __init__(self):
         self.__curso_dao = CursoDAO()

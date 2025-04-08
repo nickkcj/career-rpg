@@ -5,7 +5,7 @@ from classePersonagemController import ClassePersonagemController
 from gameloggerController import LogController
 import time
 import random
-from exceptions import OperacaoNaoPermitidaException
+from acate_rpg.exceptions.exceptions import OperacaoNaoPermitidaException
 from bossController import BossController
 import os
 class BatalhaController():

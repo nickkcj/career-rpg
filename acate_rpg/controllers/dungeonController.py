@@ -1,11 +1,11 @@
 import time
 import json
 from dungeonView import DungeonView
-from dungeon import Dungeon
-from dungeonDAO import DungeonDAO
+from models.dungeon import Dungeon
+from dao.dungeonDAO import DungeonDAO
 from setorController import SetorController
 from bossController import BossController
-from exceptions import (
+from acate_rpg.exceptions.exceptions import (
     CadastroInvalidoException,
     CarregamentoDadosException,
     OperacaoNaoPermitidaException,

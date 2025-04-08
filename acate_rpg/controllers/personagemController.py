@@ -1,9 +1,9 @@
 import time
 from personagemView import PersonagemView
-from personagem import Personagem
-from personagemDAO import PersonagemDAO
+from models.personagem import Personagem
+from dao.personagemDAO import PersonagemDAO
 from classePersonagemController import ClassePersonagemController
-from exceptions import CadastroInvalidoException, CarregamentoDadosException, ItemIndisponivelException, OperacaoNaoPermitidaException, HpJahCheioException
+from acate_rpg.exceptions.exceptions import CadastroInvalidoException, CarregamentoDadosException, ItemIndisponivelException, OperacaoNaoPermitidaException, HpJahCheioException
 from batalhaView import BatalhaView
 
 

@@ -1,8 +1,8 @@
 from quizView import QuizView
 from cursoView import CursoView
-from cursoDAO import CursoDAO
+from dao.cursoDAO import CursoDAO
 from personagemController import PersonagemController
-from quiz import Quiz
+from models.quiz import Quiz
 import time
 
 
