@@ -69,6 +69,7 @@ career-rpg/
 ├── main.py            # Entry point of the application
 ├── README.md          # Project documentation
 └── *.pkl              # Serialized data files for persistence
+```
 
 ---
 
